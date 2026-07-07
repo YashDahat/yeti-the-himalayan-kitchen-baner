@@ -3788,14 +3788,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "A reusable component to display customer testimonials, used on the homepage.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "TestimonialsSection",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders a section displaying approved customer testimonials."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/hooks/useTestimonials.ts" ],
     "depends_on" : [ ],
     "feature_name" : "testimonial-ui",
-    "file_role" : null
+    "file_role" : "COMPONENT layer — displays a list of approved customer testimonials on public-facing pages, such as the homepage."
   }, {
     "file_name" : "AdminTestimonialsPage.tsx",
     "file_path" : "frontend/src/pages/admin/AdminTestimonialsPage.tsx",
@@ -3805,14 +3810,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Admin interface for managing customer testimonials.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminTestimonialsPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the admin page for managing testimonials, including a table and forms for CRUD operations."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/hooks/useTestimonials.ts" ],
     "depends_on" : [ ],
     "feature_name" : "testimonial-ui",
-    "file_role" : null
+    "file_role" : "PAGE layer — provides the administrative interface for viewing, creating, updating, approving, and deleting customer testimonials."
   }, {
     "file_name" : "useTestimonials.ts",
     "file_path" : "frontend/src/hooks/useTestimonials.ts",
@@ -3822,14 +3832,49 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "React Query hook for fetching and managing testimonial data.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "useAllApprovedTestimonials",
+      "parameters" : [ ],
+      "return_type" : "UseQueryResult<Testimonial[], Error>",
+      "description" : "React Query hook to fetch all approved testimonials for public display."
+    }, {
+      "name" : "useAllTestimonials",
+      "parameters" : [ ],
+      "return_type" : "UseQueryResult<Testimonial[], Error>",
+      "description" : "React Query hook to fetch all testimonials (approved and unapproved) for admin use."
+    }, {
+      "name" : "useTestimonial",
+      "parameters" : [ "id: string" ],
+      "return_type" : "UseQueryResult<Testimonial, Error>",
+      "description" : "React Query hook to fetch a single testimonial by its ID."
+    }, {
+      "name" : "useCreateTestimonial",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<Testimonial, Error, CreateTestimonialRequest>",
+      "description" : "React Query hook to create a new testimonial."
+    }, {
+      "name" : "useUpdateTestimonial",
+      "parameters" : [ "{ id: string, testimonial: UpdateTestimonialRequest }" ],
+      "return_type" : "UseMutationResult<Testimonial, Error, { id: string, testimonial: UpdateTestimonialRequest }>",
+      "description" : "React Query hook to update an existing testimonial."
+    }, {
+      "name" : "useApproveTestimonial",
+      "parameters" : [ "id: string" ],
+      "return_type" : "UseMutationResult<Testimonial, Error, string>",
+      "description" : "React Query hook to approve a testimonial."
+    }, {
+      "name" : "useDeleteTestimonial",
+      "parameters" : [ "id: string" ],
+      "return_type" : "UseMutationResult<void, Error, string>",
+      "description" : "React Query hook to delete a testimonial."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/testimonialService.ts", "frontend/src/types/testimonial.ts" ],
     "depends_on" : [ ],
     "feature_name" : "testimonial-ui",
-    "file_role" : null
+    "file_role" : "HOOK layer — provides React Query hooks for fetching and mutating testimonial data, abstracting API calls for components."
   }, {
     "file_name" : "testimonialService.ts",
     "file_path" : "frontend/src/services/testimonialService.ts",
@@ -3839,14 +3884,91 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Service for all testimonial-related API calls.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllApprovedTestimonials",
+      "parameters" : [ ],
+      "return_type" : "Promise<Testimonial[]>",
+      "description" : "Fetches all approved testimonials from the backend."
+    }, {
+      "name" : "getAllTestimonials",
+      "parameters" : [ ],
+      "return_type" : "Promise<Testimonial[]>",
+      "description" : "Fetches all testimonials (approved and unapproved) from the backend for admin access."
+    }, {
+      "name" : "getTestimonialById",
+      "parameters" : [ "id: string" ],
+      "return_type" : "Promise<Testimonial>",
+      "description" : "Fetches a single testimonial by its ID from the backend."
+    }, {
+      "name" : "createTestimonial",
+      "parameters" : [ "testimonial: CreateTestimonialRequest" ],
+      "return_type" : "Promise<Testimonial>",
+      "description" : "Sends a request to create a new testimonial in the backend."
+    }, {
+      "name" : "updateTestimonial",
+      "parameters" : [ "id: string", "testimonial: UpdateTestimonialRequest" ],
+      "return_type" : "Promise<Testimonial>",
+      "description" : "Sends a request to update an existing testimonial in the backend."
+    }, {
+      "name" : "approveTestimonial",
+      "parameters" : [ "id: string" ],
+      "return_type" : "Promise<Testimonial>",
+      "description" : "Sends a request to approve a testimonial in the backend."
+    }, {
+      "name" : "deleteTestimonial",
+      "parameters" : [ "id: string" ],
+      "return_type" : "Promise<void>",
+      "description" : "Sends a request to delete a testimonial from the backend."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/testimonials",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all approved testimonials."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/testimonials",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all testimonials for admin."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/testimonials/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a single testimonial by ID for admin."
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/testimonials",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new testimonial."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/testimonials/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates an existing testimonial."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/testimonials/{id}/approve",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Approves a testimonial."
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/testimonials/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Deletes a testimonial."
+    } ],
     "imports_from" : [ "frontend/src/api/client.ts", "frontend/src/types/testimonial.ts" ],
     "depends_on" : [ ],
     "feature_name" : "testimonial-ui",
-    "file_role" : null
+    "file_role" : "SERVICE layer — handles all API calls related to testimonials, including fetching approved testimonials for public display and full CRUD for admin."
   }, {
     "file_name" : "testimonial.ts",
     "file_path" : "frontend/src/types/testimonial.ts",
@@ -3857,13 +3979,37 @@
     "status" : "PLANNED",
     "description" : "TypeScript types and interfaces for testimonials.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "string",
+      "description" : "Unique identifier for the testimonial (UUID)."
+    }, {
+      "name" : "authorName",
+      "type" : "string",
+      "description" : "Name of the testimonial author."
+    }, {
+      "name" : "content",
+      "type" : "string",
+      "description" : "The text content of the testimonial."
+    }, {
+      "name" : "rating",
+      "type" : "number",
+      "description" : "The rating given in the testimonial (integer 1-5)."
+    }, {
+      "name" : "createdAt",
+      "type" : "string",
+      "description" : "Timestamp when the testimonial was created (ISO 8601 string)."
+    }, {
+      "name" : "approved",
+      "type" : "boolean",
+      "description" : "Indicates if the testimonial has been approved for public display."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "testimonial-ui",
-    "file_role" : null
+    "file_role" : "Generated from the backend API contract — defines the TypeScript interface for a testimonial."
   }, {
     "file_name" : "deploy.yml",
     "file_path" : ".github/workflows/deploy.yml",
@@ -3999,7 +4145,7 @@
     "feature_display_name" : "Testimonials UI",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/components/TestimonialsSection.tsx", "frontend/src/pages/admin/AdminTestimonialsPage.tsx", "frontend/src/hooks/useTestimonials.ts", "frontend/src/services/testimonialService.ts", "frontend/src/types/testimonial.ts" ],
-    "feature_instruction" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#2c3e50] text-white\n- Primary CTA: bg-[#f4c430] hover:bg-[#e0b02a] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Secondary CTA: bg-[#8B4513] hover:bg-[#7a3b10] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#f4c430]\n- Section bg: bg-white (odd sections) / bg-[#f5f5f5] (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-[#4a4a4a] leading-relaxed\n- Testimonial Card Background: bg-white shadow-lg rounded-lg p-6\n- Testimonial Text: text-gray-700 italic\n- Testimonial Author: font-semibold text-[#2c3e50]\n\nThis `testimonial-ui` feature provides both public-facing display of approved customer testimonials and an administrative interface for full CRUD operations on all testimonials. It consists of a type definition file, a service for API interactions, a set of React Query hooks, a reusable component for public display, and an admin page.\n\n### 1. `frontend/src/types/testimonial.ts`\nThis file defines the TypeScript interfaces for `Testimonial`, `CreateTestimonialRequest`, and `UpdateTestimonialRequest`. These types are derived directly from the `TestimonialDto` data shape provided by the `testimonial-backend` feature, ensuring type safety across the frontend application. The `id` field will be a `string` (representing UUIDs), `authorName` and `content` will be `string`, `rating` will be `number` (integer 1-5), `createdAt` will be `string` (representing `java.time.LocalDateTime`), and `approved` will be `boolean`.\n\n### 2. `frontend/src/services/testimonialService.ts`\nThis service file encapsulates all direct API calls to the `testimonial-backend`. It uses the `client` (an Axios instance) from `@/api/client.ts` to make HTTP requests. All functions return `Promise<Testimonial[]>` or `Promise<Testimonial>` or `Promise<void>`.\n\n- **`getAllApprovedTestimonials(): Promise<Testimonial[]>`**\n  - Calls `GET /api/v1/testimonials` to fetch only approved testimonials for public display.\n- **`getAllTestimonials(): Promise<Testimonial[]>`**\n  - Calls `GET /api/v1/admin/testimonials` to fetch all testimonials (approved and unapproved) for the admin interface.\n- **`getTestimonialById(id: string): Promise<Testimonial>`**\n  - Calls `GET /api/v1/admin/testimonials/{id}` to retrieve a single testimonial by its ID.\n- **`createTestimonial(testimonial: CreateTestimonialRequest): Promise<Testimonial>`**\n  - Calls `POST /api/v1/admin/testimonials` with the `CreateTestimonialRequest` body to add a new testimonial.\n- **`updateTestimonial(id: string, testimonial: UpdateTestimonialRequest): Promise<Testimonial>`**\n  - Calls `PUT /api/v1/admin/testimonials/{id}` with the `UpdateTestimonialRequest` body to modify an existing testimonial.\n- **`approveTestimonial(id: string): Promise<Testimonial>`**\n  - Calls `PUT /api/v1/admin/testimonials/{id}/approve` to change a testimonial's status to approved.\n- **`deleteTestimonial(id: string): Promise<void>`**\n  - Calls `DELETE /api/v1/admin/testimonials/{id}` to remove a testimonial.\n\n### 3. `frontend/src/hooks/useTestimonials.ts`\nThis file provides React Query hooks that abstract the `testimonialService` functions, providing caching, loading states, and error handling for components. Each hook invalidates relevant queries on successful mutations to ensure data freshness.\n\n- **`useAllApprovedTestimonials(): UseQueryResult<Testimonial[], Error>`**\n  - Fetches approved testimonials using `testimonialService.getAllApprovedTestimonials`.\n- **`useAllTestimonials(): UseQueryResult<Testimonial[], Error>`**\n  - Fetches all testimonials using `testimonialService.getAllTestimonials`.\n- **`useTestimonial(id: string): UseQueryResult<Testimonial, Error>`**\n  - Fetches a single testimonial by ID using `testimonialService.getTestimonialById`. Enabled only if `id` is provided.\n- **`useCreateTestimonial(): UseMutationResult<Testimonial, Error, CreateTestimonialRequest>`**\n  - Mutates to create a testimonial using `testimonialService.createTestimonial`. Invalidates `testimonials` and `approvedTestimonials` queries on success.\n- **`useUpdateTestimonial(): UseMutationResult<Testimonial, Error, { id: string, testimonial: UpdateTestimonialRequest }>`**\n  - Mutates to update a testimonial using `testimonialService.updateTestimonial`. Invalidates `testimonials` and `approvedTestimonials` queries on success.\n- **`useApproveTestimonial(): UseMutationResult<Testimonial, Error, string>`**\n  - Mutates to approve a testimonial using `testimonialService.approveTestimonial`. Invalidates `testimonials` and `approvedTestimonials` queries on success.\n- **`useDeleteTestimonial(): UseMutationResult<void, Error, string>`**\n  - Mutates to delete a testimonial using `testimonialService.deleteTestimonial`. Invalidates `testimonials` and `approvedTestimonials` queries on success.\n\n### 4. `frontend/src/components/TestimonialsSection.tsx`\nThis component is responsible for displaying a visually appealing section of approved customer testimonials on public pages, such as the homepage. It will utilize the `useAllApprovedTestimonials` hook to fetch data.\n\n- **Structure and Content:**\n  - The component will be wrapped in a section container using the `Section container` design token.\n  - It will feature a prominent heading like \"Hear From Our Adventurous Guests\" and a sub-headline, both styled with appropriate text colors and sizes from the design tokens.\n  - Testimonials will be displayed in a grid layout, with each testimonial rendered within a card using the `Testimonial Card Background` design token.\n  - Each card will show the testimonial `content` (italicized, `Testimonial Text`), `rating` (represented by star icons using the `Brand text accent` color), and `authorName` (`Testimonial Author`).\n  - Loading and error states from the hook should be handled gracefully.\n\n### 5. `frontend/src/pages/admin/AdminTestimonialsPage.tsx`\nThis page provides the full administrative interface for managing testimonials. It will be accessible only to authenticated `ADMIN` users and will be wrapped in the `<AdminLayout>` component from the `admin-portal` feature. It will use the `useAllTestimonials`, `useCreateTestimonial`, `useUpdateTestimonial`, `useApproveTestimonial`, and `useDeleteTestimonial` hooks.\n\n- **Structure and Content:**\n  - The page content will be enclosed within `<AdminLayout>`.\n  - A main heading \"Manage Testimonials\" will be displayed.\n  - A table will list all testimonials, including their `id`, `authorName`, `content`, `rating`, `createdAt`, and `approved` status. Each row will include action buttons for \"Edit\", \"Approve\" (if not approved), \"Unapprove\" (if approved), and \"Delete\".\n  - Functionality for creating new testimonials will be provided, likely through a modal or dedicated form. This form will use `react-hook-form` with `zod` for validation. The `zod` schema for `CreateTestimonialRequest` will ensure `authorName` and `content` are `z.string().min(1)`, `rating` is `z.coerce.number().min(1).max(5)`, and `approved` is `z.boolean().optional()`.\n  - Similarly, an edit form (also using `react-hook-form` and `zod` for `UpdateTestimonialRequest`) will be implemented for updating existing testimonials.\n  - All buttons and form elements will adhere to the `Primary CTA` and `Secondary CTA` design tokens for consistent styling.\n  - Loading, error, and success states for all CRUD operations should be clearly communicated to the user.\n",
     "change_required" : true
   }, {
     "feature_name" : "infrastructure",
