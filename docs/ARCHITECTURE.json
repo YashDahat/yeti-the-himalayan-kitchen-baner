@@ -13,8 +13,8 @@
     "file_type" : "BACKEND",
     "layer" : "EXCEPTION",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "Handles all uncaught exceptions and formats them into a consistent ErrorResponse.",
     "public_functions" : [ {
       "name" : "handleResourceNotFoundException",
@@ -45,8 +45,8 @@
     "file_type" : "BACKEND",
     "layer" : "EXCEPTION",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "Custom exception for cases where a requested resource (e.g., menu item, order) is not found.",
     "public_functions" : [ {
       "name" : "ResourceNotFoundException",
@@ -433,8 +433,8 @@
     "file_type" : "BACKEND",
     "layer" : "UTIL",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "Utility class for generating, parsing, and validating JSON Web Tokens (JWTs).",
     "public_functions" : [ {
       "name" : "extractEmail",
