@@ -2730,14 +2730,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Layout for the admin dashboard, including a sidebar for navigation between management pages.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminLayout",
+      "parameters" : [ "props: { children: React.ReactNode }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the admin layout with a sidebar and the provided children as the main content."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null
+    "file_role" : "COMPONENT layer — Provides the consistent layout for all admin pages, including a navigation sidebar and a main content area."
   }, {
     "file_name" : "AdminDashboardPage.tsx",
     "file_path" : "frontend/src/pages/admin/AdminDashboardPage.tsx",
@@ -2747,14 +2752,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "The main landing page for the admin panel, showing key stats and links to management sections.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminDashboardPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the admin dashboard content."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "admin-portal",
-    "file_role" : null
+    "file_role" : "PAGE layer — The main landing page for the admin panel, displaying a welcome message and quick navigation links to other admin sections."
   }, {
     "file_name" : "AdminMenuPage.tsx",
     "file_path" : "frontend/src/pages/admin/AdminMenuPage.tsx",
@@ -3365,7 +3375,7 @@
     "feature_display_name" : "Admin Portal Shell",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/components/AdminLayout.tsx", "frontend/src/pages/admin/AdminDashboardPage.tsx" ],
-    "feature_instruction" : null,
+    "feature_instruction" : "## Design Tokens\n- Admin Layout Sidebar: bg-[#2C3E50] text-white\n- Admin Sidebar Link: text-white hover:text-[#E67E22] transition-colors duration-200\n- Admin Sidebar Active Link: text-[#E67E22] font-semibold\n- Admin Page Background: bg-[#F8F8F8]\n- Admin Heading Text: text-[#4A2C2A]\n- Admin Body Text: text-gray-700\n- Admin Primary Button: bg-[#E67E22] hover:bg-[#D35400] text-white font-semibold rounded-md px-4 py-2 transition-all duration-200\n- Admin Card: bg-white rounded-lg shadow-sm p-6 border border-gray-100\n\nThe `admin-portal` feature provides the foundational structure and landing page for the administrative interface of Yeti - The Himalayan Kitchen. It consists of `AdminLayout.tsx`, which defines the overall visual and navigational shell for all admin pages, and `AdminDashboardPage.tsx`, serving as the entry point to the admin panel.\n\n### AdminLayout.tsx\nThis component acts as the main layout wrapper for all pages within the `/admin` route. It ensures a consistent look and feel, providing a persistent sidebar for navigation and a main content area where specific admin pages are rendered.\n\n**Structure:**\n1.  The component will render a `div` with a flex layout to contain the sidebar and the main content.\n2.  **Sidebar:**\n    *   Positioned on the left, with a fixed width (e.g., `w-64`).\n    *   Styled with `bg-[#2C3E50]` and `text-white` for the background and default text color.\n    *   Contains the restaurant's name/logo at the top, styled appropriately (e.g., `text-2xl font-bold text-white p-4`).\n    *   Includes a navigation list (`<nav>`) with `NavLink` components from `react-router-dom`.\n    *   Each `NavLink` will point to a specific admin management page. The links should be styled with `Admin Sidebar Link` tokens.\n        *   \"Dashboard\" -> `/admin/dashboard`\n        *   \"Menu Management\" -> `/admin/menu` (from `menu-ui` feature)\n        *   \"Reservations\" -> `/admin/reservations` (from `reservation-ui` feature)\n        *   \"Orders\" -> `/admin/orders` (from `order-ui` feature)\n        *   \"Blog Posts\" -> `/admin/blog` (from `blog-ui` feature)\n        *   \"Testimonials\" -> `/admin/testimonials` (from `testimonial-ui` feature)\n    *   The active `NavLink` will apply `Admin Sidebar Active Link` tokens.\n    *   A \"Logout\" button will be present at the bottom of the sidebar, styled as a button and utilizing the `logout` function from the `useAuth` hook.\n3.  **Main Content Area:**\n    *   Occupies the remaining width, allowing child components (admin pages) to be rendered within it.\n    *   Styled with `bg-[#F8F8F8]` for the background.\n    *   The `children` prop will be rendered within this area, typically wrapped in a `div` for consistent padding (e.g., `p-8`).\n4.  **Authentication:**\n    *   `AdminLayout` will import and use the `useAuth` hook from `authentication-ui` (`frontend/src/hooks/useAuth.ts`).\n    *   The `logout` function from `useAuth` will be called when the logout button is clicked.\n    *   This component assumes it is protected by a `ProtectedRoute` (from `authentication-ui`) that ensures the user is authenticated and has the `ADMIN` role before rendering `AdminLayout` and its children.\n\n**Public Functions:**\n*   `AdminLayout(props: { children: React.ReactNode }): JSX.Element`\n    *   Renders the admin dashboard layout, including a navigation sidebar and the main content area for child routes.\n\n### AdminDashboardPage.tsx\nThis page serves as the initial view when an administrator logs into the portal. It provides a high-level overview and quick access to various management sections.\n\n**Structure:**\n1.  The page content will be rendered as a child of `AdminLayout`.\n2.  **Header Section:**\n    *   A prominent `h1` welcoming the administrator: \"Welcome, Administrator! Your Himalayan Kitchen Command Center Awaits.\"\n    *   Styled with `text-4xl font-bold text-[#4A2C2A]`.\n    *   A brief, inviting sub-headline: \"Navigate through the heart of Yeti - The Himalayan Kitchen's operations.\"\n3.  **Overview Section:**\n    *   A `div` containing a grid of placeholder \"cards\" or \"widgets\" for key statistics.\n    *   Each card will be styled with `Admin Card` tokens.\n    *   Example cards with placeholder content:\n        *   **Today's Reservations:** `<h2>Today's Reservations</h2><p className=\"text-3xl font-bold\">12</p><p>New bookings for today</p>`\n        *   **Pending Orders:** `<h2>Pending Orders</h2><p className=\"text-3xl font-bold\">5</p><p>Awaiting processing</p>`\n        *   **New Testimonials:** `<h2>New Testimonials</h2><p className=\"text-3xl font-bold\">3</p><p>Ready for review</p>`\n        *   **Menu Items:** `<h2>Total Menu Items</h2><p className=\"text-3xl font-bold\">78</p><p>Available for customers</p>`\n4.  **Quick Links Section:**\n    *   A section providing direct links to the main management pages.\n    *   Each link will be a button or a card, styled with `Admin Primary Button` tokens, encouraging navigation.\n    *   Example buttons using `Link` from `react-router-dom`:\n        *   \"Manage Menu\" (to `/admin/menu`)\n        *   \"View Reservations\" (to `/admin/reservations`)\n        *   \"Process Orders\" (to `/admin/orders`)\n        *   \"Edit Blog Posts\" (to `/admin/blog`)\n        *   \"Review Testimonials\" (to `/admin/testimonials`)\n\n**Public Functions:**\n*   `AdminDashboardPage(): JSX.Element`\n    *   Renders the main admin dashboard content, including a welcome message, overview statistics (placeholders), and quick navigation links.\n\n### Inter-file Wiring\n`AdminDashboardPage.tsx` will be rendered as a child of `AdminLayout.tsx` via `react-router-dom` routing configuration. The `AdminLayout` component provides the `children` prop, into which `AdminDashboardPage` (and other admin pages) will be injected.\n\n### Cross-Feature Contracts\n*   **`authentication-ui`:**\n    *   `AdminLayout.tsx` will import and use the `useAuth` hook from `frontend/src/hooks/useAuth.ts` to access the `logout` function, which is called when the admin user clicks the 'Logout' button. The `token` localStorage key used by `authentication-ui` is `'token'`. `AdminLayout` relies on `useAuth` for managing authentication state and actions.",
     "change_required" : true
   }, {
     "feature_name" : "menu-ui",
