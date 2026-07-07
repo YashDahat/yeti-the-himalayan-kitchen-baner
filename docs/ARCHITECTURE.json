@@ -186,13 +186,29 @@
     "status" : "PLANNED",
     "description" : "Represents a user account, which can be a customer or an administrator.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "UUID",
+      "description" : "Unique identifier for the user. Generated automatically."
+    }, {
+      "name" : "email",
+      "type" : "String",
+      "description" : "User's email address, must be unique and not null."
+    }, {
+      "name" : "password",
+      "type" : "String",
+      "description" : "Hashed password for the user, not null."
+    }, {
+      "name" : "role",
+      "type" : "Role",
+      "description" : "User's role (e.g., ADMIN, CUSTOMER), not null."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/Role.java" ],
     "depends_on" : [ ],
     "feature_name" : "shared-backend-auth",
-    "file_role" : null
+    "file_role" : "MODEL layer — Represents a user account in the database, storing authentication details and roles."
   }, {
     "file_name" : "Role.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/model/Role.java",
@@ -203,13 +219,21 @@
     "status" : "PLANNED",
     "description" : "Enum defining user roles within the system (e.g., ADMIN, CUSTOMER).",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "ADMIN",
+      "type" : "Role",
+      "description" : "Represents an administrative user with full access."
+    }, {
+      "name" : "CUSTOMER",
+      "type" : "Role",
+      "description" : "Represents a regular customer user."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "shared-backend-auth",
-    "file_role" : null
+    "file_role" : "MODEL layer — Enum defining the distinct roles a user can have within the application."
   }, {
     "file_name" : "UserRepository.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/UserRepository.java",
@@ -219,14 +243,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for User entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByEmail",
+      "parameters" : [ "String email" ],
+      "return_type" : "Optional<User>",
+      "description" : "Retrieves a user by their email address, returning an Optional to handle cases where the user is not found."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/User.java" ],
     "depends_on" : [ ],
     "feature_name" : "shared-backend-auth",
-    "file_role" : null
+    "file_role" : "REPOSITORY layer — Provides data access operations for the User entity, including custom queries like finding a user by email."
   }, {
     "file_name" : "UserService.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/service/UserService.java",
@@ -236,14 +265,24 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Business logic for user management, including registration and loading user details for security.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "registerUser",
+      "parameters" : [ "User user" ],
+      "return_type" : "User",
+      "description" : "Registers a new user by encrypting their password and saving them to the database. Throws IllegalArgumentException if email already exists."
+    }, {
+      "name" : "loadUserByUsername",
+      "parameters" : [ "String email" ],
+      "return_type" : "UserDetails",
+      "description" : "Loads user details by email for Spring Security authentication. Throws UsernameNotFoundException if the user does not exist."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/UserRepository.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/model/User.java" ],
     "depends_on" : [ ],
     "feature_name" : "shared-backend-auth",
-    "file_role" : null
+    "file_role" : "SERVICE layer — Implements business logic for user registration and acts as Spring Security's UserDetailsService to load user details for authentication."
   }, {
     "file_name" : "AuthController.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AuthController.java",
@@ -253,14 +292,36 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Handles user authentication (login) and registration endpoints.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "register",
+      "parameters" : [ "AuthRequest request" ],
+      "return_type" : "ResponseEntity<AuthResponse>",
+      "description" : "Registers a new user with the provided credentials. Returns a JWT on success or 400 if email exists."
+    }, {
+      "name" : "login",
+      "parameters" : [ "AuthRequest request" ],
+      "return_type" : "ResponseEntity<AuthResponse>",
+      "description" : "Authenticates a user with the provided credentials. Returns a JWT on success or 401 on failure."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/auth/register",
+      "request_body" : "AuthRequest",
+      "response_body" : "AuthResponse (200 OK) or ErrorResponse (400 Bad Request)",
+      "description" : "Registers a new user. Expects email and password. Returns a JWT."
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/auth/login",
+      "request_body" : "AuthRequest",
+      "response_body" : "AuthResponse (200 OK) or ErrorResponse (401 Unauthorized)",
+      "description" : "Logs in an existing user. Expects email and password. Returns a JWT."
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/AuthRequest.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/AuthResponse.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/util/JwtUtil.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/service/UserService.java" ],
     "depends_on" : [ ],
     "feature_name" : "shared-backend-auth",
-    "file_role" : null
+    "file_role" : "CONTROLLER layer — Exposes REST endpoints for user registration and login, returning JWTs upon successful authentication."
   }, {
     "file_name" : "AuthRequest.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/AuthRequest.java",
@@ -271,13 +332,21 @@
     "status" : "PLANNED",
     "description" : "DTO for capturing user login credentials (email and password).",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "email",
+      "type" : "String",
+      "description" : "User's email address. Must be a valid email format and not blank."
+    }, {
+      "name" : "password",
+      "type" : "String",
+      "description" : "User's password. Must not be blank."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "shared-backend-auth",
-    "file_role" : null
+    "file_role" : "DTO layer — Data Transfer Object used for incoming user login and registration requests."
   }, {
     "file_name" : "AuthResponse.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/AuthResponse.java",
@@ -288,13 +357,17 @@
     "status" : "PLANNED",
     "description" : "DTO for returning a JWT upon successful authentication.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "token",
+      "type" : "String",
+      "description" : "The JSON Web Token (JWT) issued upon successful authentication."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "shared-backend-auth",
-    "file_role" : null
+    "file_role" : "DTO layer — Data Transfer Object used for outgoing authentication responses, containing the generated JWT."
   }, {
     "file_name" : "SecurityConfig.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/config/SecurityConfig.java",
@@ -304,14 +377,34 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Configures Spring Security, including password encoding, CORS, and defining public/protected API endpoints.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "passwordEncoder",
+      "parameters" : [ ],
+      "return_type" : "PasswordEncoder",
+      "description" : "Provides a BCryptPasswordEncoder bean for hashing user passwords."
+    }, {
+      "name" : "authenticationProvider",
+      "parameters" : [ "UserDetailsService userDetailsService" ],
+      "return_type" : "DaoAuthenticationProvider",
+      "description" : "Configures a DaoAuthenticationProvider with the custom UserDetailsService and password encoder."
+    }, {
+      "name" : "authenticationManager",
+      "parameters" : [ "AuthenticationConfiguration config" ],
+      "return_type" : "AuthenticationManager",
+      "description" : "Exposes the AuthenticationManager bean from the AuthenticationConfiguration."
+    }, {
+      "name" : "securityFilterChain",
+      "parameters" : [ "HttpSecurity http" ],
+      "return_type" : "SecurityFilterChain",
+      "description" : "Defines the security filter chain, including CORS, CSRF disable, session management, authorization rules, and JWT filter integration."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/security/JwtAuthFilter.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/service/UserService.java" ],
     "depends_on" : [ ],
     "feature_name" : "shared-backend-auth",
-    "file_role" : null
+    "file_role" : "CONFIG layer — Configures Spring Security for the application, defining authentication providers, password encoders, and authorization rules for API endpoints."
   }, {
     "file_name" : "JwtAuthFilter.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/security/JwtAuthFilter.java",
@@ -321,14 +414,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "A Spring Security filter that validates JWTs from the Authorization header on incoming requests.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "doFilterInternal",
+      "parameters" : [ "HttpServletRequest request", "HttpServletResponse response", "FilterChain filterChain" ],
+      "return_type" : "void",
+      "description" : "Extracts, validates, and processes JWTs from the request header, setting the authentication in the SecurityContext."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/util/JwtUtil.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/service/UserService.java" ],
     "depends_on" : [ ],
     "feature_name" : "shared-backend-auth",
-    "file_role" : null
+    "file_role" : "CONFIG layer — A custom Spring Security filter that intercepts incoming requests to validate JWTs from the Authorization header and set the security context."
   }, {
     "file_name" : "JwtUtil.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/util/JwtUtil.java",
@@ -338,14 +436,34 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Utility class for generating, parsing, and validating JSON Web Tokens (JWTs).",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "extractEmail",
+      "parameters" : [ "String token" ],
+      "return_type" : "String",
+      "description" : "Extracts the email (subject) from a JWT."
+    }, {
+      "name" : "generateToken",
+      "parameters" : [ "String email", "Role role" ],
+      "return_type" : "String",
+      "description" : "Generates a new JWT for the given email and role."
+    }, {
+      "name" : "validateToken",
+      "parameters" : [ "String token", "UserDetails userDetails" ],
+      "return_type" : "boolean",
+      "description" : "Validates a JWT against user details, checking expiration and signature."
+    }, {
+      "name" : "getSigningKey",
+      "parameters" : [ ],
+      "return_type" : "Key",
+      "description" : "Retrieves the signing key used for JWT operations, decoded from a base64 secret."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "shared-backend-auth",
-    "file_role" : null
+    "file_role" : "UTIL layer — Provides utility methods for generating, parsing, and validating JSON Web Tokens (JWTs) using a configured secret key."
   }, {
     "file_name" : "MenuItem.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/model/MenuItem.java",
@@ -1889,7 +2007,7 @@
     "feature_display_name" : "Shared Backend (Authentication)",
     "feature_type" : "SHARED",
     "file_paths" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/User.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/model/Role.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/UserRepository.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/service/UserService.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AuthController.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/AuthRequest.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/AuthResponse.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/config/SecurityConfig.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/security/JwtAuthFilter.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/util/JwtUtil.java" ],
-    "feature_instruction" : null,
+    "feature_instruction" : "This feature provides the core backend authentication and authorization mechanisms for Yeti - The Himalayan Kitchen. It encompasses user registration, login, JWT generation, and request authorization using Spring Security.\n\n## User Management and Authentication Flow\n1.  **User Registration**: A new user (customer or admin) sends an `AuthRequest` to `AuthController.register`. The `AuthController` delegates to `UserService.registerUser(User user)`. `UserService` encrypts the password using `PasswordEncoder` (defined in `SecurityConfig`) and saves the new `User` entity to the `UserRepository`.\n2.  **User Login**: A user sends an `AuthRequest` (email and password) to `AuthController.login`. The `AuthController` uses Spring Security's `AuthenticationManager` to authenticate the user. Upon successful authentication, `JwtUtil.generateToken(String email, Role role)` is called to create a JSON Web Token (JWT). This JWT is then returned to the client within an `AuthResponse`.\n3.  **JWT Validation and Authorization**: For subsequent authenticated requests, the client includes the JWT in the `Authorization` header (e.g., `Bearer <token>`). The `JwtAuthFilter` (a custom Spring Security filter) intercepts these requests. It extracts the JWT, validates it using `JwtUtil.validateToken(String token, UserDetails userDetails)`, and retrieves user details via `UserService.loadUserByUsername(String email)`. If the token is valid, the filter sets the `SecurityContextHolder` with the authenticated user, allowing Spring Security to enforce authorization rules defined in `SecurityConfig`.\n\n## Security Configuration (`SecurityConfig.java`)\n*   **Password Encoding**: Defines a `BCryptPasswordEncoder` bean for secure password hashing.\n*   **CORS**: Configures Cross-Origin Resource Sharing to allow requests from the frontend application.\n*   **CSRF**: Disables CSRF protection as JWTs are used for stateless authentication.\n*   **Authentication Manager**: Exposes the `AuthenticationManager` as a bean, obtained from `AuthenticationConfiguration.getAuthenticationManager()`, which is used by `AuthController` for user authentication.\n*   **Authorization Rules**: Configures endpoint access using `HttpSecurity`:\n    *   `/api/v1/auth/**` endpoints (registration, login) are publicly accessible (`permitAll()`).\n    *   `/api/v1/admin/**` endpoints require the user to have the `ADMIN` role (`hasRole(\"ADMIN\")`).\n    *   `/api/**` (all other API endpoints) require the user to be authenticated (`authenticated()`).\n    *   `anyRequest().permitAll()` is the final rule to allow access to static frontend resources and SPA routes.\n*   **JWT Filter Integration**: The `JwtAuthFilter` is added to the Spring Security filter chain before `UsernamePasswordAuthenticationFilter` to ensure JWT validation occurs first.\n\n## JWT Utility (`JwtUtil.java`)\n*   Provides methods for generating, parsing, and validating JWTs. It uses `io.jsonwebtoken` (jjwt) library.\n*   `getSigningKey()` uses `Decoders.BASE64.decode(jwt.secret)` to decode the secret key from application properties.\n*   `generateToken(String email, Role role)` creates a JWT with the user's email as the subject and role as a claim.\n*   `validateToken(String token, UserDetails userDetails)` verifies the token's signature and expiration.\n\n## Circular Dependency Resolution\nTo prevent a circular bean dependency between `SecurityConfig`, `JwtAuthFilter`, and `UserService`:\n*   `JwtAuthFilter`'s `UserDetailsService` (or `UserService`) parameter is annotated with `@Lazy`.\n*   The `AuthenticationManager` is exposed as a separate `@Bean` method in `SecurityConfig` by calling `AuthenticationConfiguration.getAuthenticationManager()`.\n\n## Role Authority Consistency\n*   `SecurityConfig` uses `hasRole(\"ADMIN\")` for authorization.\n*   `UserService` will return `SimpleGrantedAuthority(\"ROLE_\" + role.name())` when constructing `UserDetails` objects, ensuring consistency with Spring Security's role prefixing.\n\n## Local Storage Key for JWT\nThe JWT token will be stored in the browser's `localStorage` using the key `'token'` by the `authentication-ui` feature.\n\n## Error Handling\nAuthentication failures (e.g., invalid credentials) will result in `401 Unauthorized` responses. Other exceptions will be handled by the `shared-backend-core` feature's `GlobalExceptionHandler`.",
     "change_required" : true
   }, {
     "feature_name" : "menu-backend",
