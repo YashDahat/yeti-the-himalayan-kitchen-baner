@@ -138,8 +138,8 @@
     "file_type" : "BACKEND",
     "layer" : "CONFIG",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "Creates the initial administrator user on application startup if one doesn't exist.",
     "public_functions" : [ {
       "name" : "run",
@@ -160,8 +160,8 @@
     "file_type" : "BACKEND",
     "layer" : "CONFIG",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "Populates the database with initial sample data (e.g., menu items) for development and demonstration.",
     "public_functions" : [ {
       "name" : "run",
@@ -374,8 +374,8 @@
     "file_type" : "BACKEND",
     "layer" : "CONFIG",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "Configures Spring Security, including password encoding, CORS, and defining public/protected API endpoints.",
     "public_functions" : [ {
       "name" : "passwordEncoder",
@@ -411,8 +411,8 @@
     "file_type" : "BACKEND",
     "layer" : "CONFIG",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "A Spring Security filter that validates JWTs from the Authorization header on incoming requests.",
     "public_functions" : [ {
       "name" : "doFilterInternal",
