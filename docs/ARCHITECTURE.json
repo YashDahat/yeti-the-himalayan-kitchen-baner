@@ -2531,8 +2531,8 @@
     "file_type" : "FRONTEND",
     "layer" : "CONTEXT",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "React context for managing global authentication state, including user info and JWT.",
     "public_functions" : [ {
       "name" : "AuthContext.Provider",
@@ -3460,8 +3460,8 @@
     "file_type" : "FRONTEND",
     "layer" : "CONTEXT",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "React context for managing the state of the customer's shopping cart, including adding, removing, updating quantities, and calculating totals.",
     "public_functions" : [ {
       "name" : "CartContext.Provider",
