@@ -6,7 +6,18 @@
     "@radix-ui/react-label" : [ "Label", "Root" ],
     "@radix-ui/react-popover" : [ "Anchor", "Arrow", "Close", "Content", "Popover", "PopoverAnchor", "PopoverArrow", "PopoverClose", "PopoverContent", "PopoverPortal", "PopoverTrigger", "Portal", "Root", "Trigger" ],
     "@radix-ui/react-select" : [ "Arrow", "Content", "Group", "Icon", "Item", "ItemIndicator", "ItemText", "Label", "Portal", "Root", "ScrollDownButton", "ScrollUpButton", "Select", "SelectArrow", "SelectContent", "SelectGroup", "SelectIcon", "SelectItem", "SelectItemIndicator", "SelectItemText", "SelectLabel", "SelectPortal", "SelectScrollDownButton", "SelectScrollUpButton", "SelectSeparator", "SelectTrigger", "SelectValue", "SelectViewport", "Separator", "Trigger", "Value", "Viewport", "unstable_BubbleInput", "unstable_SelectBubbleInput" ],
+    "@radix-ui/react-slot" : [ "Root", "Slot", "Slottable" ],
     "@radix-ui/react-toast" : [ "Action", "Close", "Description", "Root", "Title", "Toast", "ToastAction", "ToastClose", "ToastDescription", "ToastTitle", "ToastViewport", "Viewport" ]
   },
-  "shadcn_ui" : { }
+  "shadcn_ui" : {
+    "badge" : [ "BadgeProps", "Badge", "badgeVariants" ],
+    "button" : [ "ButtonProps", "Button", "buttonVariants" ],
+    "card" : [ "Card", "CardHeader", "CardFooter", "CardTitle", "CardDescription", "CardContent" ],
+    "form" : [ "useFormField", "Form", "FormItem", "FormLabel", "FormControl", "FormDescription", "FormMessage", "FormField" ],
+    "input" : [ "Input" ],
+    "label" : [ "Label" ],
+    "sonner" : [ "Toaster" ],
+    "table" : [ "Table", "TableHeader", "TableBody", "TableFooter", "TableHead", "TableRow", "TableCell", "TableCaption" ],
+    "textarea" : [ "Textarea" ]
+  }
 }

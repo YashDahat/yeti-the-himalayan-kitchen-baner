@@ -17,3 +17,117 @@ This file tracks each generation attempt.
 - Clear Contact Information, Address, and Embedded Map
 
 ---
+
+## Attempt 2 — 2026-07-07 [IN PROGRESS]
+
+**Business:** Yeti - The Himalayan Kitchen, Baner
+**Planned Files (107):**
+- backend/src/main/java/com/yetithehimalayankitchenbaner/exception/GlobalExceptionHandler.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/exception/ResourceNotFoundException.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/ErrorResponse.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/SpaController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/config/AdminInitializer.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/config/DataSeeder.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/model/User.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/model/Role.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/repository/UserRepository.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/service/UserService.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AuthController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/AuthRequest.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/AuthResponse.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/config/SecurityConfig.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/security/JwtAuthFilter.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/util/JwtUtil.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/model/MenuItem.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/model/MenuItemCategory.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/repository/MenuItemRepository.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/repository/MenuItemCategoryRepository.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/service/MenuService.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/MenuController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminMenuController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/MenuItemDto.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/model/Reservation.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/model/ReservationStatus.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/repository/ReservationRepository.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/service/ReservationService.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/ReservationController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminReservationController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/CreateReservationRequest.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/ReservationResponse.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/model/Order.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/model/OrderItem.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/model/OrderStatus.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/repository/OrderRepository.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/repository/OrderItemRepository.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/service/OrderService.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/OrderController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminOrderController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/CreateOrderRequest.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/OrderItemRequest.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/OrderResponse.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/service/PaymentService.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/PaymentController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/PaymentOrderResponse.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/PaymentVerificationRequest.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/model/BlogPost.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/repository/BlogPostRepository.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/service/BlogService.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/BlogController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminBlogController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/BlogPostDto.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/model/Testimonial.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/repository/TestimonialRepository.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/service/TestimonialService.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/TestimonialController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminTestimonialController.java
+- backend/src/main/java/com/yetithehimalayankitchenbaner/dto/TestimonialDto.java
+- frontend/src/api/client.ts
+- frontend/src/App.tsx
+- frontend/src/components/Layout.tsx
+- frontend/src/components/Header.tsx
+- frontend/src/components/Footer.tsx
+- frontend/src/pages/HomePage.tsx
+- frontend/src/pages/AboutPage.tsx
+- frontend/src/pages/ContactPage.tsx
+- frontend/src/context/AuthContext.tsx
+- frontend/src/hooks/useAuth.ts
+- frontend/src/services/authService.ts
+- frontend/src/types/auth.ts
+- frontend/src/pages/LoginPage.tsx
+- frontend/src/components/ProtectedRoute.tsx
+- frontend/src/components/AdminLayout.tsx
+- frontend/src/pages/admin/AdminDashboardPage.tsx
+- frontend/src/pages/admin/AdminMenuPage.tsx
+- frontend/src/pages/MenuPage.tsx
+- frontend/src/hooks/useMenu.ts
+- frontend/src/services/menuService.ts
+- frontend/src/types/menu.ts
+- frontend/src/pages/admin/AdminReservationsPage.tsx
+- frontend/src/pages/ReservationPage.tsx
+- frontend/src/hooks/useReservations.ts
+- frontend/src/services/reservationService.ts
+- frontend/src/types/reservation.ts
+- frontend/src/pages/admin/AdminOrdersPage.tsx
+- frontend/src/pages/OrderConfirmationPage.tsx
+- frontend/src/pages/ProfilePage.tsx
+- frontend/src/hooks/useOrders.ts
+- frontend/src/services/orderService.ts
+- frontend/src/types/order.ts
+- frontend/src/context/CartContext.tsx
+- frontend/src/services/paymentService.ts
+- frontend/src/types/payment.ts
+- frontend/src/pages/BlogPage.tsx
+- frontend/src/pages/BlogPostPage.tsx
+- frontend/src/pages/admin/AdminBlogPage.tsx
+- frontend/src/hooks/useBlog.ts
+- frontend/src/services/blogService.ts
+- frontend/src/types/blog.ts
+- frontend/src/components/TestimonialsSection.tsx
+- frontend/src/pages/admin/AdminTestimonialsPage.tsx
+- frontend/src/hooks/useTestimonials.ts
+- frontend/src/services/testimonialService.ts
+- frontend/src/types/testimonial.ts
+- .github/workflows/deploy.yml
+- frontend/src/pages/GalleryPage.tsx
+
+---

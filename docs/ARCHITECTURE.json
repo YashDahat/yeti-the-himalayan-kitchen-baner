@@ -2772,7 +2772,7 @@
     "layer" : "PAGE",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATION_FAILED",
+    "status" : "GENERATED",
     "description" : "Admin interface for creating, updating, and deleting menu items and categories.",
     "public_functions" : [ {
       "name" : "AdminMenuPage",
