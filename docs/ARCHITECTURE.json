@@ -2082,13 +2082,37 @@
     "status" : "PLANNED",
     "description" : "Represents a customer testimonial or review.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "UUID",
+      "description" : "Unique identifier for the testimonial. Primary key."
+    }, {
+      "name" : "authorName",
+      "type" : "String",
+      "description" : "Name of the person who provided the testimonial. Not null."
+    }, {
+      "name" : "content",
+      "type" : "String",
+      "description" : "The actual text content of the testimonial. Not null."
+    }, {
+      "name" : "rating",
+      "type" : "Integer",
+      "description" : "Rating given by the customer (e.g., 1 to 5 stars). Not null."
+    }, {
+      "name" : "createdAt",
+      "type" : "java.time.LocalDateTime",
+      "description" : "Timestamp when the testimonial was created. Not null."
+    }, {
+      "name" : "approved",
+      "type" : "Boolean",
+      "description" : "Indicates if the testimonial has been approved for public display. Default false."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "testimonial-backend",
-    "file_role" : null
+    "file_role" : "MODEL layer — defines the `Testimonial` entity with fields for author, content, rating, creation timestamp, and approval status."
   }, {
     "file_name" : "TestimonialRepository.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/TestimonialRepository.java",
@@ -2098,14 +2122,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for Testimonial entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByApproved",
+      "parameters" : [ "boolean approved" ],
+      "return_type" : "List<Testimonial>",
+      "description" : "Retrieves a list of testimonials based on their approval status."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/Testimonial.java" ],
     "depends_on" : [ ],
     "feature_name" : "testimonial-backend",
-    "file_role" : null
+    "file_role" : "REPOSITORY layer — Spring Data JPA repository for `Testimonial` entities, providing standard CRUD operations and custom query methods like `findByApproved(boolean approved)`."
   }, {
     "file_name" : "TestimonialService.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/service/TestimonialService.java",
@@ -2115,14 +2144,49 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Handles business logic for managing testimonials.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllApprovedTestimonials",
+      "parameters" : [ ],
+      "return_type" : "List<TestimonialDto>",
+      "description" : "Fetches all testimonials that have been approved for public display."
+    }, {
+      "name" : "getAllTestimonials",
+      "parameters" : [ ],
+      "return_type" : "List<TestimonialDto>",
+      "description" : "Fetches all testimonials, regardless of approval status (for admin use)."
+    }, {
+      "name" : "getTestimonialById",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "TestimonialDto",
+      "description" : "Fetches a single testimonial by its unique ID."
+    }, {
+      "name" : "createTestimonial",
+      "parameters" : [ "TestimonialDto testimonialDto" ],
+      "return_type" : "TestimonialDto",
+      "description" : "Creates a new testimonial, setting its initial status to unapproved."
+    }, {
+      "name" : "updateTestimonial",
+      "parameters" : [ "UUID id", "TestimonialDto testimonialDto" ],
+      "return_type" : "TestimonialDto",
+      "description" : "Updates an existing testimonial identified by its ID."
+    }, {
+      "name" : "approveTestimonial",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "TestimonialDto",
+      "description" : "Approves a testimonial, making it visible to the public."
+    }, {
+      "name" : "deleteTestimonial",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "void",
+      "description" : "Deletes a testimonial by its unique ID."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/TestimonialRepository.java" ],
     "depends_on" : [ ],
     "feature_name" : "testimonial-backend",
-    "file_role" : null
+    "file_role" : "SERVICE layer — implements `getAllApprovedTestimonials(): List<TestimonialDto>`, `getAllTestimonials(): List<TestimonialDto>`, `getTestimonialById(UUID id): TestimonialDto`, `createTestimonial(TestimonialDto testimonialDto): TestimonialDto`, `updateTestimonial(UUID id, TestimonialDto testimonialDto): TestimonialDto`, `approveTestimonial(UUID id): TestimonialDto`, and `deleteTestimonial(UUID id): void`."
   }, {
     "file_name" : "TestimonialController.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/TestimonialController.java",
@@ -2132,14 +2196,36 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Public-facing REST controller for fetching testimonials.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllApprovedTestimonials",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<TestimonialDto>>",
+      "description" : "Handles GET requests to retrieve all approved testimonials."
+    }, {
+      "name" : "getTestimonialById",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "ResponseEntity<TestimonialDto>",
+      "description" : "Handles GET requests to retrieve a single approved testimonial by ID."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/testimonials",
+      "request_body" : null,
+      "response_body" : "List<TestimonialDto>",
+      "description" : "Retrieves a list of all approved testimonials."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/testimonials/{id}",
+      "request_body" : null,
+      "response_body" : "TestimonialDto",
+      "description" : "Retrieves a single approved testimonial by its ID. Returns 404 if not found."
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/service/TestimonialService.java" ],
     "depends_on" : [ ],
     "feature_name" : "testimonial-backend",
-    "file_role" : null
+    "file_role" : "CONTROLLER layer — public-facing REST controller for fetching approved testimonials via `getAllApprovedTestimonials()` and `getTestimonialById(UUID id)`."
   }, {
     "file_name" : "AdminTestimonialController.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminTestimonialController.java",
@@ -2149,14 +2235,80 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Admin-only REST controller for CRUD operations on testimonials.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllTestimonials",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<TestimonialDto>>",
+      "description" : "Handles GET requests to retrieve all testimonials (approved and unapproved)."
+    }, {
+      "name" : "getTestimonialById",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "ResponseEntity<TestimonialDto>",
+      "description" : "Handles GET requests to retrieve a single testimonial by ID."
+    }, {
+      "name" : "createTestimonial",
+      "parameters" : [ "TestimonialDto testimonialDto" ],
+      "return_type" : "ResponseEntity<TestimonialDto>",
+      "description" : "Handles POST requests to create a new testimonial."
+    }, {
+      "name" : "updateTestimonial",
+      "parameters" : [ "UUID id", "TestimonialDto testimonialDto" ],
+      "return_type" : "ResponseEntity<TestimonialDto>",
+      "description" : "Handles PUT requests to update an existing testimonial."
+    }, {
+      "name" : "approveTestimonial",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "ResponseEntity<TestimonialDto>",
+      "description" : "Handles PUT requests to approve a testimonial."
+    }, {
+      "name" : "deleteTestimonial",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Handles DELETE requests to remove a testimonial."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/testimonials",
+      "request_body" : null,
+      "response_body" : "List<TestimonialDto>",
+      "description" : "Retrieves a list of all testimonials (admin only). Returns 403 if not ADMIN."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/testimonials/{id}",
+      "request_body" : null,
+      "response_body" : "TestimonialDto",
+      "description" : "Retrieves a single testimonial by its ID (admin only). Returns 404 if not found, 403 if not ADMIN."
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/testimonials",
+      "request_body" : "TestimonialDto",
+      "response_body" : "TestimonialDto",
+      "description" : "Creates a new testimonial (admin only). Returns 400 for invalid input, 403 if not ADMIN."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/testimonials/{id}",
+      "request_body" : "TestimonialDto",
+      "response_body" : "TestimonialDto",
+      "description" : "Updates an existing testimonial (admin only). Returns 400 for invalid input, 404 if not found, 403 if not ADMIN."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/testimonials/{id}/approve",
+      "request_body" : null,
+      "response_body" : "TestimonialDto",
+      "description" : "Approves a testimonial (admin only). Returns 404 if not found, 403 if not ADMIN."
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/testimonials/{id}",
+      "request_body" : null,
+      "response_body" : "Void",
+      "description" : "Deletes a testimonial (admin only). Returns 204 on success, 404 if not found, 403 if not ADMIN."
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/service/TestimonialService.java" ],
     "depends_on" : [ ],
     "feature_name" : "testimonial-backend",
-    "file_role" : null
+    "file_role" : "CONTROLLER layer — admin-only REST controller for CRUD operations on testimonials, including `getAllTestimonials()`, `getTestimonialById(UUID id)`, `createTestimonial(TestimonialDto testimonialDto)`, `updateTestimonial(UUID id, TestimonialDto testimonialDto)`, `approveTestimonial(UUID id)`, and `deleteTestimonial(UUID id)`."
   }, {
     "file_name" : "TestimonialDto.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/TestimonialDto.java",
@@ -2167,13 +2319,37 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for testimonials.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "UUID",
+      "description" : "Unique identifier for the testimonial. Optional for creation."
+    }, {
+      "name" : "authorName",
+      "type" : "String",
+      "description" : "Name of the person who provided the testimonial. Must not be blank."
+    }, {
+      "name" : "content",
+      "type" : "String",
+      "description" : "The actual text content of the testimonial. Must not be blank."
+    }, {
+      "name" : "rating",
+      "type" : "Integer",
+      "description" : "Rating given by the customer (1 to 5). Must be between 1 and 5."
+    }, {
+      "name" : "createdAt",
+      "type" : "java.time.LocalDateTime",
+      "description" : "Timestamp when the testimonial was created. Read-only."
+    }, {
+      "name" : "approved",
+      "type" : "Boolean",
+      "description" : "Indicates if the testimonial has been approved for public display. Optional, defaults to false on creation."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "testimonial-backend",
-    "file_role" : null
+    "file_role" : "DTO layer — defines the structure for incoming requests and outgoing responses related to testimonials."
   }, {
     "file_name" : "client.ts",
     "file_path" : "frontend/src/api/client.ts",
@@ -3035,7 +3211,7 @@
     "feature_display_name" : "Testimonial Management (Backend)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/Testimonial.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/TestimonialRepository.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/service/TestimonialService.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/TestimonialController.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminTestimonialController.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/TestimonialDto.java" ],
-    "feature_instruction" : null,
+    "feature_instruction" : "This feature provides a complete backend solution for managing customer testimonials, including public access to approved testimonials and administrative control for CRUD operations. It consists of a JPA entity (`Testimonial`), a Spring Data JPA repository (`TestimonialRepository`), a DTO (`TestimonialDto`), a service layer (`TestimonialService`) for business logic, and two REST controllers (`TestimonialController` for public access and `AdminTestimonialController` for authenticated admin operations).\n\n### Testimonial.java\nThis is the JPA entity representing a customer testimonial. It will be mapped to a database table. It includes fields for a unique identifier, the author's name, the testimonial content, a rating, creation timestamp, and an approval status.\n\n### TestimonialDto.java\nThis DTO is used for transferring testimonial data between the service layer and the controllers. It mirrors the `Testimonial` entity but includes validation annotations for incoming requests and is used for both request and response bodies.\n\n### TestimonialRepository.java\nThis interface extends `JpaRepository` to provide standard CRUD operations for `Testimonial` entities. It will also include a custom finder method to retrieve testimonials based on their approval status.\n\n### TestimonialService.java\n`TestimonialService` encapsulates the business logic for testimonials. It interacts with `TestimonialRepository` to perform database operations and maps entities to DTOs and vice-versa. It handles fetching, creating, updating, approving, and deleting testimonials.\n\n#### Public Methods:\n1.  `public List<TestimonialDto> getAllApprovedTestimonials()`\n    *   **Logic:**\n        1.  Call `testimonialRepository.findByApproved(true)` to retrieve all approved `Testimonial` entities.\n        2.  Map each `Testimonial` entity to a `TestimonialDto`.\n        3.  Return the list of `TestimonialDto`.\n    *   **Error Cases:** None.\n\n2.  `public List<TestimonialDto> getAllTestimonials()`\n    *   **Logic:**\n        1.  Call `testimonialRepository.findAll()` to retrieve all `Testimonial` entities.\n        2.  Map each `Testimonial` entity to a `TestimonialDto`.\n        3.  Return the list of `TestimonialDto`.\n    *   **Error Cases:** None.\n\n3.  `public TestimonialDto getTestimonialById(UUID id)`\n    *   **Logic:**\n        1.  Call `testimonialRepository.findById(id)`.\n        2.  If the testimonial is not found, throw a `ResourceNotFoundException` (from `shared-backend-core`).\n        3.  Map the found `Testimonial` entity to a `TestimonialDto`.\n        4.  Return the `TestimonialDto`.\n    *   **Error Cases:** `ResourceNotFoundException` if no testimonial with the given ID exists.\n\n4.  `public TestimonialDto createTestimonial(TestimonialDto testimonialDto)`\n    *   **Logic:**\n        1.  Create a new `Testimonial` entity from the `testimonialDto`.\n        2.  Set `createdAt` to `LocalDateTime.now()`.\n        3.  Set `approved` to `false` by default.\n        4.  Call `testimonialRepository.save()` with the new `Testimonial` entity.\n        5.  Map the saved `Testimonial` entity back to a `TestimonialDto`.\n        6.  Return the `TestimonialDto`.\n    *   **Error Cases:** None (validation handled by DTO annotations).\n\n5.  `public TestimonialDto updateTestimonial(UUID id, TestimonialDto testimonialDto)`\n    *   **Logic:**\n        1.  Call `testimonialRepository.findById(id)`.\n        2.  If the testimonial is not found, throw a `ResourceNotFoundException`.\n        3.  Update the existing `Testimonial` entity with data from `testimonialDto` (authorName, content, rating, approved).\n        4.  Call `testimonialRepository.save()` with the updated `Testimonial` entity.\n        5.  Map the saved `Testimonial` entity back to a `TestimonialDto`.\n        6.  Return the `TestimonialDto`.\n    *   **Error Cases:** `ResourceNotFoundException` if no testimonial with the given ID exists.\n\n6.  `public TestimonialDto approveTestimonial(UUID id)`\n    *   **Logic:**\n        1.  Call `testimonialRepository.findById(id)`.\n        2.  If the testimonial is not found, throw a `ResourceNotFoundException`.\n        3.  Set the `approved` field of the found `Testimonial` entity to `true`.\n        4.  Call `testimonialRepository.save()` with the updated `Testimonial` entity.\n        5.  Map the saved `Testimonial` entity back to a `TestimonialDto`.\n        6.  Return the `TestimonialDto`.\n    *   **Error Cases:** `ResourceNotFoundException` if no testimonial with the given ID exists.\n\n7.  `public void deleteTestimonial(UUID id)`\n    *   **Logic:**\n        1.  Call `testimonialRepository.findById(id)`.\n        2.  If the testimonial is not found, throw a `ResourceNotFoundException`.\n        3.  Call `testimonialRepository.deleteById(id)`.\n    *   **Error Cases:** `ResourceNotFoundException` if no testimonial with the given ID exists.\n\n### TestimonialController.java\nThis controller exposes public API endpoints for fetching testimonials. It injects `TestimonialService` and calls its methods. Endpoints are publicly accessible.\n\n### AdminTestimonialController.java\nThis controller exposes administrative API endpoints for CRUD operations on testimonials. It injects `TestimonialService` and calls its methods. All endpoints in this controller must be secured with `@PreAuthorize(\"hasRole('ADMIN')\")` to ensure only authenticated administrators can access them. It will handle mapping `TestimonialDto` to and from JSON request/response bodies.\n\n### Inter-file Wiring\n- `TestimonialService` injects `TestimonialRepository`.\n- `TestimonialController` injects `TestimonialService`.\n- `AdminTestimonialController` injects `TestimonialService`.\n\n### Security Configuration\nEnsure that `/api/v1/testimonials/**` endpoints are `permitAll()` in `SecurityConfig` (from `shared-backend-auth`).\nEnsure that `/api/v1/admin/testimonials/**` endpoints are `hasRole(\"ADMIN\")` in `SecurityConfig` (from `shared-backend-auth`).\n\n```\n\njava\n// Example SecurityConfig snippet (within securityFilterChain method)\n.authorizeHttpRequests(auth -> auth\n    .requestMatchers(\"/api/v1/auth/**\").permitAll()\n    .requestMatchers(\"/api/v1/testimonials/**\").permitAll()\n    .requestMatchers(\"/api/v1/admin/**\").hasRole(\"ADMIN\")\n    .requestMatchers(\"/api/**\").authenticated()\n    .anyRequest().permitAll()\n)\n\n\n```",
     "change_required" : true
   }, {
     "feature_name" : "core-ui",
