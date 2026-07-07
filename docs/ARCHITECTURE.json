@@ -2774,14 +2774,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Admin interface for creating, updating, and deleting menu items and categories.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminMenuPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the admin page for managing menu items and categories."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/hooks/useMenu.ts" ],
     "depends_on" : [ ],
     "feature_name" : "menu-ui",
-    "file_role" : null
+    "file_role" : "Admin interface for creating, updating, and deleting menu items and categories."
   }, {
     "file_name" : "MenuPage.tsx",
     "file_path" : "frontend/src/pages/MenuPage.tsx",
@@ -2791,14 +2796,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Displays the full interactive menu with category filters, high-quality images, and an 'Add to Order' button.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "MenuPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the public menu page with category filtering and add-to-cart functionality."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/hooks/useMenu.ts", "frontend/src/context/CartContext.tsx", "frontend/src/types/menu.ts" ],
     "depends_on" : [ ],
     "feature_name" : "menu-ui",
-    "file_role" : null
+    "file_role" : "Public-facing page displaying the restaurant's menu."
   }, {
     "file_name" : "useMenu.ts",
     "file_path" : "frontend/src/hooks/useMenu.ts",
@@ -2808,14 +2818,64 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "React Query hook for fetching and managing menu data.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "useMenuItems",
+      "parameters" : [ ],
+      "return_type" : "UseQueryResult<MenuItemDto[], Error>",
+      "description" : "Fetches all menu items."
+    }, {
+      "name" : "useMenuItem",
+      "parameters" : [ "id: string" ],
+      "return_type" : "UseQueryResult<MenuItemDto, Error>",
+      "description" : "Fetches a single menu item by ID."
+    }, {
+      "name" : "useCategories",
+      "parameters" : [ ],
+      "return_type" : "UseQueryResult<MenuItemCategory[], Error>",
+      "description" : "Fetches all menu item categories."
+    }, {
+      "name" : "useCategory",
+      "parameters" : [ "id: string" ],
+      "return_type" : "UseQueryResult<MenuItemCategory, Error>",
+      "description" : "Fetches a single menu item category by ID."
+    }, {
+      "name" : "useCreateMenuItem",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<MenuItemDto, Error, Omit<MenuItemDto, 'id' | 'categoryName' | 'createdAt' | 'updatedAt'>>",
+      "description" : "Mutation hook for creating a menu item."
+    }, {
+      "name" : "useUpdateMenuItem",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<MenuItemDto, Error, { id: string, item: Omit<MenuItemDto, 'id' | 'categoryName' | 'createdAt' | 'updatedAt'> }>",
+      "description" : "Mutation hook for updating a menu item."
+    }, {
+      "name" : "useDeleteMenuItem",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<void, Error, string>",
+      "description" : "Mutation hook for deleting a menu item."
+    }, {
+      "name" : "useCreateMenuItemCategory",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<MenuItemCategory, Error, string>",
+      "description" : "Mutation hook for creating a menu item category."
+    }, {
+      "name" : "useUpdateMenuItemCategory",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<MenuItemCategory, Error, { id: string, name: string }>",
+      "description" : "Mutation hook for updating a menu item category."
+    }, {
+      "name" : "useDeleteMenuItemCategory",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<void, Error, string>",
+      "description" : "Mutation hook for deleting a menu item category."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/menuService.ts", "frontend/src/types/menu.ts" ],
     "depends_on" : [ ],
     "feature_name" : "menu-ui",
-    "file_role" : null
+    "file_role" : "React Query hook for fetching and managing menu data."
   }, {
     "file_name" : "menuService.ts",
     "file_path" : "frontend/src/services/menuService.ts",
@@ -2825,14 +2885,124 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Service for all menu-related API calls, for both public and admin use.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllMenuItems",
+      "parameters" : [ ],
+      "return_type" : "Promise<MenuItemDto[]>",
+      "description" : "Fetches all menu items from the backend."
+    }, {
+      "name" : "getMenuItemById",
+      "parameters" : [ "id: string" ],
+      "return_type" : "Promise<MenuItemDto>",
+      "description" : "Fetches a single menu item by its ID from the backend."
+    }, {
+      "name" : "getAllMenuItemCategories",
+      "parameters" : [ ],
+      "return_type" : "Promise<MenuItemCategory[]>",
+      "description" : "Fetches all menu item categories from the backend."
+    }, {
+      "name" : "getMenuItemCategoryById",
+      "parameters" : [ "id: string" ],
+      "return_type" : "Promise<MenuItemCategory>",
+      "description" : "Fetches a single menu item category by its ID from the backend."
+    }, {
+      "name" : "createMenuItem",
+      "parameters" : [ "item: Omit<MenuItemDto, 'id' | 'categoryName' | 'createdAt' | 'updatedAt'>" ],
+      "return_type" : "Promise<MenuItemDto>",
+      "description" : "Creates a new menu item in the backend."
+    }, {
+      "name" : "updateMenuItem",
+      "parameters" : [ "id: string", "item: Omit<MenuItemDto, 'id' | 'categoryName' | 'createdAt' | 'updatedAt'>" ],
+      "return_type" : "Promise<MenuItemDto>",
+      "description" : "Updates an existing menu item in the backend."
+    }, {
+      "name" : "deleteMenuItem",
+      "parameters" : [ "id: string" ],
+      "return_type" : "Promise<void>",
+      "description" : "Deletes a menu item from the backend."
+    }, {
+      "name" : "createMenuItemCategory",
+      "parameters" : [ "name: string" ],
+      "return_type" : "Promise<MenuItemCategory>",
+      "description" : "Creates a new menu item category in the backend."
+    }, {
+      "name" : "updateMenuItemCategory",
+      "parameters" : [ "id: string", "name: string" ],
+      "return_type" : "Promise<MenuItemCategory>",
+      "description" : "Updates an existing menu item category in the backend."
+    }, {
+      "name" : "deleteMenuItemCategory",
+      "parameters" : [ "id: string" ],
+      "return_type" : "Promise<void>",
+      "description" : "Deletes a menu item category from the backend."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/menus/items",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all menu items."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/menus/items/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a single menu item by ID."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/menus/categories",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches all menu item categories."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/menus/categories/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a single menu item category by ID."
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/menus/items",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new menu item."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/menus/items/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates an existing menu item."
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/menus/items/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Deletes a menu item."
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/menus/categories",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new menu item category."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/menus/categories/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates an existing menu item category."
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/menus/categories/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Deletes a menu item category."
+    } ],
     "imports_from" : [ "frontend/src/api/client.ts", "frontend/src/types/menu.ts" ],
     "depends_on" : [ ],
     "feature_name" : "menu-ui",
-    "file_role" : null
+    "file_role" : "Service layer — implements getAllMenuItems(): Promise<MenuItemDto[]>, getMenuItemById(id: string): Promise<MenuItemDto>, getAllMenuItemCategories(): Promise<MenuItemCategory[]>, getMenuItemCategoryById(id: string): Promise<MenuItemCategory>, createMenuItem(item: Omit<MenuItemDto, 'id' | 'categoryName' | 'createdAt' | 'updatedAt'>): Promise<MenuItemDto>, updateMenuItem(id: string, item: Omit<MenuItemDto, 'id' | 'categoryName' | 'createdAt' | 'updatedAt'>): Promise<MenuItemDto>, deleteMenuItem(id: string): Promise<void>, createMenuItemCategory(name: string): Promise<MenuItemCategory>, updateMenuItemCategory(id: string, name: string): Promise<MenuItemCategory>, deleteMenuItemCategory(id: string): Promise<void>."
   }, {
     "file_name" : "menu.ts",
     "file_path" : "frontend/src/types/menu.ts",
@@ -2843,13 +3013,21 @@
     "status" : "PLANNED",
     "description" : "TypeScript types and interfaces for menu items and categories.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "MenuItemDto",
+      "type" : "{ id: string; name: string; description: string; price: number; categoryId: string; categoryName: string; imageUrl: string; available: boolean; }",
+      "description" : "Data transfer object for a menu item, including its ID, name, description, price, category details, image URL, and availability."
+    }, {
+      "name" : "MenuItemCategory",
+      "type" : "{ id: string; name: string; }",
+      "description" : "Data transfer object for a menu item category, including its ID and name."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "menu-ui",
-    "file_role" : null
+    "file_role" : "Generated from the backend API contract — TypeScript types and interfaces for menu items and categories."
   }, {
     "file_name" : "AdminReservationsPage.tsx",
     "file_path" : "frontend/src/pages/admin/AdminReservationsPage.tsx",
@@ -3382,7 +3560,7 @@
     "feature_display_name" : "Menu UI",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/pages/admin/AdminMenuPage.tsx", "frontend/src/pages/MenuPage.tsx", "frontend/src/hooks/useMenu.ts", "frontend/src/services/menuService.ts", "frontend/src/types/menu.ts" ],
-    "feature_instruction" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A2B4C] text-white\n- Primary CTA: bg-[#FF9933] hover:bg-[#E68A00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#FF9933]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-gray-700 leading-relaxed\n\nThis feature provides the user interface for displaying the restaurant's menu to customers and an administrative interface for managing menu items and categories. It consists of TypeScript types, a service layer for API interactions, React Query hooks for data management, and two main pages: `MenuPage.tsx` for public viewing and `AdminMenuPage.tsx` for administrative CRUD operations.\n\n### `frontend/src/types/menu.ts`\nThis file defines the TypeScript interfaces for `MenuItemDto` and `MenuItemCategory`, directly mirroring the backend DTOs from the `menu-backend` feature. These types ensure strong typing across the frontend application when dealing with menu data.\n\n### `frontend/src/services/menuService.ts`\nThis service acts as the primary interface for all menu-related API calls. It uses `axios` from `@/api/client.ts` to communicate with the `menu-backend` API. All functions return Promises that resolve to the appropriate data types or void for deletion operations.\n\n**Public Functions:**\n1.  `getAllMenuItems(): Promise<MenuItemDto[]>`\n    *   Calls `GET /api/v1/menus/items`.\n    *   Returns a list of all menu items.\n2.  `getMenuItemById(id: string): Promise<MenuItemDto>`\n    *   Calls `GET /api/v1/menus/items/{id}`.\n    *   Returns a single menu item by its ID. Throws an error if not found.\n3.  `getAllMenuItemCategories(): Promise<MenuItemCategory[]>`\n    *   Calls `GET /api/v1/menus/categories`.\n    *   Returns a list of all menu item categories.\n4.  `getMenuItemCategoryById(id: string): Promise<MenuItemCategory>`\n    *   Calls `GET /api/v1/menus/categories/{id}`.\n    *   Returns a single menu item category by its ID. Throws an error if not found.\n5.  `createMenuItem(item: Omit<MenuItemDto, 'id' | 'categoryName' | 'createdAt' | 'updatedAt'>): Promise<MenuItemDto>`\n    *   Calls `POST /api/v1/admin/menus/items` with the item data.\n    *   Returns the created menu item. Requires authentication (ADMIN role).\n6.  `updateMenuItem(id: string, item: Omit<MenuItemDto, 'id' | 'categoryName' | 'createdAt' | 'updatedAt'>): Promise<MenuItemDto>`\n    *   Calls `PUT /api/v1/admin/menus/items/{id}` with the updated item data.\n    *   Returns the updated menu item. Requires authentication (ADMIN role).\n7.  `deleteMenuItem(id: string): Promise<void>`\n    *   Calls `DELETE /api/v1/admin/menus/items/{id}`.\n    *   Deletes the menu item. Requires authentication (ADMIN role).\n8.  `createMenuItemCategory(name: string): Promise<MenuItemCategory>`\n    *   Calls `POST /api/v1/admin/menus/categories` with `{ name: string }` as request body.\n    *   Returns the created category. Requires authentication (ADMIN role).\n9.  `updateMenuItemCategory(id: string, name: string): Promise<MenuItemCategory>`\n    *   Calls `PUT /api/v1/admin/menus/categories/{id}` with `{ name: string }` as request body.\n    *   Returns the updated category. Requires authentication (ADMIN role).\n10. `deleteMenuItemCategory(id: string): Promise<void>`\n    *   Calls `DELETE /api/v1/admin/menus/categories/{id}`.\n    *   Deletes the category. Requires authentication (ADMIN role).\n\n### `frontend/src/hooks/useMenu.ts`\nThis file provides React Query hooks for managing menu data, abstracting the `menuService` calls and providing caching, loading states, and error handling. Each hook interacts with the `menuService` to perform its respective operation.\n\n**Public Functions:**\n1.  `useMenuItems(): UseQueryResult<MenuItemDto[], Error>`\n    *   Fetches all menu items using `menuService.getAllMenuItems()`.\n2.  `useMenuItem(id: string): UseQueryResult<MenuItemDto, Error>`\n    *   Fetches a single menu item by ID using `menuService.getMenuItemById(id)`.\n3.  `useCategories(): UseQueryResult<MenuItemCategory[], Error>`\n    *   Fetches all menu item categories using `menuService.getAllMenuItemCategories()`.\n4.  `useCategory(id: string): UseQueryResult<MenuItemCategory, Error>`\n    *   Fetches a single menu item category by ID using `menuService.getMenuItemCategoryById(id)`.\n5.  `useCreateMenuItem(): UseMutationResult<MenuItemDto, Error, Omit<MenuItemDto, 'id' | 'categoryName' | 'createdAt' | 'updatedAt'>>`\n    *   Mutation hook for creating a menu item using `menuService.createMenuItem()`.\n    *   On success, invalidates the `['menuItems']` and `['categories']` queries.\n6.  `useUpdateMenuItem(): UseMutationResult<MenuItemDto, Error, { id: string, item: Omit<MenuItemDto, 'id' | 'categoryName' | 'createdAt' | 'updatedAt'> }>`\n    *   Mutation hook for updating a menu item using `menuService.updateMenuItem()`.\n    *   On success, invalidates the `['menuItems']` and `['menuItem', id]` queries.\n7.  `useDeleteMenuItem(): UseMutationResult<void, Error, string>`\n    *   Mutation hook for deleting a menu item using `menuService.deleteMenuItem()`.\n    *   On success, invalidates the `['menuItems']` and `['categories']` queries.\n8.  `useCreateMenuItemCategory(): UseMutationResult<MenuItemCategory, Error, string>`\n    *   Mutation hook for creating a menu item category using `menuService.createMenuItemCategory()`.\n    *   On success, invalidates the `['categories']` and `['menuItems']` queries.\n9.  `useUpdateMenuItemCategory(): UseMutationResult<MenuItemCategory, Error, { id: string, name: string }>`\n    *   Mutation hook for updating a menu item category using `menuService.updateMenuItemCategory()`.\n    *   On success, invalidates the `['categories']` and `['category', id]` queries.\n10. `useDeleteMenuItemCategory(): UseMutationResult<void, Error, string>`\n    *   Mutation hook for deleting a menu item category using `menuService.deleteMenuItemCategory()`.\n    *   On success, invalidates the `['categories']` and `['menuItems']` queries.\n\n### `frontend/src/pages/MenuPage.tsx`\nThis page displays the public-facing menu of Yeti - The Himalayan Kitchen. It uses `Layout` from `core-ui` and fetches menu data using `useMenu` hooks. It also integrates with `CartContext` from `order-ui` to allow users to add items to their order.\n\n**Structure and Content:**\n*   Wraps content in `<Layout>`. \n*   **Hero Section:**\n    *   `className=\"relative h-[50vh] bg-cover bg-center flex items-center justify-center text-white\" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80)' }}`\n    *   `<div className=\"absolute inset-0 bg-black bg-opacity-50\" />`\n    *   `<h1>` text: \"Savor the Authentic Flavors of Yeti - The Himalayan Kitchen\"\n    *   `<p>` sub-text: \"Embark on a culinary journey to the heart of the Himalayas.\"\n*   **Menu Categories Section:**\n    *   `Section container` with `bg-[#F5F5F5]`.\n    *   Displays a list of menu categories fetched using `useCategories()`.\n    *   Each category is a clickable filter button (e.g., `bg-[#8B4513] hover:bg-[#6F360F] text-white rounded-full px-4 py-2`).\n*   **Menu Items Section:**\n    *   `Section container` with `bg-white`.\n    *   Displays menu items fetched using `useMenuItems()`, filtered by the selected category.\n    *   Each menu item is rendered as a `Card` (`bg-white rounded-xl shadow-md border border-gray-100 p-6`).\n    *   Each card includes:\n        *   High-quality image (`imageUrl`).\n        *   Item `name` (e.g., `text-xl font-semibold text-[#1A2B4C]`).\n        *   Item `description` (e.g., `text-gray-700`).\n        *   Item `price` (e.g., `text-lg font-bold text-[#FF9933]`).\n        *   An \"Add to Order\" button (`Primary CTA` styling) that calls `addItemToCart` from `CartContext`.\n*   **Error Handling:** Displays a user-friendly message if menu items or categories fail to load.\n*   **Loading State:** Shows a loading spinner or skeleton UI while data is being fetched.\n\n### `frontend/src/pages/admin/AdminMenuPage.tsx`\nThis page provides an administrative interface for managing menu items and categories. It uses `AdminLayout` from `admin-portal` and leverages the `useMenu` hooks for all CRUD operations. It will use `react-hook-form` and `zod` for form validation.\n\n**Structure and Content:**\n*   Wraps content in `<AdminLayout>`.\n*   **Admin Menu Management (Categories) Section:**\n    *   `Section container` with `bg-white`.\n    *   Heading: \"Manage Menu Categories\" (e.g., `text-2xl font-bold text-[#1A2B4C]`)\n    *   Form for creating new categories:\n        *   Input for `name` (string, required).\n        *   Submit button (`Primary CTA` styling) that calls `useCreateMenuItemCategory`.\n    *   Table displaying existing categories fetched using `useCategories()`:\n        *   Columns: `ID`, `Name`, `Actions`.\n        *   Edit button for each category (opens a modal/form for `useUpdateMenuItemCategory`).\n        *   Delete button for each category (confirms and calls `useDeleteMenuItemCategory`).\n*   **Admin Menu Management (Items) Section:**\n    *   `Section container` with `bg-[#F5F5F5]`.\n    *   Heading: \"Manage Menu Items\" (e.g., `text-2xl font-bold text-[#1A2B4C]`)\n    *   Form for creating new menu items:\n        *   Inputs for `name` (string, required), `description` (string, required), `price` (string, required, converted to number), `categoryId` (dropdown, required, populated from `useCategories()`), `imageUrl` (string, optional), `available` (boolean checkbox).\n        *   Zod schema for validation:\n            *   `name`: `z.string().min(1, 'Name is required')`\n            *   `description`: `z.string().min(1, 'Description is required')`\n            *   `price`: `z.string().min(1, 'Price is required').regex(/^\\d+(\\.\\d{1,2})?$/, 'Invalid price format')`\n            *   `categoryId`: `z.string().uuid('Invalid category selected')`\n            *   `imageUrl`: `z.string().url('Invalid URL format').optional().or(z.literal(''))`\n            *   `available`: `z.boolean().default(true)`\n        *   Submit button (`Primary CTA` styling) that calls `useCreateMenuItem`.\n    *   Table displaying existing menu items fetched using `useMenuItems()`:\n        *   Columns: `ID`, `Name`, `Category`, `Price`, `Available`, `Actions`.\n        *   Edit button for each item (opens a modal/form for `useUpdateMenuItem`).\n        *   Delete button for each item (confirms and calls `useDeleteMenuItem`).\n*   **Error Handling:** Displays `toast` notifications for success/error messages from mutations.\n*   **Loading State:** Shows loading indicators for data fetching and mutation submissions.\n",
     "change_required" : true
   }, {
     "feature_name" : "reservation-ui",
