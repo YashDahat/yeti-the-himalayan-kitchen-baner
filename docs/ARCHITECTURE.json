@@ -2359,14 +2359,18 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Configured Axios instance for all API calls, including JWT interceptors.",
-    "public_functions" : null,
-    "public_variables" : null,
+    "public_functions" : [ ],
+    "public_variables" : [ {
+      "name" : "apiClient",
+      "type" : "AxiosInstance",
+      "description" : "The configured Axios instance for making API requests."
+    } ],
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ ],
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "core-ui",
-    "file_role" : null
+    "file_role" : "SERVICE layer — configures a global Axios instance (`apiClient`) with JWT token interceptors for all API requests."
   }, {
     "file_name" : "App.tsx",
     "file_path" : "frontend/src/App.tsx",
@@ -2376,14 +2380,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Root component that sets up routing for the entire application, including public and admin routes.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "App",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the main application with routing and authentication context."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/pages/HomePage.tsx", "frontend/src/pages/MenuPage.tsx", "frontend/src/pages/ReservationPage.tsx", "frontend/src/pages/OrderConfirmationPage.tsx", "frontend/src/pages/ProfilePage.tsx", "frontend/src/pages/BlogPage.tsx", "frontend/src/pages/BlogPostPage.tsx", "frontend/src/pages/GalleryPage.tsx", "frontend/src/pages/AboutPage.tsx", "frontend/src/pages/ContactPage.tsx", "frontend/src/pages/LoginPage.tsx", "frontend/src/pages/admin/AdminDashboardPage.tsx", "frontend/src/components/Layout.tsx", "frontend/src/components/AdminLayout.tsx", "frontend/src/components/ProtectedRoute.tsx", "frontend/src/context/AuthContext.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "core-ui",
-    "file_role" : null
+    "file_role" : "COMPONENT layer — the root component that sets up `react-router-dom` for all public and admin routes, integrating `Layout`, `AdminLayout`, and `ProtectedRoute`."
   }, {
     "file_name" : "Layout.tsx",
     "file_path" : "frontend/src/components/Layout.tsx",
@@ -2393,14 +2402,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Main layout for public-facing pages, including the header, footer, and a floating WhatsApp CTA.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "Layout",
+      "parameters" : [ "{ children: React.ReactNode }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the main public layout with header, footer, and content."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/Header.tsx", "frontend/src/components/Footer.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "core-ui",
-    "file_role" : null
+    "file_role" : "COMPONENT layer — provides the main layout for public-facing pages, including the `Header`, `Footer`, and a floating WhatsApp CTA."
   }, {
     "file_name" : "Header.tsx",
     "file_path" : "frontend/src/components/Header.tsx",
@@ -2410,14 +2424,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Site-wide header component with navigation links and a call-to-action button.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "Header",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the application's header with navigation and auth links."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "core-ui",
-    "file_role" : null
+    "file_role" : "COMPONENT layer — renders the site-wide header with navigation links and a dynamic authentication call-to-action."
   }, {
     "file_name" : "Footer.tsx",
     "file_path" : "frontend/src/components/Footer.tsx",
@@ -2427,14 +2446,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Site-wide footer with contact info, social media links, and navigation.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "Footer",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the application's footer with business details and links."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "core-ui",
-    "file_role" : null
+    "file_role" : "COMPONENT layer — renders the site-wide footer with business contact information, social media links, and navigation."
   }, {
     "file_name" : "HomePage.tsx",
     "file_path" : "frontend/src/pages/HomePage.tsx",
@@ -2444,14 +2468,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Landing page featuring an immersive hero section, featured menu items, a reservation callout, and a testimonials section.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "HomePage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the main landing page of the application."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/components/TestimonialsSection.tsx" ],
     "depends_on" : [ ],
     "feature_name" : "core-ui",
-    "file_role" : null
+    "file_role" : "PAGE layer — the landing page featuring an immersive hero section, featured menu items, a reservation callout, and a testimonials section."
   }, {
     "file_name" : "AboutPage.tsx",
     "file_path" : "frontend/src/pages/AboutPage.tsx",
@@ -2461,14 +2490,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Displays the story of the restaurant, its culinary philosophy, and photos of the ambiance.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AboutPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the 'About Us' page with restaurant details."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "core-ui",
-    "file_role" : null
+    "file_role" : "PAGE layer — displays the story of the restaurant, its culinary philosophy, and photos of the ambiance."
   }, {
     "file_name" : "ContactPage.tsx",
     "file_path" : "frontend/src/pages/ContactPage.tsx",
@@ -2478,14 +2512,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Provides contact information, business hours, an embedded Google Map, and a contact form.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "ContactPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the 'Contact Us' page with contact details and a map."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "core-ui",
-    "file_role" : null
+    "file_role" : "PAGE layer — provides contact information, business hours, an embedded Google Map, and a contact form."
   }, {
     "file_name" : "AuthContext.tsx",
     "file_path" : "frontend/src/context/AuthContext.tsx",
@@ -3218,7 +3257,7 @@
     "feature_display_name" : "Core UI & Pages",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/api/client.ts", "frontend/src/App.tsx", "frontend/src/components/Layout.tsx", "frontend/src/components/Header.tsx", "frontend/src/components/Footer.tsx", "frontend/src/pages/HomePage.tsx", "frontend/src/pages/AboutPage.tsx", "frontend/src/pages/ContactPage.tsx" ],
-    "feature_instruction" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#2c2c2e] text-white\n- Primary CTA: bg-[#d4a843] hover:bg-[#b88e3a] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#d4a843]\n- Section bg: bg-white (odd sections) / bg-gray-50 (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-gray-700 leading-relaxed\n\nThis feature, Core UI & Pages, establishes the foundational structure and public-facing pages for the Yeti - The Himalayan Kitchen application. It encompasses the global Axios client configuration, application routing, and core layout components (Header, Footer, Layout). It also defines the primary public pages: Home, About, and Contact. All components and pages within this feature must adhere strictly to the defined Design Tokens for styling.\n\n### `frontend/src/api/client.ts`\nThis file configures an Axios instance (`apiClient`) that will be used for all API calls across the frontend application. It includes an interceptor to automatically attach the JWT token to outgoing requests. The token is retrieved from `localStorage` using the key 'token'.\n\n1.  **Axios Instance**: Create an Axios instance with a base URL pointing to the backend API (e.g., `/api/v1`).\n2.  **Request Interceptor**: Implement a request interceptor that checks for a JWT token in `localStorage` under the key 'token'. If a token exists, it should be added to the `Authorization` header as a Bearer token (`Bearer <token>`).\n3.  **Response Interceptor (Error Handling)**: Implement a response interceptor to handle common API errors, such as 401 Unauthorized responses, by redirecting the user to the login page or clearing the token.\n\n### `frontend/src/App.tsx`\nThis is the root component of the application, responsible for setting up `react-router-dom` for navigation. It defines all public and admin routes, utilizing `Layout` for public pages, `AdminLayout` for admin pages, and `ProtectedRoute` to secure admin routes.\n\n1.  **Router Setup**: Use `BrowserRouter` from `react-router-dom`.\n2.  **Auth Context**: Wrap the entire application with `AuthContext.Provider` (from `authentication-ui`) to provide authentication state globally.\n3.  **Public Routes**: Define routes for public pages, each wrapped by the `Layout` component:\n    *   `/` (HomePage)\n    *   `/menu` (MenuPage from `menu-ui`)\n    *   `/reservations` (ReservationPage from `reservation-ui`)\n    *   `/order-confirmation` (OrderConfirmationPage from `order-ui`)\n    *   `/profile` (ProfilePage from `order-ui`)\n    *   `/blog` (BlogPage from `blog-ui`)\n    *   `/blog/:id` (BlogPostPage from `blog-ui`)\n    *   `/gallery` (Placeholder for a future gallery page)\n    *   `/about` (AboutPage)\n    *   `/contact` (ContactPage)\n    *   `/login` (LoginPage from `authentication-ui`)\n4.  **Admin Routes**: Define routes for admin pages, each wrapped by `ProtectedRoute` (from `authentication-ui`) and `AdminLayout` (from `admin-portal`). `ProtectedRoute` ensures only authenticated users with the 'ADMIN' role can access these routes.\n    *   `/admin` (AdminDashboardPage from `admin-portal`)\n    *   `/admin/menu` (AdminMenuPage from `menu-ui`)\n    *   `/admin/reservations` (AdminReservationsPage from `reservation-ui`)\n    *   `/admin/orders` (AdminOrdersPage from `order-ui`)\n    *   `/admin/blog` (AdminBlogPage from `blog-ui`)\n    *   `/admin/testimonials` (AdminTestimonialsPage from `testimonial-ui`)\n\n### `frontend/src/components/Layout.tsx`\nThis component provides the main layout structure for all public-facing pages. It includes the `Header`, `Footer`, and a floating WhatsApp Call-to-Action (CTA) button.\n\n1.  **Structure**: Render the `Header` component, then the `children` prop, followed by the `Footer` component.\n2.  **WhatsApp CTA**: Implement a fixed-position floating button (e.g., bottom-right) that links to the business's WhatsApp number (`https://wa.me/917030555077`). Style it with a distinct background color (e.g., green) and an icon.\n\n### `frontend/src/components/Header.tsx`\nThis component renders the site-wide header, including the business logo, navigation links, and a dynamic call-to-action button (Login/Profile).\n\n1.  **Logo**: Display the business name \"Yeti - The Himalayan Kitchen\" as a prominent, clickable logo linking to the home page.\n2.  **Navigation**: Include navigation links for Home, Menu, Reservations, Blog, About, and Contact. Use `NavLink` from `react-router-dom` for active link styling.\n3.  **Auth CTA**: Dynamically render either a \"Login\" button (linking to `/login`) or a \"Profile\" button (linking to `/profile`) based on the user's authentication status (obtained from `AuthContext`).\n4.  **Styling**: Apply `bg-[#2c2c2e]` for the background and `text-white` for text, as per Design Tokens.\n\n### `frontend/src/components/Footer.tsx`\nThis component provides the site-wide footer, displaying essential business information, social media links, and a subset of navigation links.\n\n1.  **Business Info**: Display the business name \"Yeti - The Himalayan Kitchen\", address (\"First Floor, Yeti - The Himalayan Kitchen, Baner, Atria Building, Baner Rd, Kapil Malhar, Baner Gaon, Baner, Pune, Maharashtra 411069\"), and phone number (\"070305 55077\"). Include placeholder opening hours (e.g., \"Mon-Sun: 11:00 AM - 11:00 PM\").\n2.  **Social Media**: Include placeholder links and icons for Facebook, Instagram, and Twitter.\n3.  **Navigation**: Reiterate key navigation links such as Home, Menu, About, and Contact.\n4.  **Copyright**: Add a copyright notice.\n\n### `frontend/src/pages/HomePage.tsx`\nThis page serves as the landing page, designed to be immersive and inviting. It features a hero section, highlights featured menu items, prompts for reservations, and showcases customer testimonials.\n\n1.  **Hero Section**: \n    *   Background: Use `https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80` as the hero image, with a `bg-black bg-opacity-50` overlay.\n    *   Content: A prominent `h1` with \"Yeti - The Himalayan Kitchen\" and a subheadline like \"An Authentic Culinary Journey to the Peaks of Flavor.\" Include a primary CTA button \"Explore Our Menu\" linking to `/menu` and a secondary CTA \"Book a Table\" linking to `/reservations`.\n2.  **Featured Menu Section**: A section titled \"Our Signature Dishes\" or \"Taste the Himalayas.\" Include placeholder content for 3-4 featured menu items, each with an image, name, short description, and price. This section will eventually fetch data from the `menu-backend` via `menu-ui` hooks.\n3.  **Reservation Callout Section**: A compelling section encouraging users to book a table, with a heading like \"Experience the Warmth of Himalayan Hospitality\" and a CTA button \"Make a Reservation\" linking to `/reservations`.\n4.  **Testimonials Section**: Integrate the `TestimonialsSection` component (from `testimonial-ui`) to display customer reviews.\n\n### `frontend/src/pages/AboutPage.tsx`\nThis page tells the story of Yeti - The Himalayan Kitchen, its culinary philosophy, and showcases the restaurant's ambiance.\n\n1.  **Hero Section**: A smaller hero section with a title \"Our Story\" and a relevant background image (e.g., a cozy restaurant interior or mountain landscape).\n2.  **Our Story Section**: Narrative text about the restaurant's origins, passion for Himalayan cuisine, and the journey of bringing authentic flavors to Pune. Use an inviting and narrative-driven tone.\n3.  **Culinary Philosophy Section**: Describe the restaurant's commitment to fresh ingredients, traditional cooking methods, and unique spice blends. Highlight signature aspects of Himalayan cooking.\n4.  **Ambiance Gallery Section**: A grid or carousel of high-quality images showcasing the restaurant's interior, decor, and dining experience, reflecting the immersive visual direction.\n\n### `frontend/src/pages/ContactPage.tsx`\nThis page provides all necessary contact information, business hours, an embedded map, and a contact form.\n\n1.  **Hero Section**: A smaller hero section with a title \"Get in Touch\" and a relevant background image.\n2.  **Contact Details Section**: Display the business name, full address (\"First Floor, Yeti - The Himalayan Kitchen, Baner, Atria Building, Baner Rd, Kapil Malhar, Baner Gaon, Baner, Pune, Maharashtra 411069\"), phone number (\"070305 55077\"), and a placeholder email address (e.g., \"info@yetihimalayankitchen.com\").\n3.  **Business Hours Section**: Display placeholder opening hours (e.g., \"Monday - Sunday: 11:00 AM - 11:00 PM\").\n4.  **Our Location Section (Map)**: Embed a Google Map centered at the coordinates `18.559531, 73.805844` (assuming a second coordinate for Pune). Include a marker for the restaurant's location.\n5.  **Contact Form Section**: A simple contact form with fields for Name, Email, Subject, and Message. Include a submit button. This form will be a placeholder and not connected to a backend endpoint in this feature.\n",
     "change_required" : true
   }, {
     "feature_name" : "authentication-ui",
