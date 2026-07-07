@@ -1579,13 +1579,29 @@
     "status" : "PLANNED",
     "description" : "DTO for creating a new order, containing a list of order items and delivery details.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "orderItems",
+      "type" : "List<OrderItemRequest>",
+      "description" : "List of items included in the order. Must not be empty. @NotNull, @Size(min = 1)"
+    }, {
+      "name" : "deliveryAddress",
+      "type" : "String",
+      "description" : "The delivery address for the order. Must not be blank. @NotBlank"
+    }, {
+      "name" : "contactPhone",
+      "type" : "String",
+      "description" : "The contact phone number for delivery. Must not be blank. @NotBlank"
+    }, {
+      "name" : "notes",
+      "type" : "String",
+      "description" : "Optional notes or special instructions for the order."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/OrderItemRequest.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-backend-api",
-    "file_role" : null
+    "file_role" : "DTO layer — defines the structure for incoming requests to create a new order, including a list of `OrderItemRequest` objects and delivery information."
   }, {
     "file_name" : "OrderItemRequest.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/OrderItemRequest.java",
@@ -1596,13 +1612,21 @@
     "status" : "PLANNED",
     "description" : "DTO representing a single item within a new order request.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "menuItemId",
+      "type" : "UUID",
+      "description" : "The unique identifier of the menu item. Must not be null. @NotNull"
+    }, {
+      "name" : "quantity",
+      "type" : "int",
+      "description" : "The quantity of the menu item. Must be at least 1. @Min(1)"
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-backend-api",
-    "file_role" : null
+    "file_role" : "DTO layer — defines the structure for a single item within a `CreateOrderRequest`, specifying the menu item ID and quantity."
   }, {
     "file_name" : "OrderResponse.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/OrderResponse.java",
@@ -1613,13 +1637,49 @@
     "status" : "PLANNED",
     "description" : "DTO for returning detailed information about an order.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "UUID",
+      "description" : "The unique identifier of the order."
+    }, {
+      "name" : "userId",
+      "type" : "UUID",
+      "description" : "The unique identifier of the user who placed the order."
+    }, {
+      "name" : "orderDate",
+      "type" : "java.time.LocalDateTime",
+      "description" : "The date and time when the order was placed."
+    }, {
+      "name" : "totalAmount",
+      "type" : "java.math.BigDecimal",
+      "description" : "The total amount of the order."
+    }, {
+      "name" : "status",
+      "type" : "com.yetithehimalayankitchenbaner.model.OrderStatus",
+      "description" : "The current status of the order (e.g., PENDING, DELIVERED)."
+    }, {
+      "name" : "deliveryAddress",
+      "type" : "String",
+      "description" : "The delivery address for the order."
+    }, {
+      "name" : "contactPhone",
+      "type" : "String",
+      "description" : "The contact phone number for delivery."
+    }, {
+      "name" : "notes",
+      "type" : "String",
+      "description" : "Optional notes or special instructions for the order."
+    }, {
+      "name" : "orderItems",
+      "type" : "List<OrderItemResponse>",
+      "description" : "A list of items included in the order, where OrderItemResponse contains: id: UUID, menuItemId: UUID, menuItemName: String, quantity: int, priceAtOrder: java.math.BigDecimal."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-backend-api",
-    "file_role" : null
+    "file_role" : "DTO layer — defines the structure for outgoing responses, providing comprehensive details of an order, including its status, total amount, and a list of `OrderItemResponse` objects."
   }, {
     "file_name" : "PaymentService.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/service/PaymentService.java",
@@ -2732,7 +2792,7 @@
     "feature_display_name" : "Order Management (Backend API)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/CreateOrderRequest.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/OrderItemRequest.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/OrderResponse.java" ],
-    "feature_instruction" : null,
+    "feature_instruction" : "The `order-backend-api` feature defines the Data Transfer Objects (DTOs) used for creating and retrieving customer orders. These DTOs serve as the contract between the frontend and the backend for order-related operations.\n\n`CreateOrderRequest.java` and `OrderItemRequest.java` are used together to encapsulate the data required when a customer places a new order. `CreateOrderRequest` contains the overall order details such as delivery address, contact phone, and an optional note, along with a list of `OrderItemRequest` objects. Each `OrderItemRequest` specifies the `menuItemId` and `quantity` for a particular menu item being ordered. These DTOs ensure that incoming order creation requests are well-structured and validated using standard Jakarta Bean Validation annotations like `@NotBlank`, `@NotNull`, and `@Min`.\n\n`OrderResponse.java` is used to send detailed order information back to the client. It provides a comprehensive view of an order, including its unique `id`, the `userId` who placed it, `orderDate`, `totalAmount`, current `status` (e.g., PENDING, DELIVERED), delivery details, and a list of `OrderItemResponse` objects. The `OrderItemResponse` (which would typically be an inner class or a separate DTO derived from the `OrderItem` entity) includes details like `id`, `menuItemId`, `menuItemName`, `quantity`, and `priceAtOrder`.\n\nThese DTOs are consumed by the `OrderService` and `OrderController` within the `order-backend` feature. For instance, `OrderController.createOrder(CreateOrderRequest request, UserDetails userDetails)` receives a `CreateOrderRequest` in its request body, and `OrderController.getOrderById(UUID orderId, UserDetails userDetails)` returns an `OrderResponse`.",
     "change_required" : true
   }, {
     "feature_name" : "payment-backend",
