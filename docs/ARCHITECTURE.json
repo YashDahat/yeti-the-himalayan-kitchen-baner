@@ -873,13 +873,57 @@
     "status" : "PLANNED",
     "description" : "Represents a customer's table reservation.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "UUID",
+      "description" : "Unique identifier for the reservation. Primary key."
+    }, {
+      "name" : "customerName",
+      "type" : "String",
+      "description" : "Name of the customer who made the reservation. Not null."
+    }, {
+      "name" : "customerEmail",
+      "type" : "String",
+      "description" : "Email of the customer. Not null."
+    }, {
+      "name" : "customerPhone",
+      "type" : "String",
+      "description" : "Phone number of the customer. Not null."
+    }, {
+      "name" : "reservationDate",
+      "type" : "java.time.LocalDate",
+      "description" : "Date of the reservation. Not null."
+    }, {
+      "name" : "reservationTime",
+      "type" : "java.time.LocalTime",
+      "description" : "Time of the reservation. Not null."
+    }, {
+      "name" : "numberOfGuests",
+      "type" : "int",
+      "description" : "Number of guests for the reservation. Must be at least 1."
+    }, {
+      "name" : "status",
+      "type" : "ReservationStatus",
+      "description" : "Current status of the reservation (e.g., PENDING, CONFIRMED). Not null, defaults to PENDING."
+    }, {
+      "name" : "specialRequests",
+      "type" : "String",
+      "description" : "Any special requests from the customer. Nullable, max 255 characters."
+    }, {
+      "name" : "createdAt",
+      "type" : "java.time.LocalDateTime",
+      "description" : "Timestamp when the reservation was created. Not null."
+    }, {
+      "name" : "updatedAt",
+      "type" : "java.time.LocalDateTime",
+      "description" : "Timestamp when the reservation was last updated. Not null."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/ReservationStatus.java" ],
     "depends_on" : [ ],
     "feature_name" : "reservation-backend",
-    "file_role" : null
+    "file_role" : "MODEL layer — represents a customer's table reservation entity in the database."
   }, {
     "file_name" : "ReservationStatus.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/model/ReservationStatus.java",
@@ -890,13 +934,33 @@
     "status" : "PLANNED",
     "description" : "Enum for the status of a reservation (e.g., PENDING, CONFIRMED, CANCELLED).",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "PENDING",
+      "type" : "ReservationStatus",
+      "description" : "Reservation is awaiting confirmation."
+    }, {
+      "name" : "CONFIRMED",
+      "type" : "ReservationStatus",
+      "description" : "Reservation has been confirmed."
+    }, {
+      "name" : "CANCELLED",
+      "type" : "ReservationStatus",
+      "description" : "Reservation has been cancelled by customer or admin."
+    }, {
+      "name" : "COMPLETED",
+      "type" : "ReservationStatus",
+      "description" : "Reservation has been fulfilled."
+    }, {
+      "name" : "NO_SHOW",
+      "type" : "ReservationStatus",
+      "description" : "Customer did not arrive for the reservation."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "reservation-backend",
-    "file_role" : null
+    "file_role" : "MODEL layer — enum defining the possible statuses for a reservation."
   }, {
     "file_name" : "ReservationRepository.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/ReservationRepository.java",
@@ -906,14 +970,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for Reservation entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByReservationDateBetween",
+      "parameters" : [ "java.time.LocalDate startDate", "java.time.LocalDate endDate" ],
+      "return_type" : "List<Reservation>",
+      "description" : "Retrieves a list of reservations that fall within a specified date range."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/Reservation.java" ],
     "depends_on" : [ ],
     "feature_name" : "reservation-backend",
-    "file_role" : null
+    "file_role" : "REPOSITORY layer — provides data access operations for Reservation entities."
   }, {
     "file_name" : "ReservationService.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/service/ReservationService.java",
@@ -923,14 +992,44 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Handles business logic for creating and managing table reservations.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createReservation",
+      "parameters" : [ "CreateReservationRequest request" ],
+      "return_type" : "ReservationResponse",
+      "description" : "Creates a new reservation with PENDING status. Throws IllegalArgumentException if date/time is in the past."
+    }, {
+      "name" : "getReservationById",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "ReservationResponse",
+      "description" : "Retrieves a reservation by its ID. Throws ResourceNotFoundException if not found."
+    }, {
+      "name" : "getAllReservations",
+      "parameters" : [ ],
+      "return_type" : "List<ReservationResponse>",
+      "description" : "Retrieves all reservations."
+    }, {
+      "name" : "getReservationsByDateRange",
+      "parameters" : [ "java.time.LocalDate startDate", "java.time.LocalDate endDate" ],
+      "return_type" : "List<ReservationResponse>",
+      "description" : "Retrieves reservations within a specified date range."
+    }, {
+      "name" : "updateReservationStatus",
+      "parameters" : [ "UUID id", "ReservationStatus newStatus" ],
+      "return_type" : "ReservationResponse",
+      "description" : "Updates the status of an existing reservation. Throws ResourceNotFoundException if not found."
+    }, {
+      "name" : "deleteReservation",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "void",
+      "description" : "Deletes a reservation by its ID. Throws ResourceNotFoundException if not found."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/ReservationRepository.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/CreateReservationRequest.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/ReservationResponse.java" ],
     "depends_on" : [ ],
     "feature_name" : "reservation-backend",
-    "file_role" : null
+    "file_role" : "SERVICE layer — implements business logic for creating, retrieving, updating, and deleting reservations; calls ReservationRepository."
   }, {
     "file_name" : "ReservationController.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/ReservationController.java",
@@ -940,14 +1039,36 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Public-facing REST controller for creating new table reservations.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createReservation",
+      "parameters" : [ "CreateReservationRequest request" ],
+      "return_type" : "ResponseEntity<ReservationResponse>",
+      "description" : "Handles POST requests to create a new reservation."
+    }, {
+      "name" : "getReservationById",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "ResponseEntity<ReservationResponse>",
+      "description" : "Handles GET requests to retrieve a reservation by ID."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/reservations",
+      "request_body" : "CreateReservationRequest",
+      "response_body" : "ReservationResponse (201 Created)",
+      "description" : "Creates a new table reservation."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/reservations/{id}",
+      "request_body" : null,
+      "response_body" : "ReservationResponse (200 OK)",
+      "description" : "Retrieves details of a specific reservation by ID."
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/service/ReservationService.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/CreateReservationRequest.java" ],
     "depends_on" : [ ],
     "feature_name" : "reservation-backend",
-    "file_role" : null
+    "file_role" : "CONTROLLER layer — exposes public REST endpoints for creating and retrieving reservations."
   }, {
     "file_name" : "AdminReservationController.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminReservationController.java",
@@ -957,14 +1078,58 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Admin-only REST controller for viewing and managing all reservations.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllReservations",
+      "parameters" : [ "java.time.LocalDate startDate", "java.time.LocalDate endDate" ],
+      "return_type" : "ResponseEntity<List<ReservationResponse>>",
+      "description" : "Handles GET requests to retrieve all reservations, with optional date filtering."
+    }, {
+      "name" : "getReservationById",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "ResponseEntity<ReservationResponse>",
+      "description" : "Handles GET requests to retrieve a specific reservation by ID."
+    }, {
+      "name" : "updateReservationStatus",
+      "parameters" : [ "UUID id", "ReservationStatus newStatus" ],
+      "return_type" : "ResponseEntity<ReservationResponse>",
+      "description" : "Handles PUT requests to update the status of a reservation."
+    }, {
+      "name" : "deleteReservation",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Handles DELETE requests to remove a reservation."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/reservations",
+      "request_body" : null,
+      "response_body" : "List<ReservationResponse> (200 OK)",
+      "description" : "Retrieves all reservations, optionally filtered by date range. Requires ADMIN role."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/reservations/{id}",
+      "request_body" : null,
+      "response_body" : "ReservationResponse (200 OK)",
+      "description" : "Retrieves a specific reservation by ID. Requires ADMIN role."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/reservations/{id}/status",
+      "request_body" : "ReservationStatus",
+      "response_body" : "ReservationResponse (200 OK)",
+      "description" : "Updates the status of a reservation. Requires ADMIN role."
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/reservations/{id}",
+      "request_body" : null,
+      "response_body" : "Void (204 No Content)",
+      "description" : "Deletes a reservation by ID. Requires ADMIN role."
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/service/ReservationService.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/ReservationResponse.java" ],
     "depends_on" : [ ],
     "feature_name" : "reservation-backend",
-    "file_role" : null
+    "file_role" : "CONTROLLER layer — exposes admin-only REST endpoints for managing all reservations."
   }, {
     "file_name" : "CreateReservationRequest.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/CreateReservationRequest.java",
@@ -975,13 +1140,41 @@
     "status" : "PLANNED",
     "description" : "DTO for creating a new reservation.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "customerName",
+      "type" : "String",
+      "description" : "Name of the customer. @NotBlank."
+    }, {
+      "name" : "customerEmail",
+      "type" : "String",
+      "description" : "Email of the customer. @NotBlank, @Email."
+    }, {
+      "name" : "customerPhone",
+      "type" : "String",
+      "description" : "Phone number of the customer. @NotBlank."
+    }, {
+      "name" : "reservationDate",
+      "type" : "java.time.LocalDate",
+      "description" : "Date of the reservation. @NotNull."
+    }, {
+      "name" : "reservationTime",
+      "type" : "java.time.LocalTime",
+      "description" : "Time of the reservation. @NotNull."
+    }, {
+      "name" : "numberOfGuests",
+      "type" : "int",
+      "description" : "Number of guests. @Min(1)."
+    }, {
+      "name" : "specialRequests",
+      "type" : "String",
+      "description" : "Optional special requests. Nullable."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "reservation-backend",
-    "file_role" : null
+    "file_role" : "DTO layer — data transfer object for creating new reservation requests."
   }, {
     "file_name" : "ReservationResponse.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/ReservationResponse.java",
@@ -992,13 +1185,57 @@
     "status" : "PLANNED",
     "description" : "DTO for returning reservation details.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "UUID",
+      "description" : "Unique identifier for the reservation."
+    }, {
+      "name" : "customerName",
+      "type" : "String",
+      "description" : "Name of the customer."
+    }, {
+      "name" : "customerEmail",
+      "type" : "String",
+      "description" : "Email of the customer."
+    }, {
+      "name" : "customerPhone",
+      "type" : "String",
+      "description" : "Phone number of the customer."
+    }, {
+      "name" : "reservationDate",
+      "type" : "java.time.LocalDate",
+      "description" : "Date of the reservation."
+    }, {
+      "name" : "reservationTime",
+      "type" : "java.time.LocalTime",
+      "description" : "Time of the reservation."
+    }, {
+      "name" : "numberOfGuests",
+      "type" : "int",
+      "description" : "Number of guests for the reservation."
+    }, {
+      "name" : "status",
+      "type" : "ReservationStatus",
+      "description" : "Current status of the reservation."
+    }, {
+      "name" : "specialRequests",
+      "type" : "String",
+      "description" : "Any special requests from the customer."
+    }, {
+      "name" : "createdAt",
+      "type" : "java.time.LocalDateTime",
+      "description" : "Timestamp when the reservation was created."
+    }, {
+      "name" : "updatedAt",
+      "type" : "java.time.LocalDateTime",
+      "description" : "Timestamp when the reservation was last updated."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "reservation-backend",
-    "file_role" : null
+    "file_role" : "DTO layer — data transfer object for returning reservation details."
   }, {
     "file_name" : "Order.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/model/Order.java",
@@ -2284,7 +2521,7 @@
     "feature_display_name" : "Reservation System (Backend)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/Reservation.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/model/ReservationStatus.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/ReservationRepository.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/service/ReservationService.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/ReservationController.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminReservationController.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/CreateReservationRequest.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/ReservationResponse.java" ],
-    "feature_instruction" : null,
+    "feature_instruction" : "This feature implements the backend logic for managing table reservations at Yeti - The Himalayan Kitchen. It includes data models for reservations and their statuses, a repository for persistence, a service layer for business logic, and two REST controllers: one for public reservation creation and retrieval, and another for administrative management of all reservations.\n\n## Data Models\n- `ReservationStatus.java`: An enum defining the possible states of a reservation: `PENDING`, `CONFIRMED`, `CANCELLED`, `COMPLETED`, `NO_SHOW`.\n- `Reservation.java`: The JPA entity representing a reservation. It includes fields for `id` (UUID), `customerName` (String), `customerEmail` (String), `customerPhone` (String), `reservationDate` (LocalDate), `reservationTime` (LocalTime), `numberOfGuests` (int), `status` (ReservationStatus), `specialRequests` (String, nullable), `createdAt` (LocalDateTime), and `updatedAt` (LocalDateTime). The `status` field defaults to `PENDING` upon creation.\n\n## Data Transfer Objects (DTOs)\n- `CreateReservationRequest.java`: Used for incoming requests to create a new reservation. It contains `customerName`, `customerEmail`, `customerPhone`, `reservationDate`, `reservationTime`, `numberOfGuests`, and `specialRequests`. All fields except `specialRequests` are mandatory and include appropriate validation annotations (`@NotBlank`, `@Email`, `@NotNull`, `@Min`).\n- `ReservationResponse.java`: Used for outgoing responses, providing full details of a reservation. It includes all fields from the `Reservation` entity.\n\n## Persistence Layer\n- `ReservationRepository.java`: Extends `JpaRepository<Reservation, UUID>`, providing standard CRUD operations. It also declares a custom finder method `findByReservationDateBetween(LocalDate startDate, LocalDate endDate): List<Reservation>` to allow fetching reservations within a date range.\n\n## Service Layer\n- `ReservationService.java`: This service orchestrates the business logic for reservations. It injects `ReservationRepository`.\n  - `createReservation(CreateReservationRequest request): ReservationResponse`:\n    1. Validates the `CreateReservationRequest`. If the requested date/time is in the past, throw `IllegalArgumentException`.\n    2. Creates a new `Reservation` entity, mapping fields from the request.\n    3. Sets the initial `status` to `ReservationStatus.PENDING`.\n    4. Sets `createdAt` and `updatedAt` to the current `LocalDateTime`.\n    5. Saves the new reservation using `reservationRepository.save()`.\n    6. Returns a `ReservationResponse` mapped from the saved entity.\n  - `getReservationById(UUID id): ReservationResponse`:\n    1. Retrieves a `Reservation` by its `id` using `reservationRepository.findById(id)`.\n    2. If not found, throws `ResourceNotFoundException` (from `shared-backend-core`).\n    3. Returns a `ReservationResponse` mapped from the found entity.\n  - `getAllReservations(): List<ReservationResponse>`:\n    1. Retrieves all `Reservation` entities using `reservationRepository.findAll()`.\n    2. Maps each entity to a `ReservationResponse` and returns the list.\n  - `getReservationsByDateRange(LocalDate startDate, LocalDate endDate): List<ReservationResponse>`:\n    1. Retrieves `Reservation` entities within the specified date range using `reservationRepository.findByReservationDateBetween(startDate, endDate)`.\n    2. Maps each entity to a `ReservationResponse` and returns the list.\n  - `updateReservationStatus(UUID id, ReservationStatus newStatus): ReservationResponse`:\n    1. Retrieves the `Reservation` by `id` using `reservationRepository.findById(id)`.\n    2. If not found, throws `ResourceNotFoundException`.\n    3. Updates the `status` field of the retrieved reservation to `newStatus`.\n    4. Updates the `updatedAt` field to the current `LocalDateTime`.\n    5. Saves the updated reservation using `reservationRepository.save()`.\n    6. Returns a `ReservationResponse` mapped from the updated entity.\n  - `deleteReservation(UUID id): void`:\n    1. Checks if a reservation with the given `id` exists using `reservationRepository.existsById(id)`.\n    2. If not found, throws `ResourceNotFoundException`.\n    3. Deletes the reservation using `reservationRepository.deleteById(id)`.\n\n## Controller Layer\n- `ReservationController.java`: Handles public-facing API endpoints for reservations. It injects `ReservationService`.\n  - `POST /api/v1/reservations`: Creates a new reservation. Consumes `CreateReservationRequest` and returns `ReservationResponse` (HTTP 201 Created). Handles `IllegalArgumentException` with HTTP 400 Bad Request.\n  - `GET /api/v1/reservations/{id}`: Retrieves a reservation by ID. Returns `ReservationResponse` (HTTP 200 OK). Handles `ResourceNotFoundException` with HTTP 404 Not Found.\n- `AdminReservationController.java`: Handles admin-only API endpoints for reservations. It injects `ReservationService`. All endpoints in this controller require the `ADMIN` role.\n  - `GET /api/v1/admin/reservations`: Retrieves all reservations. Optionally accepts `startDate` and `endDate` query parameters (format YYYY-MM-DD) to filter reservations by date range. Returns `List<ReservationResponse>` (HTTP 200 OK).\n  - `GET /api/v1/admin/reservations/{id}`: Retrieves a specific reservation by ID. Returns `ReservationResponse` (HTTP 200 OK). Handles `ResourceNotFoundException` with HTTP 404 Not Found.\n  - `PUT /api/v1/admin/reservations/{id}/status`: Updates the status of a reservation. Consumes a `ReservationStatus` enum value in the request body and returns `ReservationResponse` (HTTP 200 OK). Handles `ResourceNotFoundException` with HTTP 404 Not Found and `IllegalArgumentException` (e.g., invalid status) with HTTP 400 Bad Request.\n  - `DELETE /api/v1/admin/reservations/{id}`: Deletes a reservation by ID. Returns HTTP 204 No Content on success. Handles `ResourceNotFoundException` with HTTP 404 Not Found.\n\n## Security Configuration\n- The public endpoints `/api/v1/reservations` (POST) and `/api/v1/reservations/{id}` (GET) must be `permitAll()` in `SecurityConfig`.\n- All admin endpoints under `/api/v1/admin/reservations/**` must be secured with `hasRole(\"ADMIN\")`.",
     "change_required" : true
   }, {
     "feature_name" : "order-backend",
