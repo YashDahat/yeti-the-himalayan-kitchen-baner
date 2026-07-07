@@ -2,11 +2,11 @@ package com.yetithehimalayankitchenbaner.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
@@ -37,11 +37,8 @@ public class MenuItem {
     @Column(nullable = false)
     private boolean available;
 
-    // The MenuItemCategory is provided as an enum, not an entity.
-    // Therefore, a direct Many-to-One relationship as described in the feature instruction
-    // is not possible. We store the enum value directly.
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
     private MenuItemCategory category;
 
     @Column(nullable = false, updatable = false)

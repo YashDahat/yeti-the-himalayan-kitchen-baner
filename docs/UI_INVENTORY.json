@@ -1,0 +1,12 @@
+{
+  "radix" : {
+    "@radix-ui/react-alert-dialog" : [ "Action", "AlertDialog", "AlertDialogAction", "AlertDialogCancel", "AlertDialogContent", "AlertDialogDescription", "AlertDialogOverlay", "AlertDialogPortal", "AlertDialogTitle", "AlertDialogTrigger", "Cancel", "Content", "Description", "Overlay", "Portal", "Root", "Title", "Trigger" ],
+    "@radix-ui/react-checkbox" : [ "Checkbox", "CheckboxIndicator", "Indicator", "Root", "unstable_BubbleInput", "unstable_CheckboxBubbleInput", "unstable_CheckboxTrigger", "unstable_Trigger" ],
+    "@radix-ui/react-dialog" : [ "Close", "Content", "Description", "Dialog", "DialogClose", "DialogContent", "DialogDescription", "DialogOverlay", "DialogPortal", "DialogTitle", "DialogTrigger", "Overlay", "Portal", "Root", "Title", "Trigger" ],
+    "@radix-ui/react-label" : [ "Label", "Root" ],
+    "@radix-ui/react-popover" : [ "Anchor", "Arrow", "Close", "Content", "Popover", "PopoverAnchor", "PopoverArrow", "PopoverClose", "PopoverContent", "PopoverPortal", "PopoverTrigger", "Portal", "Root", "Trigger" ],
+    "@radix-ui/react-select" : [ "Arrow", "Content", "Group", "Icon", "Item", "ItemIndicator", "ItemText", "Label", "Portal", "Root", "ScrollDownButton", "ScrollUpButton", "Select", "SelectArrow", "SelectContent", "SelectGroup", "SelectIcon", "SelectItem", "SelectItemIndicator", "SelectItemText", "SelectLabel", "SelectPortal", "SelectScrollDownButton", "SelectScrollUpButton", "SelectSeparator", "SelectTrigger", "SelectValue", "SelectViewport", "Separator", "Trigger", "Value", "Viewport", "unstable_BubbleInput", "unstable_SelectBubbleInput" ],
+    "@radix-ui/react-toast" : [ "Action", "Close", "Description", "Root", "Title", "Toast", "ToastAction", "ToastClose", "ToastDescription", "ToastTitle", "ToastViewport", "Viewport" ]
+  },
+  "shadcn_ui" : { }
+}

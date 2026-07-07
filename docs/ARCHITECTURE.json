@@ -14,7 +14,7 @@
     "layer" : "EXCEPTION",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Handles all uncaught exceptions and formats them into a consistent ErrorResponse.",
     "public_functions" : [ {
       "name" : "handleResourceNotFoundException",
@@ -46,7 +46,7 @@
     "layer" : "EXCEPTION",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Custom exception for cases where a requested resource (e.g., menu item, order) is not found.",
     "public_functions" : [ {
       "name" : "ResourceNotFoundException",
@@ -68,7 +68,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A standard DTO for returning error details from the API.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -105,7 +105,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Forwards all non-API, non-static requests to index.html, enabling client-side routing in the SPA.",
     "public_functions" : [ {
       "name" : "forwardToIndex",
@@ -139,7 +139,7 @@
     "layer" : "CONFIG",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Creates the initial administrator user on application startup if one doesn't exist.",
     "public_functions" : [ {
       "name" : "run",
@@ -161,7 +161,7 @@
     "layer" : "CONFIG",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Populates the database with initial sample data (e.g., menu items) for development and demonstration.",
     "public_functions" : [ {
       "name" : "run",
@@ -183,7 +183,7 @@
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Represents a user account, which can be a customer or an administrator.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -216,7 +216,7 @@
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Enum defining user roles within the system (e.g., ADMIN, CUSTOMER).",
     "public_functions" : null,
     "public_variables" : [ {
@@ -241,7 +241,7 @@
     "layer" : "REPOSITORY",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Spring Data JPA repository for User entities.",
     "public_functions" : [ {
       "name" : "findByEmail",
@@ -263,7 +263,7 @@
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Business logic for user management, including registration and loading user details for security.",
     "public_functions" : [ {
       "name" : "registerUser",
@@ -290,7 +290,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Handles user authentication (login) and registration endpoints.",
     "public_functions" : [ {
       "name" : "register",
@@ -329,7 +329,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "DTO for capturing user login credentials (email and password).",
     "public_functions" : null,
     "public_variables" : [ {
@@ -354,7 +354,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "DTO for returning a JWT upon successful authentication.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -375,7 +375,7 @@
     "layer" : "CONFIG",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Configures Spring Security, including password encoding, CORS, and defining public/protected API endpoints.",
     "public_functions" : [ {
       "name" : "passwordEncoder",
@@ -412,7 +412,7 @@
     "layer" : "CONFIG",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "A Spring Security filter that validates JWTs from the Authorization header on incoming requests.",
     "public_functions" : [ {
       "name" : "doFilterInternal",
@@ -434,7 +434,7 @@
     "layer" : "UTIL",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Utility class for generating, parsing, and validating JSON Web Tokens (JWTs).",
     "public_functions" : [ {
       "name" : "extractEmail",
@@ -471,7 +471,7 @@
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Represents a single item on the restaurant's menu.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -524,7 +524,7 @@
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Represents a category for menu items (e.g., Appetizers, Main Course, Desserts).",
     "public_functions" : null,
     "public_variables" : [ {
@@ -561,7 +561,7 @@
     "layer" : "REPOSITORY",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Spring Data JPA repository for MenuItem entities.",
     "public_functions" : [ {
       "name" : "findByCategoryId",
@@ -583,7 +583,7 @@
     "layer" : "REPOSITORY",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Spring Data JPA repository for MenuItemCategory entities.",
     "public_functions" : [ {
       "name" : "findByName",
@@ -605,7 +605,7 @@
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Handles business logic for menu items and categories, including CRUD operations.",
     "public_functions" : [ {
       "name" : "getAllMenuItems",
@@ -677,7 +677,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Public-facing REST controller for fetching menu information.",
     "public_functions" : [ {
       "name" : "getAllMenuItems",
@@ -738,7 +738,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Admin-only REST controller for managing (CRUD) menu items and categories.",
     "public_functions" : [ {
       "name" : "createMenuItem",
@@ -821,7 +821,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Data Transfer Object for menu items, used in API requests and responses.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -870,7 +870,7 @@
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Represents a customer's table reservation.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -931,7 +931,7 @@
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Enum for the status of a reservation (e.g., PENDING, CONFIRMED, CANCELLED).",
     "public_functions" : null,
     "public_variables" : [ {
@@ -968,7 +968,7 @@
     "layer" : "REPOSITORY",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Spring Data JPA repository for Reservation entities.",
     "public_functions" : [ {
       "name" : "findByReservationDateBetween",
@@ -990,7 +990,7 @@
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Handles business logic for creating and managing table reservations.",
     "public_functions" : [ {
       "name" : "createReservation",
@@ -1037,7 +1037,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Public-facing REST controller for creating new table reservations.",
     "public_functions" : [ {
       "name" : "createReservation",
@@ -1076,7 +1076,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Admin-only REST controller for viewing and managing all reservations.",
     "public_functions" : [ {
       "name" : "getAllReservations",
@@ -1137,7 +1137,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "DTO for creating a new reservation.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -1182,7 +1182,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "DTO for returning reservation details.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -1243,7 +1243,7 @@
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Represents a customer's food order for delivery or takeaway.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -1296,7 +1296,7 @@
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Represents a single line item within an Order.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -1337,7 +1337,7 @@
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Enum for the status of an order (e.g., PENDING, CONFIRMED, OUT_FOR_DELIVERY, DELIVERED).",
     "public_functions" : null,
     "public_variables" : [ {
@@ -1374,7 +1374,7 @@
     "layer" : "REPOSITORY",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Spring Data JPA repository for Order entities.",
     "public_functions" : [ {
       "name" : "findByUserId",
@@ -1401,7 +1401,7 @@
     "layer" : "REPOSITORY",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Spring Data JPA repository for OrderItem entities.",
     "public_functions" : [ ],
     "public_variables" : null,
@@ -1418,7 +1418,7 @@
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Handles business logic for creating and managing customer orders.",
     "public_functions" : [ {
       "name" : "createOrder",
@@ -1465,7 +1465,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Authenticated REST controller for customers to place orders and view their order history.",
     "public_functions" : [ {
       "name" : "createOrder",
@@ -1526,7 +1526,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Admin-only REST controller for viewing and managing all customer orders.",
     "public_functions" : [ {
       "name" : "getAllOrders",
@@ -1576,7 +1576,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "DTO for creating a new order, containing a list of order items and delivery details.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -1609,7 +1609,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "DTO representing a single item within a new order request.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -1634,7 +1634,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "DTO for returning detailed information about an order.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -1687,7 +1687,7 @@
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Handles interactions with the Razorpay API, including creating payment orders and verifying signatures.",
     "public_functions" : [ {
       "name" : "createPaymentOrder",
@@ -1714,7 +1714,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Exposes endpoints for initiating payments and handling webhooks from Razorpay.",
     "public_functions" : [ {
       "name" : "initiatePayment",
@@ -1753,7 +1753,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "DTO to return Razorpay order details to the frontend to initiate the payment flow.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -1790,7 +1790,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "DTO for the frontend to send Razorpay payment details for server-side verification.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -1819,7 +1819,7 @@
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Represents a single blog post or story.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -1868,7 +1868,7 @@
     "layer" : "REPOSITORY",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Spring Data JPA repository for BlogPost entities.",
     "public_functions" : [ ],
     "public_variables" : null,
@@ -1885,7 +1885,7 @@
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Handles business logic for managing blog posts.",
     "public_functions" : [ {
       "name" : "getAllBlogPosts",
@@ -1927,7 +1927,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Public-facing REST controller for fetching blog posts.",
     "public_functions" : [ {
       "name" : "getAllBlogPosts",
@@ -1966,7 +1966,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Admin-only REST controller for CRUD operations on blog posts.",
     "public_functions" : [ {
       "name" : "getAllBlogPosts",
@@ -2038,7 +2038,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Data Transfer Object for blog posts.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -2079,7 +2079,7 @@
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Represents a customer testimonial or review.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -2120,7 +2120,7 @@
     "layer" : "REPOSITORY",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Spring Data JPA repository for Testimonial entities.",
     "public_functions" : [ {
       "name" : "findByApproved",
@@ -2142,7 +2142,7 @@
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Handles business logic for managing testimonials.",
     "public_functions" : [ {
       "name" : "getAllApprovedTestimonials",
@@ -2194,7 +2194,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Public-facing REST controller for fetching testimonials.",
     "public_functions" : [ {
       "name" : "getAllApprovedTestimonials",
@@ -2233,7 +2233,7 @@
     "layer" : "CONTROLLER",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Admin-only REST controller for CRUD operations on testimonials.",
     "public_functions" : [ {
       "name" : "getAllTestimonials",
@@ -2316,7 +2316,7 @@
     "layer" : "DTO",
     "created_date" : "2024-07-29",
     "updated_date" : "2026-07-07",
-    "status" : "GENERATED",
+    "status" : "VALIDATED",
     "description" : "Data Transfer Object for testimonials.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -2356,8 +2356,8 @@
     "file_type" : "FRONTEND",
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "Configured Axios instance for all API calls, including JWT interceptors.",
     "public_functions" : [ ],
     "public_variables" : [ {
@@ -2611,8 +2611,8 @@
     "file_type" : "FRONTEND",
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "Service for handling authentication API calls like login and register.",
     "public_functions" : [ {
       "name" : "login",
@@ -2650,8 +2650,8 @@
     "file_type" : "FRONTEND",
     "layer" : "UTIL",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "TypeScript types and interfaces related to authentication.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -2882,8 +2882,8 @@
     "file_type" : "FRONTEND",
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "Service for all menu-related API calls, for both public and admin use.",
     "public_functions" : [ {
       "name" : "getAllMenuItems",
@@ -3009,8 +3009,8 @@
     "file_type" : "FRONTEND",
     "layer" : "UTIL",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "TypeScript types and interfaces for menu items and categories.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -3120,8 +3120,8 @@
     "file_type" : "FRONTEND",
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "Service for all reservation-related API calls.",
     "public_functions" : [ {
       "name" : "createReservation",
@@ -3192,8 +3192,8 @@
     "file_type" : "FRONTEND",
     "layer" : "UTIL",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "TypeScript types and interfaces for reservations.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -3334,8 +3334,8 @@
     "file_type" : "FRONTEND",
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "Service for all order-related API calls, interacting with the backend order API.",
     "public_functions" : [ {
       "name" : "createOrder",
@@ -3423,8 +3423,8 @@
     "file_type" : "FRONTEND",
     "layer" : "UTIL",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "TypeScript types and interfaces for orders and order items, mirroring the backend DTOs.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -3516,8 +3516,8 @@
     "file_type" : "FRONTEND",
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "Service for payment-related API calls, such as creating a Razorpay order and verifying payment signatures.",
     "public_functions" : [ {
       "name" : "initiatePayment",
@@ -3555,8 +3555,8 @@
     "file_type" : "FRONTEND",
     "layer" : "UTIL",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "TypeScript types related to payment processing with Razorpay, mirroring backend DTOs.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -3688,8 +3688,8 @@
     "file_type" : "FRONTEND",
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "Service for all blog-related API calls.",
     "public_functions" : [ {
       "name" : "getAllBlogPosts",
@@ -3760,8 +3760,8 @@
     "file_type" : "FRONTEND",
     "layer" : "UTIL",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "TypeScript types and interfaces for blog posts.",
     "public_functions" : null,
     "public_variables" : [ {
@@ -3881,8 +3881,8 @@
     "file_type" : "FRONTEND",
     "layer" : "SERVICE",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "Service for all testimonial-related API calls.",
     "public_functions" : [ {
       "name" : "getAllApprovedTestimonials",
@@ -3975,8 +3975,8 @@
     "file_type" : "FRONTEND",
     "layer" : "UTIL",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "VALIDATED",
     "description" : "TypeScript types and interfaces for testimonials.",
     "public_functions" : null,
     "public_variables" : [ {

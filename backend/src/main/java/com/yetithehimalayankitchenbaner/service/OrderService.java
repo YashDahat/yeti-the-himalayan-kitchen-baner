@@ -9,6 +9,7 @@ import com.yetithehimalayankitchenbaner.model.MenuItem; // Assuming MenuItem is 
 import com.yetithehimalayankitchenbaner.model.User; // Assuming UserService returns User
 import com.yetithehimalayankitchenbaner.dto.CreateOrderRequest;
 import com.yetithehimalayankitchenbaner.dto.OrderResponse;
+import com.yetithehimalayankitchenbaner.dto.OrderItemResponse;
 import com.yetithehimalayankitchenbaner.dto.OrderItemRequest;
 import com.yetithehimalayankitchenbaner.dto.MenuItemDto; // From menu-backend
 import com.yetithehimalayankitchenbaner.dto.PaymentOrderResponse; // From payment-backend
@@ -54,7 +55,7 @@ public class OrderService {
         // 1. Validate that the userId exists
         // Assuming userService.loadUserByUsername returns a User object or null if not found
         // The User model implements UserDetails, so this is consistent with typical Spring Security usage.
-        User user = userService.loadUserByUsername(userId.toString());
+        User user = (User) userService.loadUserByUsername(userId.toString());
         if (user == null) {
             throw new ResourceNotFoundException("User with ID " + userId + " not found.");
         }
@@ -114,7 +115,7 @@ public class OrderService {
         // 9. Call paymentService.createPaymentOrder
         // This call is for initiating payment, but the OrderResponse doesn't include payment details.
         // We just make the call as specified.
-        PaymentOrderResponse paymentResponse = paymentService.createPaymentOrder(savedOrder.getId(), totalAmount, userId);
+        PaymentOrderResponse paymentResponse = paymentService.createPaymentOrder(savedOrder.getId(), totalAmount);
 
         // 10. Map the saved Order and its OrderItems to an OrderResponse DTO
         // 11. Return the OrderResponse

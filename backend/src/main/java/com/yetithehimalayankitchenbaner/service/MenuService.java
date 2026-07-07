@@ -37,7 +37,7 @@ public class MenuService {
                 // For mapping from MenuItem (which has an enum category), we cannot derive a UUID.
                 // This field will be null when mapping from MenuItem to MenuItemDto.
                 .categoryId(null)
-                .categoryName(menuItem.getCategory() != null ? menuItem.getCategory().name() : null)
+                .categoryName(menuItem.getCategory() != null ? menuItem.getCategory().getName() : null)
                 .imageUrl(menuItem.getImageUrl())
                 .available(menuItem.isAvailable())
                 .build();

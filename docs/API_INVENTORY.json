@@ -1,0 +1,513 @@
+{
+  "endpoints" : [ {
+    "method" : "GET",
+    "path" : "/api/v1/blog",
+    "handler" : "getAllBlogPosts",
+    "request" : null,
+    "response" : "BlogPostDto[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/blog/{id}",
+    "handler" : "getBlogPostById",
+    "request" : null,
+    "response" : "BlogPostDto"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/admin/orders",
+    "handler" : "getAllOrders",
+    "request" : null,
+    "response" : "OrderResponse[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/admin/orders/{orderId}",
+    "handler" : "getOrderById",
+    "request" : null,
+    "response" : "OrderResponse"
+  }, {
+    "method" : "PUT",
+    "path" : "/api/v1/admin/orders/{orderId}/status",
+    "handler" : "updateOrderStatus",
+    "request" : "Map",
+    "response" : "OrderResponse"
+  }, {
+    "method" : "POST",
+    "path" : "/api/v1/auth/register",
+    "handler" : "register",
+    "request" : "AuthRequest",
+    "response" : "AuthResponse"
+  }, {
+    "method" : "POST",
+    "path" : "/api/v1/auth/login",
+    "handler" : "login",
+    "request" : "AuthRequest",
+    "response" : "AuthResponse"
+  }, {
+    "method" : "POST",
+    "path" : "/api/v1/payments/initiate",
+    "handler" : "initiatePayment",
+    "request" : null,
+    "response" : "PaymentOrderResponse"
+  }, {
+    "method" : "POST",
+    "path" : "/api/v1/payments/verify",
+    "handler" : "verifyPayment",
+    "request" : "PaymentVerificationRequest",
+    "response" : "String"
+  }, {
+    "method" : "POST",
+    "path" : "/api/v1/orders",
+    "handler" : "createOrder",
+    "request" : "CreateOrderRequest",
+    "response" : "OrderResponse"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/orders",
+    "handler" : "getOrdersByUserId",
+    "request" : null,
+    "response" : "OrderResponse[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/orders/{orderId}",
+    "handler" : "getOrderById",
+    "request" : null,
+    "response" : "OrderResponse"
+  }, {
+    "method" : "PUT",
+    "path" : "/api/v1/orders/{orderId}/cancel",
+    "handler" : "cancelOrder",
+    "request" : null,
+    "response" : "OrderResponse"
+  }, {
+    "method" : "GET",
+    "path" : "/api/public/menu/items",
+    "handler" : "getAllMenuItems",
+    "request" : null,
+    "response" : "MenuItemDto[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/public/menu/items/{id}",
+    "handler" : "getMenuItemById",
+    "request" : null,
+    "response" : "MenuItemDto"
+  }, {
+    "method" : "GET",
+    "path" : "/api/public/menu/items/category/{categoryId}",
+    "handler" : "getMenuItemsByCategory",
+    "request" : null,
+    "response" : "MenuItemDto[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/public/menu/categories",
+    "handler" : "getAllMenuItemCategories",
+    "request" : null,
+    "response" : "MenuItemCategory[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/public/menu/categories/{id}",
+    "handler" : "getMenuItemCategoryById",
+    "request" : null,
+    "response" : "MenuItemCategory"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/testimonials/approved",
+    "handler" : "getAllApprovedTestimonials",
+    "request" : null,
+    "response" : "TestimonialDto[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/testimonials/{id}",
+    "handler" : "getTestimonialById",
+    "request" : null,
+    "response" : "TestimonialDto"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/admin/reservations",
+    "handler" : "getAllReservations",
+    "request" : null,
+    "response" : "ReservationResponse[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/admin/reservations/{id}",
+    "handler" : "getReservationById",
+    "request" : null,
+    "response" : "ReservationResponse"
+  }, {
+    "method" : "PUT",
+    "path" : "/api/v1/admin/reservations/{id}/status",
+    "handler" : "updateReservationStatus",
+    "request" : "ReservationStatus",
+    "response" : "ReservationResponse"
+  }, {
+    "method" : "DELETE",
+    "path" : "/api/v1/admin/reservations/{id}",
+    "handler" : "deleteReservation",
+    "request" : null,
+    "response" : null
+  }, {
+    "method" : "POST",
+    "path" : "/api/v1/reservations",
+    "handler" : "createReservation",
+    "request" : "CreateReservationRequest",
+    "response" : "ReservationResponse"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/reservations/{id}",
+    "handler" : "getReservationById",
+    "request" : null,
+    "response" : "ReservationResponse"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/admin/testimonials",
+    "handler" : "getAllTestimonials",
+    "request" : null,
+    "response" : "TestimonialDto[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/admin/testimonials/{id}",
+    "handler" : "getTestimonialById",
+    "request" : null,
+    "response" : "TestimonialDto"
+  }, {
+    "method" : "POST",
+    "path" : "/api/v1/admin/testimonials",
+    "handler" : "createTestimonial",
+    "request" : "TestimonialDto",
+    "response" : "TestimonialDto"
+  }, {
+    "method" : "PUT",
+    "path" : "/api/v1/admin/testimonials/{id}",
+    "handler" : "updateTestimonial",
+    "request" : "TestimonialDto",
+    "response" : "TestimonialDto"
+  }, {
+    "method" : "PUT",
+    "path" : "/api/v1/admin/testimonials/{id}/approve",
+    "handler" : "approveTestimonial",
+    "request" : null,
+    "response" : "TestimonialDto"
+  }, {
+    "method" : "DELETE",
+    "path" : "/api/v1/admin/testimonials/{id}",
+    "handler" : "deleteTestimonial",
+    "request" : null,
+    "response" : null
+  }, {
+    "method" : "GET",
+    "path" : "/api/admin/menu/items",
+    "handler" : "getAllMenuItems",
+    "request" : null,
+    "response" : "MenuItemDto[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/admin/menu/items/{id}",
+    "handler" : "getMenuItemById",
+    "request" : null,
+    "response" : "MenuItemDto"
+  }, {
+    "method" : "POST",
+    "path" : "/api/admin/menu/items",
+    "handler" : "createMenuItem",
+    "request" : "MenuItemDto",
+    "response" : "MenuItemDto"
+  }, {
+    "method" : "PUT",
+    "path" : "/api/admin/menu/items/{id}",
+    "handler" : "updateMenuItem",
+    "request" : "MenuItemDto",
+    "response" : "MenuItemDto"
+  }, {
+    "method" : "DELETE",
+    "path" : "/api/admin/menu/items/{id}",
+    "handler" : "deleteMenuItem",
+    "request" : null,
+    "response" : null
+  }, {
+    "method" : "GET",
+    "path" : "/api/admin/menu/categories",
+    "handler" : "getAllMenuItemCategories",
+    "request" : null,
+    "response" : "MenuItemCategory[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/admin/menu/categories/{id}",
+    "handler" : "getMenuItemCategoryById",
+    "request" : null,
+    "response" : "MenuItemCategory"
+  }, {
+    "method" : "POST",
+    "path" : "/api/admin/menu/categories",
+    "handler" : "createMenuItemCategory",
+    "request" : "CategoryRequest",
+    "response" : "MenuItemCategory"
+  }, {
+    "method" : "PUT",
+    "path" : "/api/admin/menu/categories/{id}",
+    "handler" : "updateMenuItemCategory",
+    "request" : "CategoryRequest",
+    "response" : "MenuItemCategory"
+  }, {
+    "method" : "DELETE",
+    "path" : "/api/admin/menu/categories/{id}",
+    "handler" : "deleteMenuItemCategory",
+    "request" : null,
+    "response" : null
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/admin/blog",
+    "handler" : "getAllBlogPosts",
+    "request" : null,
+    "response" : "BlogPostDto[]"
+  }, {
+    "method" : "GET",
+    "path" : "/api/v1/admin/blog/{id}",
+    "handler" : "getBlogPostById",
+    "request" : null,
+    "response" : "BlogPostDto"
+  }, {
+    "method" : "POST",
+    "path" : "/api/v1/admin/blog",
+    "handler" : "createBlogPost",
+    "request" : "BlogPostDto",
+    "response" : "BlogPostDto"
+  }, {
+    "method" : "PUT",
+    "path" : "/api/v1/admin/blog/{id}",
+    "handler" : "updateBlogPost",
+    "request" : "BlogPostDto",
+    "response" : "BlogPostDto"
+  }, {
+    "method" : "DELETE",
+    "path" : "/api/v1/admin/blog/{id}",
+    "handler" : "deleteBlogPost",
+    "request" : null,
+    "response" : null
+  } ],
+  "types" : {
+    "ReservationStatus" : {
+      "constants" : [ "PENDING", "CONFIRMED", "CANCELLED", "COMPLETED", "NO_SHOW" ]
+    },
+    "OrderItem" : {
+      "fields" : {
+        "id" : "UUID",
+        "order" : "Order?",
+        "menuItemId" : "UUID?",
+        "menuItemName" : "String?",
+        "quantity" : "int?",
+        "priceAtOrder" : "BigDecimal?"
+      }
+    },
+    "MenuItemCategory" : {
+      "fields" : {
+        "id" : "UUID",
+        "name" : "String?",
+        "menuItems" : "List<MenuItem>?",
+        "createdAt" : "LocalDateTime?",
+        "updatedAt" : "LocalDateTime?"
+      }
+    },
+    "User" : {
+      "fields" : {
+        "id" : "Long",
+        "email" : "String?",
+        "password" : "String?",
+        "role" : "Role?"
+      }
+    },
+    "Testimonial" : {
+      "fields" : {
+        "id" : "UUID",
+        "authorName" : "String?",
+        "content" : "String?",
+        "rating" : "Integer?",
+        "createdAt" : "LocalDateTime?"
+      }
+    },
+    "MenuItem" : {
+      "fields" : {
+        "id" : "UUID",
+        "name" : "String?",
+        "description" : "String?",
+        "price" : "BigDecimal?",
+        "imageUrl" : "String?",
+        "available" : "boolean?",
+        "category" : "MenuItemCategory?",
+        "createdAt" : "LocalDateTime?",
+        "updatedAt" : "LocalDateTime?"
+      }
+    },
+    "Order" : {
+      "fields" : {
+        "id" : "UUID",
+        "userId" : "UUID?",
+        "orderDate" : "LocalDateTime?",
+        "totalAmount" : "BigDecimal?",
+        "status" : "OrderStatus?",
+        "deliveryAddress" : "String?",
+        "contactPhone" : "String?",
+        "notes" : "String?"
+      }
+    },
+    "OrderStatus" : {
+      "constants" : [ "PENDING", "CONFIRMED", "OUT_FOR_DELIVERY", "DELIVERED", "CANCELLED" ]
+    },
+    "Reservation" : {
+      "fields" : {
+        "id" : "UUID",
+        "customerName" : "String?",
+        "customerEmail" : "String?",
+        "customerPhone" : "String?",
+        "reservationDate" : "LocalDate?",
+        "reservationTime" : "LocalTime?",
+        "numberOfGuests" : "int?",
+        "specialRequests" : "String?",
+        "createdAt" : "LocalDateTime?",
+        "updatedAt" : "LocalDateTime?"
+      }
+    },
+    "Role" : {
+      "constants" : [ "ADMIN", "CUSTOMER" ]
+    },
+    "BlogPost" : {
+      "fields" : {
+        "id" : "UUID",
+        "title" : "String?",
+        "content" : "String?",
+        "author" : "String?",
+        "publicationDate" : "LocalDateTime?",
+        "imageUrl" : "String?",
+        "createdAt" : "LocalDateTime?",
+        "updatedAt" : "LocalDateTime?"
+      }
+    },
+    "MenuItemDto" : {
+      "fields" : {
+        "id" : "UUID?",
+        "name" : "String?",
+        "description" : "String?",
+        "price" : "java.math.BigDecimal?",
+        "categoryId" : "UUID?",
+        "categoryName" : "String?",
+        "imageUrl" : "String?",
+        "available" : "Boolean?"
+      }
+    },
+    "CreateReservationRequest" : {
+      "fields" : {
+        "customerName" : "String?",
+        "customerEmail" : "String?",
+        "customerPhone" : "String?",
+        "reservationDate" : "java.time.LocalDate?",
+        "reservationTime" : "java.time.LocalTime?",
+        "numberOfGuests" : "Integer?",
+        "specialRequests" : "String?"
+      }
+    },
+    "TestimonialDto" : {
+      "fields" : {
+        "id" : "UUID?",
+        "authorName" : "String?",
+        "content" : "String?",
+        "rating" : "Integer?",
+        "createdAt" : "java.time.LocalDateTime?",
+        "approved" : "Boolean?"
+      }
+    },
+    "AuthResponse" : {
+      "fields" : {
+        "token" : "String?"
+      }
+    },
+    "OrderResponse" : {
+      "fields" : {
+        "id" : "UUID?",
+        "userId" : "UUID?",
+        "orderDate" : "java.time.LocalDateTime?",
+        "totalAmount" : "java.math.BigDecimal?",
+        "status" : "com.yetithehimalayankitchenbaner.model.OrderStatus?",
+        "deliveryAddress" : "String?",
+        "contactPhone" : "String?",
+        "notes" : "String?",
+        "orderItems" : "List<OrderItemResponse>?"
+      }
+    },
+    "OrderItemRequest" : {
+      "fields" : {
+        "menuItemId" : "UUID?",
+        "quantity" : "Integer?"
+      }
+    },
+    "AuthRequest" : {
+      "fields" : {
+        "email" : "String?",
+        "password" : "String?"
+      }
+    },
+    "CreateOrderRequest" : {
+      "fields" : {
+        "orderItems" : "List<OrderItemRequest>?",
+        "deliveryAddress" : "String?",
+        "contactPhone" : "String?",
+        "notes" : "String?"
+      }
+    },
+    "BlogPostDto" : {
+      "fields" : {
+        "id" : "UUID?",
+        "title" : "String?",
+        "content" : "String?",
+        "author" : "String?",
+        "publicationDate" : "java.time.LocalDateTime?",
+        "imageUrl" : "String?"
+      }
+    },
+    "OrderItemResponse" : {
+      "fields" : {
+        "orderItemId" : "UUID?",
+        "menuItemId" : "UUID?",
+        "menuItemName" : "String?",
+        "quantity" : "int?",
+        "priceAtOrder" : "BigDecimal?"
+      }
+    },
+    "ErrorResponse" : {
+      "fields" : {
+        "timestamp" : "java.time.LocalDateTime?",
+        "status" : "Integer?",
+        "error" : "String?",
+        "message" : "String?",
+        "path" : "String?"
+      }
+    },
+    "PaymentVerificationRequest" : {
+      "fields" : {
+        "razorpayOrderId" : "String?",
+        "razorpayPaymentId" : "String?",
+        "razorpaySignature" : "String?"
+      }
+    },
+    "PaymentOrderResponse" : {
+      "fields" : {
+        "razorpayOrderId" : "String?",
+        "amount" : "java.math.BigDecimal?",
+        "currency" : "String?",
+        "receipt" : "String?",
+        "key" : "String?"
+      }
+    },
+    "ReservationResponse" : {
+      "fields" : {
+        "id" : "UUID?",
+        "customerName" : "String?",
+        "customerEmail" : "String?",
+        "customerPhone" : "String?",
+        "reservationDate" : "java.time.LocalDate?",
+        "reservationTime" : "java.time.LocalTime?",
+        "numberOfGuests" : "Integer?",
+        "status" : "ReservationStatus?",
+        "specialRequests" : "String?",
+        "createdAt" : "java.time.LocalDateTime?",
+        "updatedAt" : "java.time.LocalDateTime?"
+      }
+    }
+  }
+}

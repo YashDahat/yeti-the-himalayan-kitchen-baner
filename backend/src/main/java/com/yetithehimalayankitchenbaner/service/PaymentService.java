@@ -1,8 +1,8 @@
 package com.yetithehimalayankitchenbaner.service;
 
+import com.yetithehimalayankitchenbaner.dto.OrderResponse;
 import com.yetithehimalayankitchenbaner.dto.PaymentOrderResponse;
 import com.yetithehimalayankitchenbaner.exception.ResourceNotFoundException;
-import com.yetithehimalayankitchenbaner.model.Order;
 import com.yetithehimalayankitchenbaner.model.OrderStatus;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
@@ -35,14 +35,14 @@ public class PaymentService {
 
     @Transactional
     public PaymentOrderResponse createPaymentOrder(UUID orderId, BigDecimal amount) {
-        Order order = orderService.getOrderById(orderId);
+        OrderResponse order = orderService.getOrderById(orderId);
 
         if (order == null) {
             throw new ResourceNotFoundException("Order not found with ID: " + orderId);
         }
 
         // Ensure the amount from frontend matches the actual order total
-        if (order.getTotalAmount().compareTo(amount) != 0) {
+        if (order.getTotalAmount() != null && order.getTotalAmount().compareTo(amount) != 0) {
             throw new IllegalArgumentException("Amount mismatch for order ID: " + orderId);
         }
 
@@ -77,7 +77,11 @@ public class PaymentService {
     public boolean verifyPaymentSignature(String razorpayOrderId, String razorpayPaymentId, String razorpaySignature) {
         try {
             String data = razorpayOrderId + "|" + razorpayPaymentId;
-            boolean isSignatureValid = Utils.verifyPaymentSignature(data, razorpaySignature, razorpayKeySecret);
+            JSONObject attributes = new JSONObject();
+            attributes.put("razorpay_order_id", razorpayOrderId);
+            attributes.put("razorpay_payment_id", razorpayPaymentId);
+            attributes.put("razorpay_signature", razorpaySignature);
+            boolean isSignatureValid = Utils.verifyPaymentSignature(attributes, razorpayKeySecret);
 
             if (isSignatureValid) {
                 // Fetch the Razorpay order to get our internal orderId from the receipt
