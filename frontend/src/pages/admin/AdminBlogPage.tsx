@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AdminLayout } from '@/components/AdminLayout';
+import AdminLayout from '@/components/AdminLayout';
 import { Button } from '@/components/ui/button';
 import {
   Table,
@@ -11,9 +11,9 @@ import {
 } from '@/components/ui/table';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@radix-ui/react-dialog';
-import { Label } from '@radix-ui/react-label';
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@radix-ui/react-alert-dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
+import { Label } from '@/components/ui/label';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -24,7 +24,8 @@ import {
   useUpdateBlogPost,
   useDeleteBlogPost,
 } from '@/hooks/useBlog';
-import type { BlogPostDto, CreateUpdateBlogPostDto } from '@/types/blog';
+import type { BlogPostDto } from '@/types/blog';
+
 import { clsx } from 'clsx';
 
 // Zod Schema for Create/Update Blog Post Form
@@ -63,12 +64,11 @@ const AdminBlogPage: React.FC = () => {
   useEffect(() => {
     if (isModalOpen && editingPost) {
       form.reset({
-        title: editingPost.title,
-        content: editingPost.content,
-        author: editingPost.author,
-        // Format ISO string to YYYY-MM-DD for date input
-        publicationDate: format(new Date(editingPost.publicationDate), 'yyyy-MM-dd'),
-        imageUrl: editingPost.imageUrl,
+        title: editingPost.title ?? '',
+        content: editingPost.content ?? '',
+        author: editingPost.author ?? '',
+        publicationDate: editingPost.publicationDate ? format(new Date(editingPost.publicationDate), 'yyyy-MM-dd') : '',
+        imageUrl: editingPost.imageUrl ?? '',
       });
     } else if (isModalOpen && !editingPost) {
       form.reset({

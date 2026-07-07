@@ -96,10 +96,10 @@ const OrderConfirmationPage = () => {
                 <strong>Order Date:</strong> {order.orderDate ? format(new Date(order.orderDate), 'PPP p') : 'N/A'}
               </p>
               <p className="text-gray-700 mb-2">
-                <strong>Total Amount:</strong> ₹{order.totalAmount.toFixed(2)}
+                <strong>Total Amount:</strong> ₹{(order.totalAmount ?? 0).toFixed(2)}
               </p>
               <p className="text-gray-700 mb-2">
-                <strong>Status:</strong> <span className={`${getStatusColorClass(order.status)} font-medium`}>{order.status}</span>
+                <strong>Status:</strong> <span className={`${order.status ? getStatusColorClass(order.status) : ''} font-medium`}>{order.status}</span>
               </p>
               <p className="text-gray-700 mb-2">
                 <strong>Delivery Address:</strong> {order.deliveryAddress}
@@ -116,15 +116,15 @@ const OrderConfirmationPage = () => {
 
             <Card className="p-6 bg-white rounded-xl shadow-md border border-gray-100">
               <h3 className="text-xl font-semibold text-gray-800 mb-4">Items Ordered</h3>
-              {order.orderItems.length > 0 ? (
+              {(order.orderItems ?? []).length > 0 ? (
                 <ul className="space-y-4">
-                  {order.orderItems.map((item) => (
+                  {(order.orderItems ?? []).map((item) => (
                     <li key={item.menuItemId} className="flex justify-between items-center border-b pb-2 last:border-b-0 last:pb-0">
                       <div>
                         <p className="font-medium text-gray-800">{item.menuItemName}</p>
                         <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
                       </div>
-                      <p className="font-semibold text-gray-800">₹{(item.priceAtOrder * item.quantity).toFixed(2)}</p>
+                      <p className="font-semibold text-gray-800">₹{((item.priceAtOrder ?? 0) * (item.quantity ?? 0)).toFixed(2)}</p>
                     </li>
                   ))}
                 </ul>

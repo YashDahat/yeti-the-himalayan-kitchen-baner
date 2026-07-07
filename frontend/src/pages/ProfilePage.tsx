@@ -29,7 +29,7 @@ const ProfilePage: React.FC = () => {
   };
 
   const sortedOrders = orders
-    ? [...orders].sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime())
+    ? [...orders].sort((a, b) => new Date(b.orderDate ?? 0).getTime() - new Date(a.orderDate ?? 0).getTime())
     : [];
 
   return (
@@ -60,9 +60,7 @@ const ProfilePage: React.FC = () => {
               </div>
               <div>
                 <p className="text-gray-500">Name:</p>
-                <p className="text-lg font-medium text-gray-900">
-                  {user?.firstName && user?.lastName ? `${user.firstName} ${user.lastName}` : 'N/A'}
-                </p>
+                <p className="text-lg font-medium text-gray-900">N/A</p>
               </div>
             </div>
             <p className="mt-6 text-gray-600">
@@ -102,17 +100,17 @@ const ProfilePage: React.FC = () => {
               {sortedOrders.map((order) => (
                 <Card key={order.id} className="p-6 flex flex-col justify-between">
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-800 mb-2">Order #{order.id.substring(0, 8)}...</h3>
+                    <h3 className="text-xl font-semibold text-gray-800 mb-2">Order #{(order.id ?? '').substring(0, 8)}...</h3>
                     <p className="text-gray-600 mb-1">
-                      <span className="font-medium">Date:</span> {format(new Date(order.orderDate), 'PPP')}
+                      <span className="font-medium">Date:</span> {order.orderDate ? format(new Date(order.orderDate), 'PPP') : 'N/A'}
                     </p>
                     <p className="text-gray-600 mb-1">
-                      <span className="font-medium">Total:</span> ₹{order.totalAmount.toFixed(2)}
+                      <span className="font-medium">Total:</span> ₹{(order.totalAmount ?? 0).toFixed(2)}
                     </p>
                     <p className="text-gray-600 mb-4">
                       <span className="font-medium">Status:</span>{' '}
-                      <span className={clsx('font-semibold', getStatusColorClass(order.status))}>
-                        {order.status.replace(/_/g, ' ')}
+                      <span className={clsx('font-semibold', order.status ? getStatusColorClass(order.status) : '')}>
+                        {(order.status ?? '').replace(/_/g, ' ')}
                       </span>
                     </p>
                   </div>

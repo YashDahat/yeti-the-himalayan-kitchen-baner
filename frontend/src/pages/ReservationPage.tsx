@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { clsx } from 'clsx';
 
-import { Layout } from '@/components/Layout';
+import Layout from '@/components/Layout';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@radix-ui/react-select';
-import { useToast } from '@/components/ui/use-toast';
+import { toast } from 'sonner';
 import { useCreateReservation } from '@/hooks/useReservations';
 import type { CreateReservationRequest } from '@/types/reservation';
 
@@ -33,7 +33,7 @@ const reservationFormSchema = z.object({
   customerPhone: z.string().min(1, 'Phone number is required'),
   reservationDate: z.string().min(1, 'Reservation date is required'),
   reservationTime: z.string().min(1, 'Reservation time is required'),
-  numberOfGuests: z.coerce.number().min(1, 'Number of guests must be at least 1'),
+  numberOfGuests: z.number().min(1, 'Number of guests must be at least 1'),
   specialRequests: z.string().optional(),
 });
 
@@ -45,7 +45,7 @@ const timeSlots = [
 ];
 
 const ReservationPage: React.FC = () => {
-  const { toast } = useToast();
+
   const createReservationMutation = useCreateReservation();
 
   const form = useForm<ReservationFormValues>({
@@ -74,18 +74,14 @@ const ReservationPage: React.FC = () => {
 
     try {
       await createReservationMutation.mutateAsync(request);
-      toast({
-        title: 'Reservation Confirmed!',
+      toast.success('Reservation Confirmed!', {
         description: 'Your table has been successfully reserved. We look forward to seeing you!',
-        variant: 'default',
       });
       form.reset();
     } catch (error) {
       console.error('Reservation error:', error);
-      toast({
-        title: 'Reservation Failed',
+      toast.error('Reservation Failed', {
         description: 'There was an error processing your reservation. Please try again.',
-        variant: 'destructive',
       });
     }
   };

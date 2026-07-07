@@ -54,7 +54,7 @@ _None — every resolvable frontend call maps to a backend route._
 - PUT /api/v1/admin/testimonials/*/approve
 - PUT /api/v1/orders/*/cancel
 
-## Frontend calls (47)
+## Frontend calls (49)
 - DELETE /api/admin/menu/items/${id}
 - DELETE /api/admin/menu/categories/${id}
 - POST /api/v1/payments/verify
@@ -102,3 +102,5 @@ _None — every resolvable frontend call maps to a backend route._
 - GET /api/v1/admin/reservations/${id}
 - PUT /api/v1/admin/reservations/${id}/status
 - DELETE /api/v1/admin/reservations/${id}
+- DELETE /api/admin/menu/items/${id}
+- DELETE /api/admin/menu/categories/${id}
