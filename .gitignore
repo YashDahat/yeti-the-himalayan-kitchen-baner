@@ -1,0 +1,9 @@
+.env
+.smoke/
+docs/llm/
+target/
+node_modules/
+dist/
+*.class
+.idea/
+.DS_Store

@@ -215,8 +215,8 @@
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "Enum defining user roles within the system (e.g., ADMIN, CUSTOMER).",
     "public_functions" : null,
     "public_variables" : [ {
@@ -523,8 +523,8 @@
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "Represents a category for menu items (e.g., Appetizers, Main Course, Desserts).",
     "public_functions" : null,
     "public_variables" : [ {
@@ -930,8 +930,8 @@
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "Enum for the status of a reservation (e.g., PENDING, CONFIRMED, CANCELLED).",
     "public_functions" : null,
     "public_variables" : [ {
@@ -1336,8 +1336,8 @@
     "file_type" : "BACKEND",
     "layer" : "MODEL",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "Enum for the status of an order (e.g., PENDING, CONFIRMED, OUT_FOR_DELIVERY, DELIVERED).",
     "public_functions" : null,
     "public_variables" : [ {
@@ -4026,6 +4026,23 @@
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "infrastructure",
+    "file_role" : null
+  }, {
+    "file_name" : "GalleryPage.tsx",
+    "file_path" : "frontend/src/pages/GalleryPage.tsx",
+    "file_type" : "FRONTEND",
+    "layer" : "PAGE",
+    "created_date" : null,
+    "updated_date" : null,
+    "status" : "PLANNED",
+    "description" : "Auto-added: referenced in imports_from but missing from manifest",
+    "public_functions" : null,
+    "public_variables" : null,
+    "api_endpoints" : null,
+    "api_endpoints_consumed" : null,
+    "imports_from" : null,
+    "depends_on" : null,
+    "feature_name" : null,
     "file_role" : null
   } ],
   "features" : [ {
