@@ -1246,13 +1246,49 @@
     "status" : "PLANNED",
     "description" : "Represents a customer's food order for delivery or takeaway.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "UUID",
+      "description" : "Unique identifier for the order. Generated automatically."
+    }, {
+      "name" : "userId",
+      "type" : "UUID",
+      "description" : "ID of the user who placed the order. Not null."
+    }, {
+      "name" : "orderDate",
+      "type" : "java.time.LocalDateTime",
+      "description" : "Timestamp when the order was placed. Not null."
+    }, {
+      "name" : "totalAmount",
+      "type" : "java.math.BigDecimal",
+      "description" : "Total monetary amount of the order. Not null."
+    }, {
+      "name" : "status",
+      "type" : "OrderStatus",
+      "description" : "Current status of the order (e.g., PENDING, DELIVERED). Not null."
+    }, {
+      "name" : "deliveryAddress",
+      "type" : "String",
+      "description" : "Full delivery address for the order. Not null, max 255 characters."
+    }, {
+      "name" : "contactPhone",
+      "type" : "String",
+      "description" : "Contact phone number for delivery. Not null, max 20 characters."
+    }, {
+      "name" : "notes",
+      "type" : "String",
+      "description" : "Any special instructions or notes for the order. Nullable, max 500 characters."
+    }, {
+      "name" : "orderItems",
+      "type" : "List<OrderItem>",
+      "description" : "List of items included in this order. One-to-many relationship, cascade all operations."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/OrderItem.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/model/OrderStatus.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/model/User.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-backend",
-    "file_role" : null
+    "file_role" : "MODEL layer — Represents a customer's food order, linking to user, order items, and payment details."
   }, {
     "file_name" : "OrderItem.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/model/OrderItem.java",
@@ -1263,13 +1299,37 @@
     "status" : "PLANNED",
     "description" : "Represents a single line item within an Order.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "UUID",
+      "description" : "Unique identifier for the order item. Generated automatically."
+    }, {
+      "name" : "order",
+      "type" : "Order",
+      "description" : "The parent order this item belongs to. Many-to-one relationship. Not null."
+    }, {
+      "name" : "menuItemId",
+      "type" : "UUID",
+      "description" : "ID of the menu item ordered. Not null."
+    }, {
+      "name" : "menuItemName",
+      "type" : "String",
+      "description" : "Name of the menu item at the time of order. Not null, max 100 characters."
+    }, {
+      "name" : "quantity",
+      "type" : "int",
+      "description" : "Quantity of the menu item ordered. Not null, minimum 1."
+    }, {
+      "name" : "priceAtOrder",
+      "type" : "java.math.BigDecimal",
+      "description" : "Price of the menu item at the time the order was placed. Not null."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/Order.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/model/MenuItem.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-backend",
-    "file_role" : null
+    "file_role" : "MODEL layer — Represents a single line item within an Order, capturing menu item details at the time of order."
   }, {
     "file_name" : "OrderStatus.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/model/OrderStatus.java",
@@ -1280,13 +1340,33 @@
     "status" : "PLANNED",
     "description" : "Enum for the status of an order (e.g., PENDING, CONFIRMED, OUT_FOR_DELIVERY, DELIVERED).",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "PENDING",
+      "type" : "OrderStatus",
+      "description" : "Order has been placed but not yet processed."
+    }, {
+      "name" : "CONFIRMED",
+      "type" : "OrderStatus",
+      "description" : "Order has been confirmed by the restaurant."
+    }, {
+      "name" : "OUT_FOR_DELIVERY",
+      "type" : "OrderStatus",
+      "description" : "Order is out for delivery."
+    }, {
+      "name" : "DELIVERED",
+      "type" : "OrderStatus",
+      "description" : "Order has been successfully delivered."
+    }, {
+      "name" : "CANCELLED",
+      "type" : "OrderStatus",
+      "description" : "Order has been cancelled."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-backend",
-    "file_role" : null
+    "file_role" : "MODEL layer — Enum defining the possible statuses for a customer order."
   }, {
     "file_name" : "OrderRepository.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/OrderRepository.java",
@@ -1296,14 +1376,24 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for Order entities.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "findByUserId",
+      "parameters" : [ "UUID userId" ],
+      "return_type" : "List<Order>",
+      "description" : "Retrieves a list of orders associated with a specific user ID."
+    }, {
+      "name" : "findByStatus",
+      "parameters" : [ "OrderStatus status" ],
+      "return_type" : "List<Order>",
+      "description" : "Retrieves a list of orders with a specific status."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/Order.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-backend",
-    "file_role" : null
+    "file_role" : "REPOSITORY layer — Provides data access operations for Order entities."
   }, {
     "file_name" : "OrderItemRepository.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/OrderItemRepository.java",
@@ -1313,14 +1403,14 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for OrderItem entities.",
-    "public_functions" : null,
+    "public_functions" : [ ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/OrderItem.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-backend",
-    "file_role" : null
+    "file_role" : "REPOSITORY layer — Provides data access operations for OrderItem entities."
   }, {
     "file_name" : "OrderService.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/service/OrderService.java",
@@ -1330,14 +1420,44 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Handles business logic for creating and managing customer orders.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createOrder",
+      "parameters" : [ "CreateOrderRequest request", "UUID userId" ],
+      "return_type" : "OrderResponse",
+      "description" : "Creates a new order, validates menu items, calculates total, initiates payment, and persists the order."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "UUID orderId" ],
+      "return_type" : "OrderResponse",
+      "description" : "Retrieves a specific order by its ID."
+    }, {
+      "name" : "getOrdersByUserId",
+      "parameters" : [ "UUID userId" ],
+      "return_type" : "List<OrderResponse>",
+      "description" : "Retrieves all orders placed by a specific user."
+    }, {
+      "name" : "getAllOrders",
+      "parameters" : [ ],
+      "return_type" : "List<OrderResponse>",
+      "description" : "Retrieves all orders in the system (admin-only)."
+    }, {
+      "name" : "updateOrderStatus",
+      "parameters" : [ "UUID orderId", "OrderStatus newStatus" ],
+      "return_type" : "OrderResponse",
+      "description" : "Updates the status of a specific order (admin-only)."
+    }, {
+      "name" : "cancelOrder",
+      "parameters" : [ "UUID orderId" ],
+      "return_type" : "OrderResponse",
+      "description" : "Cancels an existing order if its status allows."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/OrderRepository.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/CreateOrderRequest.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/OrderResponse.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-backend",
-    "file_role" : null
+    "file_role" : "SERVICE layer — Implements business logic for order creation, retrieval, and status management; delegates persistence to OrderRepository and OrderItemRepository, user validation to UserService, menu item retrieval to MenuService, and payment initiation to PaymentService."
   }, {
     "file_name" : "OrderController.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/OrderController.java",
@@ -1347,14 +1467,58 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Authenticated REST controller for customers to place orders and view their order history.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "createOrder",
+      "parameters" : [ "CreateOrderRequest request", "UserDetails userDetails" ],
+      "return_type" : "ResponseEntity<OrderResponse>",
+      "description" : "Handles requests to create a new order for the authenticated user."
+    }, {
+      "name" : "getOrdersByCurrentUser",
+      "parameters" : [ "UserDetails userDetails" ],
+      "return_type" : "ResponseEntity<List<OrderResponse>>",
+      "description" : "Retrieves all orders placed by the authenticated user."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "UUID orderId", "UserDetails userDetails" ],
+      "return_type" : "ResponseEntity<OrderResponse>",
+      "description" : "Retrieves a specific order by ID, ensuring it belongs to the authenticated user."
+    }, {
+      "name" : "cancelOrder",
+      "parameters" : [ "UUID orderId", "UserDetails userDetails" ],
+      "return_type" : "ResponseEntity<OrderResponse>",
+      "description" : "Allows the authenticated user to cancel one of their orders."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/orders",
+      "request_body" : "CreateOrderRequest",
+      "response_body" : "OrderResponse",
+      "description" : "Creates a new order for the authenticated customer. Requires 'CUSTOMER' role."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/orders",
+      "request_body" : null,
+      "response_body" : "List<OrderResponse>",
+      "description" : "Retrieves all orders placed by the authenticated customer. Requires 'CUSTOMER' role."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/orders/{orderId}",
+      "request_body" : null,
+      "response_body" : "OrderResponse",
+      "description" : "Retrieves a specific order by ID for the authenticated customer. Requires 'CUSTOMER' role."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/orders/{orderId}/cancel",
+      "request_body" : null,
+      "response_body" : "OrderResponse",
+      "description" : "Cancels a specific order for the authenticated customer. Requires 'CUSTOMER' role."
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/service/OrderService.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/CreateOrderRequest.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-backend",
-    "file_role" : null
+    "file_role" : "CONTROLLER layer — Exposes authenticated REST endpoints for customers to manage their orders."
   }, {
     "file_name" : "AdminOrderController.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminOrderController.java",
@@ -1364,14 +1528,47 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Admin-only REST controller for viewing and managing all customer orders.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllOrders",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<OrderResponse>>",
+      "description" : "Handles requests to retrieve all customer orders."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "UUID orderId" ],
+      "return_type" : "ResponseEntity<OrderResponse>",
+      "description" : "Retrieves a specific order by ID for administrators."
+    }, {
+      "name" : "updateOrderStatus",
+      "parameters" : [ "UUID orderId", "Map<String, String> statusUpdate" ],
+      "return_type" : "ResponseEntity<OrderResponse>",
+      "description" : "Updates the status of a specific order by ID for administrators."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders",
+      "request_body" : null,
+      "response_body" : "List<OrderResponse>",
+      "description" : "Retrieves all customer orders. Requires 'ADMIN' role."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders/{orderId}",
+      "request_body" : null,
+      "response_body" : "OrderResponse",
+      "description" : "Retrieves a specific order by ID. Requires 'ADMIN' role."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/orders/{orderId}/status",
+      "request_body" : "Map<String, String> (e.g., {\"status\": \"CONFIRMED\"})",
+      "response_body" : "OrderResponse",
+      "description" : "Updates the status of a specific order. Requires 'ADMIN' role."
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/service/OrderService.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/OrderResponse.java" ],
     "depends_on" : [ ],
     "feature_name" : "order-backend",
-    "file_role" : null
+    "file_role" : "CONTROLLER layer — Exposes admin-only REST endpoints for comprehensive order management."
   }, {
     "file_name" : "CreateOrderRequest.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/CreateOrderRequest.java",
@@ -2528,7 +2725,7 @@
     "feature_display_name" : "Order Management (Backend Core)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/Order.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/model/OrderItem.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/model/OrderStatus.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/OrderRepository.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/OrderItemRepository.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/service/OrderService.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/OrderController.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminOrderController.java" ],
-    "feature_instruction" : null,
+    "feature_instruction" : "The Order Management (Backend Core) feature provides the foundational backend logic for customers to place food orders and for administrators to manage these orders. It encompasses data models, persistence layers, business logic, and REST API endpoints.\n\n## DTO Contracts (from order-backend-api feature)\nThis feature consumes the following DTOs defined in the `order-backend-api` feature:\n\n### CreateOrderRequest\nUsed for submitting a new order. It includes customer details and a list of items.\n- `userId`: `UUID` (Required) - The ID of the user placing the order. This will be extracted from the authenticated user's context in the controller.\n- `deliveryAddress`: `String` (Required, NotBlank) - The full delivery address for the order.\n- `contactPhone`: `String` (Required, NotBlank) - The contact phone number for delivery.\n- `notes`: `String` (Optional) - Any special instructions or notes for the order.\n- `orderItems`: `List<OrderItemRequest>` (Required, NotEmpty, Valid) - A list of items included in the order.\n\n### OrderItemRequest\nRepresents a single item within a `CreateOrderRequest`.\n- `menuItemId`: `UUID` (Required) - The ID of the menu item being ordered.\n- `quantity`: `int` (Required, Min=1) - The quantity of the menu item.\n\n### OrderResponse\nUsed for returning detailed information about an order.\n- `orderId`: `UUID` - The unique identifier of the order.\n- `userId`: `UUID` - The ID of the user who placed the order.\n- `orderDate`: `java.time.LocalDateTime` - The timestamp when the order was placed.\n- `totalAmount`: `java.math.BigDecimal` - The total cost of the order.\n- `status`: `OrderStatus` - The current status of the order (e.g., PENDING, DELIVERED).\n- `deliveryAddress`: `String` - The delivery address.\n- `contactPhone`: `String` - The contact phone number.\n- `notes`: `String` - Any notes associated with the order.\n- `orderItems`: `List<OrderItemResponse>` - A list of items in the order.\n\n### OrderItemResponse\nRepresents a single item within an `OrderResponse`.\n- `orderItemId`: `UUID` - The unique identifier of the order item.\n- `menuItemId`: `UUID` - The ID of the menu item.\n- `menuItemName`: `String` - The name of the menu item at the time of order.\n- `quantity`: `int` - The quantity ordered.\n- `priceAtOrder`: `java.math.BigDecimal` - The price of the item at the time of order.\n\n## File Implementations\n\n### `Order.java` (Model)\nThis JPA entity represents a customer's food order. It will have a one-to-many relationship with `OrderItem`.\n- Fields:\n    - `id`: `UUID` (Primary Key, Generated)\n    - `userId`: `UUID` (Foreign Key to User from shared-backend-auth)\n    - `orderDate`: `java.time.LocalDateTime` (Defaults to current timestamp)\n    - `totalAmount`: `java.math.BigDecimal`\n    - `status`: `OrderStatus` (Enum)\n    - `deliveryAddress`: `String`\n    - `contactPhone`: `String`\n    - `notes`: `String` (Nullable)\n    - `orderItems`: `List<OrderItem>` (OneToMany, mappedBy=\"order\", CascadeType.ALL, OrphanRemoval=true)\n\n### `OrderItem.java` (Model)\nThis JPA entity represents a single line item within an `Order`. It will have a many-to-one relationship with `Order`.\n- Fields:\n    - `id`: `UUID` (Primary Key, Generated)\n    - `order`: `Order` (ManyToOne, Foreign Key to Order)\n    - `menuItemId`: `UUID` (Foreign Key to MenuItem from menu-backend)\n    - `menuItemName`: `String` (Denormalized, stores the name at the time of order)\n    - `quantity`: `int`\n    - `priceAtOrder`: `java.math.BigDecimal` (Stores the price at the time of order)\n\n### `OrderStatus.java` (Enum)\nThis enum defines the possible states of a customer order.\n- Values: `PENDING`, `CONFIRMED`, `OUT_FOR_DELIVERY`, `DELIVERED`, `CANCELLED`.\n\n### `OrderRepository.java` (Repository)\nExtends `JpaRepository` for `Order` entities. It will provide standard CRUD operations and custom query methods.\n- Custom Methods:\n    - `findByUserId(UUID userId): List<Order>`\n    - `findByStatus(OrderStatus status): List<Order>`\n\n### `OrderItemRepository.java` (Repository)\nExtends `JpaRepository` for `OrderItem` entities. It will provide standard CRUD operations.\n\n### `OrderService.java` (Service)\nThis service handles the core business logic for order creation, retrieval, and status updates. It interacts with `OrderRepository`, `OrderItemRepository`, `UserService` (from `shared-backend-auth`), `MenuService` (from `menu-backend`), and `PaymentService` (from `payment-backend`).\n\n- Dependencies:\n    - `OrderRepository orderRepository`\n    - `OrderItemRepository orderItemRepository`\n    - `UserService userService` (from `shared-backend-auth`)\n    - `MenuService menuService` (from `menu-backend`)\n    - `PaymentService paymentService` (from `payment-backend`)\n\n- Public Methods:\n    - `createOrder(CreateOrderRequest request, UUID userId): OrderResponse`\n        1.  Validate that the `userId` exists using `userService.loadUserByUsername(userId.toString())`. If the user is not found, throw `ResourceNotFoundException`.\n        2.  Initialize `totalAmount = BigDecimal.ZERO`.\n        3.  Create a new `Order` entity. Set `userId`, `orderDate` to `LocalDateTime.now()`, `status` to `OrderStatus.PENDING`, and populate `deliveryAddress`, `contactPhone`, `notes` from the `request`.\n        4.  Create a `List<OrderItem>` to store the order items.\n        5.  For each `OrderItemRequest` in `request.getOrderItems()`:\n            a.  Call `menuService.getMenuItemById(itemRequest.getMenuItemId())` to retrieve `MenuItemDto` from the `menu-backend` feature.\n            b.  If `MenuItemDto` is not found, throw `ResourceNotFoundException` with a message indicating the missing menu item.\n            c.  If `itemRequest.getQuantity()` is less than 1, throw `IllegalArgumentException`.\n            d.  Calculate the item's subtotal: `itemRequest.getQuantity().multiply(menuItemDto.getPrice())`.\n            e.  Add the item's subtotal to `totalAmount`.\n            f.  Create an `OrderItem` entity. Set its `order` to the newly created `Order` entity, `menuItemId` from `itemRequest`, `menuItemName` from `MenuItemDto.getName()`, `quantity` from `itemRequest`, and `priceAtOrder` from `MenuItemDto.getPrice()`.\n            g.  Add the `OrderItem` to the list.\n        6.  Set `order.setTotalAmount(totalAmount)`.\n        7.  Set `order.setOrderItems(orderItems)`.\n        8.  Save the `Order` entity using `orderRepository.save(order)`.\n        9.  Call `paymentService.createPaymentOrder(order.getId(), totalAmount, userId)` (from `payment-backend`) to initiate the payment process. This call should return a `PaymentOrderResponse` which can be used by the frontend.\n        10. Map the saved `Order` and its `OrderItem`s to an `OrderResponse` DTO, including mapping `OrderItem`s to `OrderItemResponse`.\n        11. Return the `OrderResponse`.\n        - Error cases: `ResourceNotFoundException` (HTTP 404) if user or menu item not found. `IllegalArgumentException` (HTTP 400) for invalid quantity.\n\n    - `getOrderById(UUID orderId): OrderResponse`\n        1.  Retrieve the `Order` entity by `orderId` using `orderRepository.findById(orderId)`.\n        2.  If the `Order` is not found, throw `ResourceNotFoundException`.\n        3.  Map the `Order` and its associated `OrderItem`s to an `OrderResponse` DTO.\n        4.  Return the `OrderResponse`.\n        - Error cases: `ResourceNotFoundException` (HTTP 404) if order not found.\n\n    - `getOrdersByUserId(UUID userId): List<OrderResponse>`\n        1.  Retrieve a list of `Order` entities by `userId` using `orderRepository.findByUserId(userId)`.\n        2.  Map each `Order` and its `OrderItem`s to an `OrderResponse` DTO.\n        3.  Return the `List<OrderResponse>`.\n\n    - `getAllOrders(): List<OrderResponse>`\n        1.  Retrieve all `Order` entities using `orderRepository.findAll()`.\n        2.  Map each `Order` and its `OrderItem`s to an `OrderResponse` DTO.\n        3.  Return the `List<OrderResponse>`.\n\n    - `updateOrderStatus(UUID orderId, OrderStatus newStatus): OrderResponse`\n        1.  Retrieve the `Order` entity by `orderId` using `orderRepository.findById(orderId)`.\n        2.  If the `Order` is not found, throw `ResourceNotFoundException`.\n        3.  Update the `status` of the `Order` entity to `newStatus`.\n        4.  Save the updated `Order` entity using `orderRepository.save(order)`.\n        5.  Map the updated `Order` to an `OrderResponse` DTO.\n        6.  Return the `OrderResponse`.\n        - Error cases: `ResourceNotFoundException` (HTTP 404) if order not found.\n\n    - `cancelOrder(UUID orderId): OrderResponse`\n        1.  Retrieve the `Order` entity by `orderId` using `orderRepository.findById(orderId)`.\n        2.  If the `Order` is not found, throw `ResourceNotFoundException`.\n        3.  If the current `order.getStatus()` is `DELIVERED` or `CANCELLED`, throw `IllegalStateException` with a message like \"Order cannot be cancelled in its current status.\"\n        4.  Set the `status` of the `Order` entity to `OrderStatus.CANCELLED`.\n        5.  Save the updated `Order` entity using `orderRepository.save(order)`.\n        6.  Map the updated `Order` to an `OrderResponse` DTO.\n        7.  Return the `OrderResponse`.\n        - Error cases: `ResourceNotFoundException` (HTTP 404) if order not found. `IllegalStateException` (HTTP 400) if order cannot be cancelled.\n\n### `OrderController.java` (Controller)\nThis REST controller exposes authenticated endpoints for customers to place new orders and view their order history. All endpoints require authentication and the `CUSTOMER` role.\n\n- Dependencies:\n    - `OrderService orderService`\n\n- API Endpoints:\n    - `POST /api/v1/orders`\n        - Description: Allows an authenticated customer to place a new order.\n        - Request Body: `CreateOrderRequest` (JSON)\n        - Response Body: `OrderResponse` (JSON, 201 Created)\n        - Logic:\n            1.  Extract `userId` from `AuthenticationPrincipal UserDetails`.\n            2.  Call `orderService.createOrder(request, userId)`.\n            3.  Return `ResponseEntity.status(HttpStatus.CREATED).body(orderResponse)`.\n        - Error cases: `400 Bad Request` for validation errors (`MethodArgumentNotValidException`), `404 Not Found` for non-existent menu items or user (`ResourceNotFoundException`).\n\n    - `GET /api/v1/orders`\n        - Description: Retrieves all orders placed by the currently authenticated customer.\n        - Response Body: `List<OrderResponse>` (JSON, 200 OK)\n        - Logic:\n            1.  Extract `userId` from `AuthenticationPrincipal UserDetails`.\n            2.  Call `orderService.getOrdersByUserId(userId)`.\n            3.  Return `ResponseEntity.ok(orderResponses)`.\n\n    - `GET /api/v1/orders/{orderId}`\n        - Description: Retrieves a specific order by ID for the currently authenticated customer. Ensures the order belongs to the customer.\n        - Path Variable: `orderId` (UUID)\n        - Response Body: `OrderResponse` (JSON, 200 OK)\n        - Logic:\n            1.  Extract `userId` from `AuthenticationPrincipal UserDetails`.\n            2.  Call `orderService.getOrderById(orderId)`.\n            3.  If `orderResponse.getUserId()` does not equal `userId`, throw `AccessDeniedException` (or `ResourceNotFoundException` to prevent enumeration).\n            4.  Return `ResponseEntity.ok(orderResponse)`.\n        - Error cases: `404 Not Found` if order does not exist or does not belong to the user (`ResourceNotFoundException`). `403 Forbidden` if `AccessDeniedException` is thrown.\n\n    - `PUT /api/v1/orders/{orderId}/cancel`\n        - Description: Allows an authenticated customer to cancel one of their own orders.\n        - Path Variable: `orderId` (UUID)\n        - Response Body: `OrderResponse` (JSON, 200 OK)\n        - Logic:\n            1.  Extract `userId` from `AuthenticationPrincipal UserDetails`.\n            2.  Call `orderService.getOrderById(orderId)`.\n            3.  If `orderResponse.getUserId()` does not equal `userId`, throw `AccessDeniedException`.\n            4.  Call `orderService.cancelOrder(orderId)`.\n            5.  Return `ResponseEntity.ok(updatedOrderResponse)`.\n        - Error cases: `404 Not Found` if order does not exist or does not belong to the user. `400 Bad Request` if the order cannot be cancelled in its current state (`IllegalStateException`).\n\n### `AdminOrderController.java` (Controller)\nThis REST controller exposes admin-only endpoints for viewing and managing all customer orders. All endpoints require authentication and the `ADMIN` role.\n\n- Dependencies:\n    - `OrderService orderService`\n\n- API Endpoints:\n    - `GET /api/v1/admin/orders`\n        - Description: Retrieves all customer orders.\n        - Response Body: `List<OrderResponse>` (JSON, 200 OK)\n        - Logic:\n            1.  Call `orderService.getAllOrders()`.\n            2.  Return `ResponseEntity.ok(orderResponses)`.\n\n    - `GET /api/v1/admin/orders/{orderId}`\n        - Description: Retrieves a specific order by ID.\n        - Path Variable: `orderId` (UUID)\n        - Response Body: `OrderResponse` (JSON, 200 OK)\n        - Logic:\n            1.  Call `orderService.getOrderById(orderId)`.\n            2.  Return `ResponseEntity.ok(orderResponse)`.\n        - Error cases: `404 Not Found` if order does not exist (`ResourceNotFoundException`).\n\n    - `PUT /api/v1/admin/orders/{orderId}/status`\n        - Description: Updates the status of a specific order.\n        - Path Variable: `orderId` (UUID)\n        - Request Body: `Map<String, String>` containing a `status` field (e.g., `{\"status\": \"CONFIRMED\"}`)\n        - Response Body: `OrderResponse` (JSON, 200 OK)\n        - Logic:\n            1.  Extract `newStatusString` from the request body map.\n            2.  Parse `newStatusString` into an `OrderStatus` enum. Handle `IllegalArgumentException` if the status string is invalid.\n            3.  Call `orderService.updateOrderStatus(orderId, newStatus)`.\n            4.  Return `ResponseEntity.ok(updatedOrderResponse)`.\n        - Error cases: `404 Not Found` if order does not exist. `400 Bad Request` for invalid status string (`IllegalArgumentException`).\n\n## Security Configuration (shared-backend-auth)\n\n- The `SecurityConfig` in `shared-backend-auth` must be updated to include authorization rules for these endpoints:\n    - `/api/v1/orders/**`: Requires `authenticated()` and `hasRole('CUSTOMER')`.\n    - `/api/v1/admin/orders/**`: Requires `hasRole('ADMIN')`.\n\nExample `SecurityConfig` snippet:\n```\n\njava\n.authorizeHttpRequests(auth -> auth\n    .requestMatchers(\"/api/v1/auth/**\").permitAll()\n    .requestMatchers(\"/api/v1/orders/**\").hasRole(\"CUSTOMER\")\n    .requestMatchers(\"/api/v1/admin/orders/**\").hasRole(\"ADMIN\")\n    .requestMatchers(\"/api/**\").authenticated()\n    .anyRequest().permitAll()\n)\n\n\n```",
     "change_required" : true
   }, {
     "feature_name" : "order-backend-api",
