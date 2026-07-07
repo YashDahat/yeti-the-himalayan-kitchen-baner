@@ -237,7 +237,7 @@ const AdminMenuPage = () => {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {categories.map((category) => (
+                  {categories.map((category: MenuItemCategory) => (
                     <TableRow key={category.id}>
                       <TableCell className="font-medium">{category.id.substring(0, 8)}...</TableCell>
                       <TableCell>{category.name}</TableCell>
@@ -470,4 +470,182 @@ const AdminMenuPage = () => {
                     <TableHead className="text-right">Actions</TableHead>
                   </TableRow>
                 </TableHeader>
-                <
+                <TableBody>
+                  {menuItems.map((item) => (
+                    <TableRow key={item.id}>
+                      <TableCell className="font-medium">{item.id ? item.id.substring(0, 8) + '...' : ''}</TableCell>
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.categoryName}</TableCell>
+                      <TableCell>${item.price?.toFixed(2)}</TableCell>
+                      <TableCell>{item.available ? 'Yes' : 'No'}</TableCell>
+                      <TableCell className="text-right space-x-2">
+                        <Dialog open={isItemEditDialogOpen && selectedItem?.id === item.id} onOpenChange={setIsItemEditDialogOpen}>
+                          <DialogTrigger asChild>
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                setSelectedItem(item);
+                                setIsItemEditDialogOpen(true);
+                              }}
+                            >
+                              Edit
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="sm:max-w-[525px] bg-white p-6 rounded-lg shadow-lg">
+                            <DialogTitle className="text-xl font-semibold text-[#1A2B4C]">Edit Menu Item</DialogTitle>
+                            <DialogDescription className="text-gray-600 mb-4">
+                              Make changes to the menu item here. Click save when you're done.
+                            </DialogDescription>
+                            <Form {...editItemForm}>
+                              <form onSubmit={editItemForm.handleSubmit(handleUpdateMenuItem)} className="space-y-4">
+                                <FormField
+                                  control={editItemForm.control}
+                                  name="name"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Item Name</FormLabel>
+                                      <FormControl><Input {...field} /></FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={editItemForm.control}
+                                  name="description"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Description</FormLabel>
+                                      <FormControl><Input {...field} /></FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={editItemForm.control}
+                                  name="price"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Price</FormLabel>
+                                      <FormControl>
+                                        <Input type="number" step="0.01" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
+                                      </FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={editItemForm.control}
+                                  name="categoryId"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Category</FormLabel>
+                                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                          <SelectTrigger>
+                                            <SelectValue placeholder="Select a category" />
+                                          </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                          {categories?.map((category) => (
+                                            <SelectItem key={category.id} value={category.id}>
+                                              {category.name}
+                                            </SelectItem>
+                                          ))}
+                                        </SelectContent>
+                                      </Select>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={editItemForm.control}
+                                  name="imageUrl"
+                                  render={({ field }) => (
+                                    <FormItem>
+                                      <FormLabel>Image URL (Optional)</FormLabel>
+                                      <FormControl><Input {...field} /></FormControl>
+                                      <FormMessage />
+                                    </FormItem>
+                                  )}
+                                />
+                                <FormField
+                                  control={editItemForm.control}
+                                  name="available"
+                                  render={({ field }) => (
+                                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4 shadow-sm">
+                                      <FormControl>
+                                        <Checkbox
+                                          checked={field.value}
+                                          onCheckedChange={field.onChange}
+                                          className="h-4 w-4 shrink-0 rounded-sm border border-primary"
+                                        />
+                                      </FormControl>
+                                      <div className="space-y-1 leading-none">
+                                        <FormLabel>Available</FormLabel>
+                                      </div>
+                                    </FormItem>
+                                  )}
+                                />
+                                <div className="flex justify-end space-x-2">
+                                  <DialogClose asChild>
+                                    <Button type="button" variant="outline">Cancel</Button>
+                                  </DialogClose>
+                                  <Button
+                                    type="submit"
+                                    className="bg-[#FF9933] hover:bg-[#E68A00] text-white font-semibold transition-all duration-200"
+                                    disabled={updateMenuItemMutation.isPending}
+                                  >
+                                    {updateMenuItemMutation.isPending ? 'Saving...' : 'Save changes'}
+                                  </Button>
+                                </div>
+                              </form>
+                            </Form>
+                          </DialogContent>
+                        </Dialog>
+
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button
+                              variant="destructive"
+                              size="sm"
+                              onClick={() => setSelectedItem(item)}
+                            >
+                              Delete
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent className="bg-white p-6 rounded-lg shadow-lg">
+                            <AlertDialogTitle className="text-xl font-semibold text-[#1A2B4C]">Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription className="text-gray-600 mb-4">
+                              This action cannot be undone. This will permanently delete the menu item.
+                            </AlertDialogDescription>
+                            <div className="flex justify-end space-x-2">
+                              <AlertDialogCancel asChild>
+                                <Button type="button" variant="outline">Cancel</Button>
+                              </AlertDialogCancel>
+                              <AlertDialogAction asChild>
+                                <Button
+                                  variant="destructive"
+                                  onClick={() => selectedItem?.id && handleDeleteMenuItem(selectedItem.id)}
+                                  disabled={deleteMenuItemMutation.isPending}
+                                >
+                                  {deleteMenuItemMutation.isPending ? 'Deleting...' : 'Delete'}
+                                </Button>
+                              </AlertDialogAction>
+                            </div>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
+          )}
+        </div>
+      </section>
+    </AdminLayout>
+  );
+};
+
+export default AdminMenuPage;

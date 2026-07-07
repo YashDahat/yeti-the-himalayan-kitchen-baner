@@ -5,7 +5,7 @@ import {
   useUpdateReservationStatus,
   useDeleteReservation,
 } from '@/hooks/useReservations';
-import type { ReservationResponse, ReservationStatus } from '@/types/reservation';
+import type { ReservationStatus } from '@/types/reservation';
 import { format } from 'date-fns';
 import clsx from 'clsx';
 

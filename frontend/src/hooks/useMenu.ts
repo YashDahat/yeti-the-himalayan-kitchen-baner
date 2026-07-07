@@ -7,11 +7,17 @@ import {
   getMenuItemCategoryById,
   createMenuItem,
   updateMenuItem,
-  deleteMenuItem,
   createMenuItemCategory,
   updateMenuItemCategory,
-  deleteMenuItemCategory,
 } from '../services/menuService';
+
+import apiClient from '../api/client';
+const deleteMenuItem = async (id: string): Promise<void> => {
+  await apiClient.delete(`/api/admin/menu/items/${id}`);
+};
+const deleteMenuItemCategory = async (id: string): Promise<void> => {
+  await apiClient.delete(`/api/admin/menu/categories/${id}`);
+};
 
 export const useMenuItems = () => {
   return useQuery<MenuItemDto[], Error>({
@@ -43,7 +49,7 @@ export const useCategory = (id: string) => {
   });
 };
 
-type MenuItemCreateUpdateInput = Omit<MenuItemDto, 'id' | 'categoryName' | 'createdAt' | 'updatedAt'>;
+type MenuItemCreateUpdateInput = MenuItemDto;
 
 export const useCreateMenuItem = () => {
   const queryClient = useQueryClient();

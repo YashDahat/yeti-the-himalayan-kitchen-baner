@@ -93,7 +93,7 @@ const OrderConfirmationPage = () => {
                 <strong>Order ID:</strong> {order.id}
               </p>
               <p className="text-gray-700 mb-2">
-                <strong>Order Date:</strong> {format(new Date(order.orderDate), 'PPP p')}
+                <strong>Order Date:</strong> {order.orderDate ? format(new Date(order.orderDate), 'PPP p') : 'N/A'}
               </p>
               <p className="text-gray-700 mb-2">
                 <strong>Total Amount:</strong> ₹{order.totalAmount.toFixed(2)}

@@ -7,7 +7,7 @@ import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { format } from 'date-fns';
 import clsx from 'clsx';
-import type { OrderResponse, OrderStatus } from '@/types/order';
+import type { OrderStatus } from '@/types/order';
 
 const ProfilePage: React.FC = () => {
   const { user } = useAuth();

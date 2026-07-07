@@ -3,7 +3,8 @@ import { NavLink, Link } from 'react-router-dom';
 import { AuthContext } from '@/context/AuthContext';
 
 const Header: React.FC = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const auth = useContext(AuthContext);
+  const isAuthenticated = auth?.isAuthenticated ?? false;
 
   const navLinks = [
     { name: 'Home', path: '/' },

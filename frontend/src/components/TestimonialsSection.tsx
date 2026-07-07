@@ -87,7 +87,7 @@ const TestimonialsSection: React.FC = () => {
             <div key={testimonial.id} className="bg-white shadow-lg rounded-lg p-6">
               <div className="flex items-center mb-4">
                 {[...Array(5)].map((_, index) => (
-                  <StarIcon key={index} filled={index < testimonial.rating} />
+                  <StarIcon key={index} filled={index < (testimonial.rating ?? 0)} />
                 ))}
               </div>
               <p className="text-gray-700 italic mb-4">"{testimonial.content}"</p>

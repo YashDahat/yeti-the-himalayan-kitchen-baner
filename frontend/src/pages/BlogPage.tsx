@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
-import { Layout } from '@/components/Layout';
+import Layout from '@/components/Layout';
 import { useBlogPosts } from '@/hooks/useBlog';
 
 const BlogPage: React.FC = () => {
@@ -64,16 +64,16 @@ const BlogPage: React.FC = () => {
               {blogPosts.map((post) => (
                 <div key={post.id} className="bg-white rounded-xl shadow-md border border-gray-100 p-6 flex flex-col">
                   <img
-                    src={post.imageUrl}
-                    alt={post.title}
+                    src={post.imageUrl ?? undefined}
+                    alt={post.title ?? undefined}
                     className="w-full h-48 object-cover rounded-md mb-4"
                   />
                   <h3 className="text-xl font-semibold text-[#1A2B3C] mb-2">{post.title}</h3>
                   <p className="text-gray-700 text-sm mb-4 flex-grow leading-relaxed">
-                    {truncateContent(post.content, 150)}
+                    {truncateContent(post.content ?? '', 150)}
                   </p>
                   <div className="text-gray-600 text-xs mb-4">
-                    By {post.author} on {format(new Date(post.publicationDate), 'MMMM dd, yyyy')}
+                    By {post.author} on {post.publicationDate ? format(new Date(post.publicationDate), 'MMMM dd, yyyy') : ''}
                   </div>
                   <Link
                     to={`/blog/${post.id}`}

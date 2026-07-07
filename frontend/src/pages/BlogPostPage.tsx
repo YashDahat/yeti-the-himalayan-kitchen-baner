@@ -49,19 +49,21 @@ const BlogPostPage: React.FC = () => {
     );
   }
 
-  const formattedDate = new Date(blogPost.publicationDate).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const formattedDate = blogPost.publicationDate
+    ? new Date(blogPost.publicationDate).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })
+    : '';
 
   return (
     <Layout>
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <img
-            src={blogPost.imageUrl}
-            alt={blogPost.title}
+            src={blogPost.imageUrl ?? undefined}
+            alt={blogPost.title ?? undefined}
             className="w-full h-96 object-cover rounded-lg mb-8"
           />
           <h1 className="text-4xl font-bold text-[#1A2B3C] mb-4">{blogPost.title}</h1>

@@ -1,7 +1,14 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login as authServiceLogin, register as authServiceRegister } from '@/services/authService';
-import type { AuthRequest, AuthResponse, User, Role } from '@/types/auth';
+import type { AuthRequest, AuthResponse } from '@/types/auth';
+
+type Role = 'ADMIN' | 'USER' | string;
+
+interface User {
+  email: string;
+  role: Role;
+}
 
 // Helper function to decode JWT and extract user info
 const decodeJwt = (token: string): User | null => {
@@ -92,8 +99,9 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
     try {
       const request: AuthRequest = { email, password };
       const response: AuthResponse = await authServiceLogin(request);
-      saveAuthData(response.token);
-      const decodedUser = decodeJwt(response.token);
+      const loginToken = response.token ?? '';
+      saveAuthData(loginToken);
+      const decodedUser = decodeJwt(loginToken);
       if (decodedUser) {
         navigate(decodedUser.role === 'ADMIN' ? '/admin/dashboard' : '/');
       } else {
@@ -112,8 +120,9 @@ export const AuthContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
     try {
       const request: AuthRequest = { email, password };
       const response: AuthResponse = await authServiceRegister(request);
-      saveAuthData(response.token);
-      const decodedUser = decodeJwt(response.token);
+      const registerToken = response.token ?? '';
+      saveAuthData(registerToken);
+      const decodedUser = decodeJwt(registerToken);
       if (decodedUser) {
         navigate(decodedUser.role === 'ADMIN' ? '/admin/dashboard' : '/');
       } else {
