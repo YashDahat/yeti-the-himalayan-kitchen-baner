@@ -3223,15 +3223,20 @@
     "created_date" : "2024-07-29",
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
-    "description" : "Admin interface for viewing all customer orders and updating their status.",
-    "public_functions" : null,
+    "description" : "Admin interface for viewing all customer orders and updating their status, providing a centralized management console.",
+    "public_functions" : [ {
+      "name" : "AdminOrdersPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the admin orders management page, displaying a table of all orders with status update functionality."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/hooks/useOrders.ts" ],
     "depends_on" : [ ],
     "feature_name" : "order-ui",
-    "file_role" : null
+    "file_role" : "Admin interface for viewing all customer orders and updating their status, consuming `useAllOrders` and `useUpdateOrderStatus` from `useOrders.ts`."
   }, {
     "file_name" : "OrderConfirmationPage.tsx",
     "file_path" : "frontend/src/pages/OrderConfirmationPage.tsx",
@@ -3240,15 +3245,20 @@
     "created_date" : "2024-07-29",
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
-    "description" : "Displays a summary of a successfully placed order and its current status.",
-    "public_functions" : null,
+    "description" : "Displays a summary of a successfully placed order and its current status, providing immediate feedback to the customer.",
+    "public_functions" : [ {
+      "name" : "OrderConfirmationPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the order confirmation page, showing details of a specific order."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/hooks/useOrders.ts" ],
     "depends_on" : [ ],
     "feature_name" : "order-ui",
-    "file_role" : null
+    "file_role" : "Public page displaying a summary of a successfully placed order and its current status, consuming `useOrderById` from `useOrders.ts`."
   }, {
     "file_name" : "ProfilePage.tsx",
     "file_path" : "frontend/src/pages/ProfilePage.tsx",
@@ -3257,15 +3267,20 @@
     "created_date" : "2024-07-29",
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
-    "description" : "Customer profile page showing personal details and a complete order history.",
-    "public_functions" : null,
+    "description" : "Customer profile page showing personal details and a complete order history, allowing users to review their past interactions.",
+    "public_functions" : [ {
+      "name" : "ProfilePage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the customer profile page, displaying user information and their order history."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/hooks/useOrders.ts", "frontend/src/hooks/useAuth.ts" ],
     "depends_on" : [ ],
     "feature_name" : "order-ui",
-    "file_role" : null
+    "file_role" : "Customer profile page showing personal details and a complete order history, consuming `useAuth` from `authentication-ui` and `useOrdersByCurrentUser` from `useOrders.ts`."
   }, {
     "file_name" : "useOrders.ts",
     "file_path" : "frontend/src/hooks/useOrders.ts",
@@ -3274,15 +3289,45 @@
     "created_date" : "2024-07-29",
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
-    "description" : "React Query hook for creating and managing order data.",
-    "public_functions" : null,
+    "description" : "React Query hook for creating and managing order data, interacting with `orderService.ts`.",
+    "public_functions" : [ {
+      "name" : "useCreateOrder",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<OrderResponse, Error, CreateOrderRequest>",
+      "description" : "Hook for creating a new order by calling `orderService.createOrder`."
+    }, {
+      "name" : "useOrdersByCurrentUser",
+      "parameters" : [ ],
+      "return_type" : "UseQueryResult<OrderResponse[], Error>",
+      "description" : "Hook for fetching orders for the current user by calling `orderService.getOrdersByCurrentUser`."
+    }, {
+      "name" : "useOrderById",
+      "parameters" : [ "orderId: string" ],
+      "return_type" : "UseQueryResult<OrderResponse, Error>",
+      "description" : "Hook for fetching a specific order by ID by calling `orderService.getOrderById`."
+    }, {
+      "name" : "useCancelOrder",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<OrderResponse, Error, string>",
+      "description" : "Hook for cancelling an order by calling `orderService.cancelOrder`."
+    }, {
+      "name" : "useAllOrders",
+      "parameters" : [ ],
+      "return_type" : "UseQueryResult<OrderResponse[], Error>",
+      "description" : "Hook for fetching all orders (admin only) by calling `orderService.getAllOrders`."
+    }, {
+      "name" : "useUpdateOrderStatus",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<OrderResponse, Error, { orderId: string, status: OrderStatus }>",
+      "description" : "Hook for updating an order's status (admin only) by calling `orderService.updateOrderStatus`."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/orderService.ts", "frontend/src/types/order.ts" ],
     "depends_on" : [ ],
     "feature_name" : "order-ui",
-    "file_role" : null
+    "file_role" : "React Query hook for creating and managing order data, providing mutations for order creation, cancellation, and status updates, and queries for fetching orders by user or all orders."
   }, {
     "file_name" : "orderService.ts",
     "file_path" : "frontend/src/services/orderService.ts",
@@ -3291,15 +3336,87 @@
     "created_date" : "2024-07-29",
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
-    "description" : "Service for all order-related API calls.",
-    "public_functions" : null,
+    "description" : "Service for all order-related API calls, interacting with the backend order API.",
+    "public_functions" : [ {
+      "name" : "createOrder",
+      "parameters" : [ "orderData: CreateOrderRequest" ],
+      "return_type" : "Promise<OrderResponse>",
+      "description" : "Sends a POST request to create a new order."
+    }, {
+      "name" : "getOrdersByCurrentUser",
+      "parameters" : [ ],
+      "return_type" : "Promise<OrderResponse[]>",
+      "description" : "Sends a GET request to retrieve orders for the currently authenticated user."
+    }, {
+      "name" : "getOrderById",
+      "parameters" : [ "orderId: string" ],
+      "return_type" : "Promise<OrderResponse>",
+      "description" : "Sends a GET request to retrieve a specific order by ID."
+    }, {
+      "name" : "cancelOrder",
+      "parameters" : [ "orderId: string" ],
+      "return_type" : "Promise<OrderResponse>",
+      "description" : "Sends a PUT request to cancel a specific order."
+    }, {
+      "name" : "getAllOrders",
+      "parameters" : [ ],
+      "return_type" : "Promise<OrderResponse[]>",
+      "description" : "Sends a GET request to retrieve all orders (admin only)."
+    }, {
+      "name" : "updateOrderStatus",
+      "parameters" : [ "orderId: string", "status: OrderStatus" ],
+      "return_type" : "Promise<OrderResponse>",
+      "description" : "Sends a PUT request to update the status of an order (admin only)."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/orders",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new order."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/orders",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Retrieves orders for the current user."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/orders/{orderId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Retrieves a specific order by ID."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/orders/{orderId}/cancel",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Cancels a specific order."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Retrieves all orders (admin access)."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/orders/{orderId}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Retrieves a specific order by ID (admin access)."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/orders/{orderId}/status",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates the status of a specific order (admin access)."
+    } ],
     "imports_from" : [ "frontend/src/api/client.ts", "frontend/src/types/order.ts" ],
     "depends_on" : [ ],
     "feature_name" : "order-ui",
-    "file_role" : null
+    "file_role" : "Frontend service for all order-related API calls, including creating orders, fetching user-specific orders, fetching all orders for admin, and updating/cancelling orders."
   }, {
     "file_name" : "order.ts",
     "file_path" : "frontend/src/types/order.ts",
@@ -3308,15 +3425,35 @@
     "created_date" : "2024-07-29",
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
-    "description" : "TypeScript types and interfaces for orders and order items.",
+    "description" : "TypeScript types and interfaces for orders and order items, mirroring the backend DTOs.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "OrderItemRequest",
+      "type" : "{ menuItemId: string; quantity: number; }",
+      "description" : "Request DTO for an item within an order, specifying menu item ID and quantity."
+    }, {
+      "name" : "CreateOrderRequest",
+      "type" : "{ orderItems: OrderItemRequest[]; deliveryAddress: string; contactPhone: string; notes: string; }",
+      "description" : "Request DTO for creating a new order, including order items and delivery details."
+    }, {
+      "name" : "OrderStatus",
+      "type" : "'PENDING' | 'CONFIRMED' | 'OUT_FOR_DELIVERY' | 'DELIVERED' | 'CANCELLED'",
+      "description" : "Enum for the possible statuses of an order."
+    }, {
+      "name" : "OrderItemResponse",
+      "type" : "{ id: string; menuItemId: string; menuItemName: string; quantity: number; priceAtOrder: number; }",
+      "description" : "Response DTO for an item within an order, including its ID, name, quantity, and price at the time of order."
+    }, {
+      "name" : "OrderResponse",
+      "type" : "{ id: string; userId: string; orderDate: string; totalAmount: number; status: OrderStatus; deliveryAddress: string; contactPhone: string; notes: string; orderItems: OrderItemResponse[]; }",
+      "description" : "Response DTO for a complete order, including all details and a list of order items."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-ui",
-    "file_role" : null
+    "file_role" : "Generated from the backend API contract — defines TypeScript types for orders and order items."
   }, {
     "file_name" : "CartContext.tsx",
     "file_path" : "frontend/src/context/CartContext.tsx",
@@ -3325,15 +3462,54 @@
     "created_date" : "2024-07-29",
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
-    "description" : "React context for managing the state of the customer's shopping cart.",
-    "public_functions" : null,
-    "public_variables" : null,
+    "description" : "React context for managing the state of the customer's shopping cart, including adding, removing, updating quantities, and calculating totals.",
+    "public_functions" : [ {
+      "name" : "CartContext.Provider",
+      "parameters" : [ "{ children: React.ReactNode }" ],
+      "return_type" : "JSX.Element",
+      "description" : "Provides the cart state and actions to its children components."
+    }, {
+      "name" : "addToCart",
+      "parameters" : [ "item: MenuItemDto", "quantity: number" ],
+      "return_type" : "void",
+      "description" : "Adds a menu item to the cart or updates its quantity if already present."
+    }, {
+      "name" : "removeFromCart",
+      "parameters" : [ "menuItemId: string" ],
+      "return_type" : "void",
+      "description" : "Removes a menu item from the cart."
+    }, {
+      "name" : "updateItemQuantity",
+      "parameters" : [ "menuItemId: string", "quantity: number" ],
+      "return_type" : "void",
+      "description" : "Updates the quantity of a specific item in the cart."
+    }, {
+      "name" : "clearCart",
+      "parameters" : [ ],
+      "return_type" : "void",
+      "description" : "Clears all items from the cart."
+    }, {
+      "name" : "getCartTotal",
+      "parameters" : [ ],
+      "return_type" : "number",
+      "description" : "Calculates the total amount of all items in the cart."
+    }, {
+      "name" : "getCartItems",
+      "parameters" : [ ],
+      "return_type" : "CartItem[]",
+      "description" : "Returns the current list of items in the cart."
+    } ],
+    "public_variables" : [ {
+      "name" : "CartItem",
+      "type" : "{ menuItem: MenuItemDto; quantity: number; }",
+      "description" : "Represents an item in the shopping cart, including the menu item details and its quantity."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/types/menu.ts" ],
     "depends_on" : [ ],
     "feature_name" : "order-ui",
-    "file_role" : null
+    "file_role" : "React context for managing the state of the customer's shopping cart, providing functions to add, remove, update, and retrieve cart items."
   }, {
     "file_name" : "paymentService.ts",
     "file_path" : "frontend/src/services/paymentService.ts",
@@ -3342,15 +3518,37 @@
     "created_date" : "2024-07-29",
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
-    "description" : "Service for payment-related API calls, such as creating a Razorpay order.",
-    "public_functions" : null,
+    "description" : "Service for payment-related API calls, such as creating a Razorpay order and verifying payment signatures.",
+    "public_functions" : [ {
+      "name" : "initiatePayment",
+      "parameters" : [ "orderId: string", "amount: number" ],
+      "return_type" : "Promise<PaymentOrderResponse>",
+      "description" : "Sends a POST request to initiate a payment for a given order."
+    }, {
+      "name" : "verifyPayment",
+      "parameters" : [ "verificationData: PaymentVerificationRequest" ],
+      "return_type" : "Promise<string>",
+      "description" : "Sends a POST request to verify a payment signature."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "POST",
+      "path" : "/api/v1/payments/initiate",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Initiates a payment process, returning Razorpay order details."
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/payments/verify",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Verifies the payment signature after a successful Razorpay transaction."
+    } ],
     "imports_from" : [ "frontend/src/api/client.ts", "frontend/src/types/payment.ts" ],
     "depends_on" : [ ],
     "feature_name" : "order-ui",
-    "file_role" : null
+    "file_role" : "Frontend service for payment-related API calls, specifically for initiating and verifying Razorpay payments."
   }, {
     "file_name" : "payment.ts",
     "file_path" : "frontend/src/types/payment.ts",
@@ -3359,15 +3557,23 @@
     "created_date" : "2024-07-29",
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
-    "description" : "TypeScript types related to payment processing with Razorpay.",
+    "description" : "TypeScript types related to payment processing with Razorpay, mirroring backend DTOs.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "PaymentOrderResponse",
+      "type" : "{ razorpayOrderId: string; amount: number; currency: string; receipt: string; key: string; }",
+      "description" : "Response DTO containing details for initiating a Razorpay payment."
+    }, {
+      "name" : "PaymentVerificationRequest",
+      "type" : "{ razorpayOrderId: string; razorpayPaymentId: string; razorpaySignature: string; }",
+      "description" : "Request DTO for verifying a Razorpay payment signature."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "order-ui",
-    "file_role" : null
+    "file_role" : "Generated from the backend API contract — defines TypeScript types for payment processing."
   }, {
     "file_name" : "BlogPage.tsx",
     "file_path" : "frontend/src/pages/BlogPage.tsx",
@@ -3676,7 +3882,7 @@
     "feature_display_name" : "Ordering & Checkout UI",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/pages/admin/AdminOrdersPage.tsx", "frontend/src/pages/OrderConfirmationPage.tsx", "frontend/src/pages/ProfilePage.tsx", "frontend/src/hooks/useOrders.ts", "frontend/src/services/orderService.ts", "frontend/src/types/order.ts", "frontend/src/context/CartContext.tsx", "frontend/src/services/paymentService.ts", "frontend/src/types/payment.ts" ],
-    "feature_instruction" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#36454F] text-white\n- Primary CTA: bg-[#CC5500] hover:bg-[#A34300] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#CC5500]\n- Section bg: bg-white (odd sections) / bg-gray-50 (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-gray-700 leading-relaxed\n- Admin Table Header: bg-gray-200 text-gray-700 font-semibold\n\n## Feature Overview: Ordering & Checkout UI\nThis feature provides the complete user interface for customers to manage their shopping cart, proceed through checkout, view order confirmations, and review their order history. It also includes an administrative interface for managing all customer orders. The UI integrates with the `order-backend` and `payment-backend` features for data persistence and transaction processing, and with `menu-ui` for menu item details. Authentication is handled by `authentication-ui`.\n\n## Data Models (`frontend/src/types/order.ts`, `frontend/src/types/payment.ts`)\nThese files define the TypeScript interfaces that mirror the backend DTOs for orders and payments. They ensure type safety and consistency across the frontend application. The `OrderResponse` and `CreateOrderRequest` types, along with `OrderItemRequest` and `OrderItemResponse`, are derived directly from the `order-backend-api` contracts. Similarly, `PaymentOrderResponse` and `PaymentVerificationRequest` are derived from `payment-backend` contracts.\n\n## Cart Management (`frontend/src/context/CartContext.tsx`)\n`CartContext.tsx` establishes a React Context for managing the customer's shopping cart state. It provides the following public functions:\n1.  `addToCart(item: MenuItemDto, quantity: number)`: Adds a `MenuItemDto` (from `menu-ui`) to the cart. If the item is already in the cart, its quantity is updated. The cart state is stored in local storage to persist across sessions.\n2.  `removeFromCart(menuItemId: string)`: Removes an item from the cart based on its `menuItemId`.\n3.  `updateItemQuantity(menuItemId: string, quantity: number)`: Updates the quantity of a specific item in the cart. If `quantity` is 0 or less, the item is removed.\n4.  `clearCart()`: Empties the entire cart.\n5.  `getCartTotal(): number`: Calculates and returns the total price of all items currently in the cart.\n6.  `getCartItems(): CartItem[]`: Returns the current list of items in the cart, where `CartItem` is `{ menuItem: MenuItemDto, quantity: number }`.\n\nComponents needing cart functionality will consume this context using `useContext(CartContext)`.\n\n## API Services (`frontend/src/services/orderService.ts`, `frontend/src/services/paymentService.ts`)\nThese services encapsulate all direct API calls to the backend, using the `axios` instance from `frontend/src/api/client.ts` which handles authentication tokens.\n\n### `orderService.ts`\n-   `createOrder(orderData: CreateOrderRequest): Promise<OrderResponse>`: Sends a `POST` request to `/api/v1/orders` to create a new order. The `orderData` includes `orderItems`, `deliveryAddress`, `contactPhone`, and `notes`.\n-   `getOrdersByCurrentUser(): Promise<OrderResponse[]>`: Sends a `GET` request to `/api/v1/orders` to retrieve all orders for the currently authenticated user.\n-   `getOrderById(orderId: string): Promise<OrderResponse>`: Sends a `GET` request to `/api/v1/orders/{orderId}` to fetch a specific order.\n-   `cancelOrder(orderId: string): Promise<OrderResponse>`: Sends a `PUT` request to `/api/v1/orders/{orderId}/cancel` to change an order's status to `CANCELLED`.\n-   `getAllOrders(): Promise<OrderResponse[]>`: Sends a `GET` request to `/api/v1/admin/orders` to retrieve all orders (admin access only).\n-   `updateOrderStatus(orderId: string, status: OrderStatus): Promise<OrderResponse>`: Sends a `PUT` request to `/api/v1/admin/orders/{orderId}/status` to update an order's status (admin access only).\n\n### `paymentService.ts`\n-   `initiatePayment(orderId: string, amount: number): Promise<PaymentOrderResponse>`: Sends a `POST` request to `/api/v1/payments/initiate` to initiate a payment. Returns Razorpay order details.\n-   `verifyPayment(verificationData: PaymentVerificationRequest): Promise<string>`: Sends a `POST` request to `/api/v1/payments/verify` to verify the payment signature after a successful Razorpay transaction. Returns a success message or throws an error.\n\n## React Hooks (`frontend/src/hooks/useOrders.ts`)\nThis file provides React Query hooks that abstract the `orderService` calls, managing loading states, error handling, and data caching. These hooks are consumed by pages and components.\n-   `useCreateOrder()`: Returns a mutation hook for creating a new order. On success, it invalidates relevant order queries.\n-   `useOrdersByCurrentUser()`: Returns a query hook for fetching orders associated with the logged-in user.\n-   `useOrderById(orderId: string)`: Returns a query hook for fetching a single order by its ID.\n-   `useCancelOrder()`: Returns a mutation hook for cancelling an order. On success, it invalidates the specific order query and the current user's orders query.\n-   `useAllOrders()`: Returns a query hook for fetching all orders, intended for admin use.\n-   `useUpdateOrderStatus()`: Returns a mutation hook for updating an order's status, intended for admin use. On success, it invalidates the specific order query and the all orders query.\n\n## Customer-Facing Pages\n\n### Order Confirmation Page (`frontend/src/pages/OrderConfirmationPage.tsx`)\nThis page displays a summary of a successfully placed order. It wraps its content in `<Layout>` from `core-ui`.\n\n**Sections:**\n1.  **Hero Section**: A full-width section with a background image (e.g., `url(https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1920&q=80)`) with a `bg-black bg-opacity-50` overlay. Contains a `h1` with `text-4xl md:text-6xl font-bold text-white` displaying \"Your Culinary Journey Confirmed!\" and a subheadline \"Thank you for your order at Yeti - The Himalayan Kitchen, Baner. Your adventure begins now.\"\n2.  **Order Summary Section**: Uses `<section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">`. Displays the order details fetched using `useOrderById` (retrieving `orderId` from URL parameters). It shows the `orderId`, `orderDate`, `totalAmount`, `status`, `deliveryAddress`, `contactPhone`, `notes`, and a list of `orderItems` (displaying `menuItemName`, `quantity`, `priceAtOrder`). Each item is presented in a `Card` style. The status should be highlighted using appropriate colors (e.g., `text-green-600` for 'CONFIRMED', `text-yellow-600` for 'PENDING').\n3.  **Next Steps Section**: Provides a call to action, such as a button to \"Explore More of Our Menu\" (linking to `/menu`) using the `Primary CTA` style, and a link to \"View Your Order History\" (linking to `/profile`) using a `Brand text accent` style.\n\n### Profile Page (`frontend/src/pages/ProfilePage.tsx`)\nThis page allows authenticated customers to view their personal details and a history of their orders. It wraps its content in `<Layout>` from `core-ui`.\n\n**Sections:**\n1.  **Hero Section**: A full-width section with a background image (e.g., `url(https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80)`) with a `bg-black bg-opacity-50` overlay. Contains a `h1` with `text-4xl md:text-6xl font-bold text-white` displaying \"Your Himalayan Profile\" and a subheadline \"Manage your details and explore your past culinary adventures at Yeti - The Himalayan Kitchen, Baner.\"\n2.  **Profile Details Section**: Uses `<section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">`. Displays the user's email (from `useAuth`). Placeholder for future personal details editing. Uses `Card` style for display.\n3.  **Order History Section**: Uses `<section className=\"py-16 px-4 bg-gray-50\"><div className=\"max-w-7xl mx-auto\">`. Displays a list of orders fetched using `useOrdersByCurrentUser`. Each order is presented in a `Card` style, showing `orderDate`, `totalAmount`, `status`, and a button to \"View Details\" (linking to `/order-confirmation/{orderId}`). Orders should be sorted by `orderDate` in descending order. The status should be highlighted.\n\n## Admin-Facing Page\n\n### Admin Orders Page (`frontend/src/pages/admin/AdminOrdersPage.tsx`)\nThis page provides administrators with a comprehensive view of all customer orders and the ability to update their statuses. It wraps its content in `<AdminLayout>` from `admin-portal`.\n\n**Sections:**\n1.  **Header Section**: Contains a `h1` with `text-3xl font-bold text-gray-800` displaying \"Manage Customer Orders\".\n2.  **Orders Table Section**: Uses `<section className=\"py-8 px-4\"><div className=\"max-w-7xl mx-auto\">`. Displays a sortable and filterable table of all orders fetched using `useAllOrders`. The table columns include `orderId`, `userId`, `orderDate`, `totalAmount`, `deliveryAddress`, `contactPhone`, `status`, and \"Actions\".\n    -   The `status` column should be an editable dropdown (e.g., `<select>`) allowing administrators to change the `OrderStatus` using `useUpdateOrderStatus`. The dropdown options should be `PENDING`, `CONFIRMED`, `OUT_FOR_DELIVERY`, `DELIVERED`, `CANCELLED`.\n    -   The \"Actions\" column includes a button to \"View Details\" (linking to `/admin/orders/{orderId}`) and potentially a \"Cancel Order\" button using `useCancelOrder`.\n    -   The table header uses `Admin Table Header` style.\n\n## Inter-file Wiring\n-   `AdminOrdersPage.tsx`, `OrderConfirmationPage.tsx`, and `ProfilePage.tsx` all import and utilize hooks from `frontend/src/hooks/useOrders.ts`.\n-   `frontend/src/hooks/useOrders.ts` imports and calls functions from `frontend/src/services/orderService.ts`.\n-   `frontend/src/services/orderService.ts` and `frontend/src/services/paymentService.ts` both import and use the `api` client from `frontend/src/api/client.ts`.\n-   `frontend/src/context/CartContext.tsx` imports `MenuItemDto` from `frontend/src/types/menu.ts` (from `menu-ui`) to define its `CartItem` structure.\n-   `ProfilePage.tsx` imports and uses `useAuth` from `authentication-ui` to display user details.\n-   `OrderConfirmationPage.tsx` and `ProfilePage.tsx` are wrapped in `<Layout>` from `core-ui`.\n-   `AdminOrdersPage.tsx` is wrapped in `<AdminLayout>` from `admin-portal`.\n",
     "change_required" : true
   }, {
     "feature_name" : "blog-ui",
