@@ -3583,14 +3583,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Displays a grid or list of all blog posts with titles, excerpts, and images.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "BlogPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the public blog post listing page."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/hooks/useBlog.ts" ],
     "depends_on" : [ ],
     "feature_name" : "blog-ui",
-    "file_role" : null
+    "file_role" : "Public page displaying a grid or list of all blog posts."
   }, {
     "file_name" : "BlogPostPage.tsx",
     "file_path" : "frontend/src/pages/BlogPostPage.tsx",
@@ -3600,14 +3605,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Displays the full content of a single blog post.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "BlogPostPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the public single blog post detail page."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/hooks/useBlog.ts" ],
     "depends_on" : [ ],
     "feature_name" : "blog-ui",
-    "file_role" : null
+    "file_role" : "Public page displaying the full content of a single blog post."
   }, {
     "file_name" : "AdminBlogPage.tsx",
     "file_path" : "frontend/src/pages/admin/AdminBlogPage.tsx",
@@ -3617,14 +3627,19 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Admin interface for creating, editing, and deleting blog posts.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "AdminBlogPage",
+      "parameters" : [ ],
+      "return_type" : "JSX.Element",
+      "description" : "Renders the admin page for managing blog posts."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/hooks/useBlog.ts" ],
     "depends_on" : [ ],
     "feature_name" : "blog-ui",
-    "file_role" : null
+    "file_role" : "Admin interface for creating, editing, and deleting blog posts."
   }, {
     "file_name" : "useBlog.ts",
     "file_path" : "frontend/src/hooks/useBlog.ts",
@@ -3634,14 +3649,39 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "React Query hook for fetching and managing blog post data.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "useBlogPosts",
+      "parameters" : [ ],
+      "return_type" : "UseQueryResult<BlogPostDto[], Error>",
+      "description" : "Fetches and caches all blog posts."
+    }, {
+      "name" : "useBlogPost",
+      "parameters" : [ "id: string" ],
+      "return_type" : "UseQueryResult<BlogPostDto, Error>",
+      "description" : "Fetches and caches a single blog post by ID."
+    }, {
+      "name" : "useCreateBlogPost",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<BlogPostDto, Error, CreateUpdateBlogPostDto>",
+      "description" : "Provides a mutation to create a new blog post."
+    }, {
+      "name" : "useUpdateBlogPost",
+      "parameters" : [ "{ id: string, post: CreateUpdateBlogPostDto }" ],
+      "return_type" : "UseMutationResult<BlogPostDto, Error, { id: string, post: CreateUpdateBlogPostDto }>",
+      "description" : "Provides a mutation to update an existing blog post."
+    }, {
+      "name" : "useDeleteBlogPost",
+      "parameters" : [ ],
+      "return_type" : "UseMutationResult<void, Error, string>",
+      "description" : "Provides a mutation to delete a blog post by ID."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "frontend/src/services/blogService.ts", "frontend/src/types/blog.ts" ],
     "depends_on" : [ ],
     "feature_name" : "blog-ui",
-    "file_role" : null
+    "file_role" : "React Query hook for fetching and managing blog post data, exposing useBlogPosts(), useBlogPost(id), useCreateBlogPost(), useUpdateBlogPost(), and useDeleteBlogPost()."
   }, {
     "file_name" : "blogService.ts",
     "file_path" : "frontend/src/services/blogService.ts",
@@ -3651,14 +3691,69 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Service for all blog-related API calls.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllBlogPosts",
+      "parameters" : [ ],
+      "return_type" : "Promise<BlogPostDto[]>",
+      "description" : "Fetches all blog posts from the backend."
+    }, {
+      "name" : "getBlogPostById",
+      "parameters" : [ "id: string" ],
+      "return_type" : "Promise<BlogPostDto>",
+      "description" : "Fetches a single blog post by its ID from the backend."
+    }, {
+      "name" : "createBlogPost",
+      "parameters" : [ "post: CreateUpdateBlogPostDto" ],
+      "return_type" : "Promise<BlogPostDto>",
+      "description" : "Sends a request to create a new blog post on the backend."
+    }, {
+      "name" : "updateBlogPost",
+      "parameters" : [ "id: string", "post: CreateUpdateBlogPostDto" ],
+      "return_type" : "Promise<BlogPostDto>",
+      "description" : "Sends a request to update an existing blog post on the backend."
+    }, {
+      "name" : "deleteBlogPost",
+      "parameters" : [ "id: string" ],
+      "return_type" : "Promise<void>",
+      "description" : "Sends a request to delete a blog post from the backend."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
-    "api_endpoints_consumed" : null,
+    "api_endpoints_consumed" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/blog",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a list of all blog posts."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/blog/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Fetches a single blog post by ID."
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/blog",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Creates a new blog post."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/blog/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Updates an existing blog post."
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/blog/{id}",
+      "request_body" : null,
+      "response_body" : null,
+      "description" : "Deletes a blog post."
+    } ],
     "imports_from" : [ "frontend/src/api/client.ts", "frontend/src/types/blog.ts" ],
     "depends_on" : [ ],
     "feature_name" : "blog-ui",
-    "file_role" : null
+    "file_role" : "Service layer for blog-related API calls, providing getAllBlogPosts(), getBlogPostById(id), createBlogPost(post), updateBlogPost(id, post), and deleteBlogPost(id)."
   }, {
     "file_name" : "blog.ts",
     "file_path" : "frontend/src/types/blog.ts",
@@ -3669,13 +3764,21 @@
     "status" : "PLANNED",
     "description" : "TypeScript types and interfaces for blog posts.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "BlogPostDto",
+      "type" : "{ id: string; title: string; content: string; author: string; publicationDate: string; imageUrl: string; }",
+      "description" : "Represents a blog post with its ID, title, content, author, publication date, and image URL."
+    }, {
+      "name" : "CreateUpdateBlogPostDto",
+      "type" : "Omit<BlogPostDto, 'id'>",
+      "description" : "Represents the data structure for creating or updating a blog post, omitting the 'id' field."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "blog-ui",
-    "file_role" : null
+    "file_role" : "Generated from the backend API contract — defines TypeScript types and interfaces for blog posts."
   }, {
     "file_name" : "TestimonialsSection.tsx",
     "file_path" : "frontend/src/components/TestimonialsSection.tsx",
@@ -3889,7 +3992,7 @@
     "feature_display_name" : "Blog UI",
     "feature_type" : "FRONTEND",
     "file_paths" : [ "frontend/src/pages/BlogPage.tsx", "frontend/src/pages/BlogPostPage.tsx", "frontend/src/pages/admin/AdminBlogPage.tsx", "frontend/src/hooks/useBlog.ts", "frontend/src/services/blogService.ts", "frontend/src/types/blog.ts" ],
-    "feature_instruction" : null,
+    "feature_instruction" : "## Design Tokens\n- Navbar: bg-[#1A2B3C] text-white\n- Primary CTA: bg-[#FF9933] hover:bg-[#E68A00] text-white font-semibold rounded-full px-8 py-3 transition-all duration-200\n- Brand text accent: text-[#FF9933]\n- Section bg: bg-white (odd sections) / bg-[#F5F5F5] (even sections)\n- Card: bg-white rounded-xl shadow-md border border-gray-100 p-6\n- Section container: <section className=\"py-16 px-4\"><div className=\"max-w-7xl mx-auto\">\n- Hero h1: text-4xl md:text-6xl font-bold text-white\n- Body: text-gray-700 leading-relaxed\n\n## Overview\nThis feature implements the user interface for the blog functionality, allowing public users to browse blog posts and administrators to manage them. It consists of TypeScript types, a frontend service for API interaction, React Query hooks for data management, and three React pages: a public list of blog posts, a public detail view for a single blog post, and an administrative interface for CRUD operations on blog posts.\n\n## `frontend/src/types/blog.ts`\nThis file defines the TypeScript interfaces for blog post data, mirroring the `BlogPostDto` from the `blog-backend` feature. It will export the `BlogPostDto` interface and a `CreateUpdateBlogPostDto` interface for data sent during creation or update operations.\n\n```\n\ntypescript\nexport interface BlogPostDto {\n  id: string;\n  title: string;\n  content: string;\n  author: string;\n  publicationDate: string; // ISO 8601 string, e.g., '2023-10-27T10:00:00'\n  imageUrl: string;\n}\n\n// For creating or updating a blog post, 'id' is omitted as it's generated by the backend or passed in the URL.\nexport interface CreateUpdateBlogPostDto extends Omit<BlogPostDto, 'id'> {}\n\n\n```\n\n## `frontend/src/services/blogService.ts`\nThis service handles all direct API calls related to blog posts. It uses the `axios` instance from `frontend/src/api/client.ts` to communicate with the `blog-backend` endpoints. All methods return Promises resolving to `BlogPostDto` or `void`.\n\n### Public Functions:\n1.  **`getAllBlogPosts(): Promise<BlogPostDto[]>`**\n    *   **Logic**: Makes a GET request to `/api/v1/blog` to fetch all blog posts.\n    *   **Error Cases**: Throws `Error` if the API call fails.\n2.  **`getBlogPostById(id: string): Promise<BlogPostDto>`**\n    *   **Logic**: Makes a GET request to `/api/v1/blog/{id}` to fetch a single blog post by its ID.\n    *   **Error Cases**: Throws `Error` if the API call fails or the post is not found (404).\n3.  **`createBlogPost(post: CreateUpdateBlogPostDto): Promise<BlogPostDto>`**\n    *   **Logic**: Makes a POST request to `/api/v1/admin/blog` with the `CreateUpdateBlogPostDto` as the request body. The backend will generate the `id` and `createdAt`/`updatedAt`.\n    *   **Error Cases**: Throws `Error` if the API call fails (e.g., 400 Bad Request).\n4.  **`updateBlogPost(id: string, post: CreateUpdateBlogPostDto): Promise<BlogPostDto>`**\n    *   **Logic**: Makes a PUT request to `/api/v1/admin/blog/{id}` with the `CreateUpdateBlogPostDto` as the request body. The `id` in the path specifies which blog post to update.\n    *   **Error Cases**: Throws `Error` if the API call fails (e.g., 400 Bad Request, 404 Not Found).\n5.  **`deleteBlogPost(id: string): Promise<void>`**\n    *   **Logic**: Makes a DELETE request to `/api/v1/admin/blog/{id}` to remove a blog post.\n    *   **Error Cases**: Throws `Error` if the API call fails (e.g., 404 Not Found).\n\n## `frontend/src/hooks/useBlog.ts`\nThis file provides React Query hooks for managing blog post data, abstracting API calls and providing caching, loading states, and mutation capabilities. It depends on `blogService.ts` for actual API interaction.\n\n### Public Functions:\n1.  **`useBlogPosts(): UseQueryResult<BlogPostDto[], Error>`**\n    *   **Logic**: Fetches all blog posts using `blogService.getAllBlogPosts()`. Caches results with React Query.\n2.  **`useBlogPost(id: string): UseQueryResult<BlogPostDto, Error>`**\n    *   **Logic**: Fetches a single blog post by ID using `blogService.getBlogPostById(id)`. Caches results.\n3.  **`useCreateBlogPost(): UseMutationResult<BlogPostDto, Error, CreateUpdateBlogPostDto>`**\n    *   **Logic**: Provides a mutation function to create a new blog post using `blogService.createBlogPost()`. On success, invalidates the `blogPosts` query to refetch the list.\n4.  **`useUpdateBlogPost(): UseMutationResult<BlogPostDto, Error, { id: string, post: CreateUpdateBlogPostDto }>`**\n    *   **Logic**: Provides a mutation function to update an existing blog post using `blogService.updateBlogPost()`. On success, invalidates both the `blogPosts` query and the specific `blogPost` query for the updated ID.\n5.  **`useDeleteBlogPost(): UseMutationResult<void, Error, string>`**\n    *   **Logic**: Provides a mutation function to delete a blog post using `blogService.deleteBlogPost()`. On success, invalidates the `blogPosts` query.\n\n## `frontend/src/pages/BlogPage.tsx`\nThis page displays a public list of all blog posts in an immersive and authentic layout, reflecting the Himalayan theme. It uses the `Layout` component from `core-ui` for consistent navigation and footer.\n\n### Structure and Content:\n1.  **Layout**: Wraps content in `<Layout>`. Uses `useBlogPosts()` to fetch data.\n2.  **Hero Section**: \n    *   `className=\"relative h-96 bg-cover bg-center\" style={{ backgroundImage: 'url(https://images.unsplash.com/photo-1497366216548-37526070297c?w=1920&q=80)' }}`\n    *   Overlay: `<div className=\"absolute inset-0 bg-black bg-opacity-50\" />`\n    *   Content: Centered `div` with `Hero h1` style: `<h1>Journey Through Our Stories</h1>` and a subheadline: `<p className=\"text-xl text-white mt-4\">Discover the tales and traditions behind Yeti - The Himalayan Kitchen.</p>`\n3.  **Blog Post Grid Section**: \n    *   `Section container` style.\n    *   Heading: `<h2>Our Latest Adventures</h2>` (text-3xl md:text-4xl font-bold text-[#1A2B3C] mb-8 text-center)\n    *   Grid: Displays `BlogPostDto` items in a responsive grid (e.g., `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8`). Each card uses `Card` design token.\n    *   Each blog post card should display `imageUrl`, `title`, a truncated `content` (excerpt), `author`, and `publicationDate`. A \"Read More\" button (Primary CTA style) links to `BlogPostPage` for the specific post (`/blog/{id}`).\n    *   Loading/Error states: Display appropriate messages using `isLoading` and `isError` from `useBlogPosts`.\n\n## `frontend/src/pages/BlogPostPage.tsx`\nThis page displays the full content of a single blog post, providing a rich reading experience. It uses the `Layout` component from `core-ui`.\n\n### Structure and Content:\n1.  **Layout**: Wraps content in `<Layout>`. Uses `useBlogPost(id)` to fetch data, where `id` is extracted from the URL parameters.\n2.  **Blog Post Content Section**: \n    *   `Section container` style.\n    *   Conditional rendering: If `isLoading`, display a loading spinner. If `isError` or `!blogPost`, display a \"Blog post not found\" message.\n    *   Once loaded, display:\n        *   `imageUrl` (full width, e.g., `w-full h-96 object-cover rounded-lg mb-8`)\n        *   `title` (text-4xl font-bold text-[#1A2B3C] mb-4)\n        *   `author` and `publicationDate` (text-gray-600 text-sm mb-6)\n        *   `content` (rich text, using `Body` style, e.g., `prose lg:prose-xl max-w-none` for styling if a rich text editor is used, otherwise simple `<p>` tags).\n    *   Back button: A button (e.g., `text-[#FF9933] hover:underline`) to navigate back to `/blog`.\n\n## `frontend/src/pages/admin/AdminBlogPage.tsx`\nThis page provides an administrative interface for managing blog posts, allowing authenticated administrators to create, view, edit, and delete blog entries. It uses the `AdminLayout` component from `admin-portal`.\n\n### Structure and Content:\n1.  **Layout**: Wraps content in `<AdminLayout>`. Uses `useBlogPosts()`, `useCreateBlogPost()`, `useUpdateBlogPost()`, and `useDeleteBlogPost()`.\n2.  **Header Section**: \n    *   Heading: `<h1>Manage Blog Posts</h1>` (text-3xl font-bold text-[#1A2B3C])\n    *   \"Add New Blog Post\" button (Primary CTA style) that triggers a modal or navigates to a form for creating a new post.\n3.  **Blog Post List Table**: \n    *   Displays all blog posts in a sortable, filterable table.\n    *   Columns: `Title`, `Author`, `Publication Date`, `Image URL`, `Actions`.\n    *   Each row includes buttons for \"Edit\" and \"Delete\" for the respective blog post.\n    *   Loading/Error states: Display appropriate messages.\n4.  **Create/Edit Blog Post Form (Modal/Drawer)**:\n    *   Triggered by \"Add New Blog Post\" or \"Edit\" buttons.\n    *   Uses `react-hook-form` with `zod` for validation based on `CreateUpdateBlogPostDto`.\n    *   Form fields:\n        *   `title`: `z.string().min(1, 'Title is required')`\n        *   `author`: `z.string().min(1, 'Author is required')`\n        *   `content`: `z.string().min(1, 'Content is required')`\n        *   `imageUrl`: `z.string().url('Must be a valid URL').min(1, 'Image URL is required')`\n        *   `publicationDate`: `z.string().min(1, 'Publication date is required')` (for date picker, format as ISO string)\n    *   Submission: Calls `useCreateBlogPost().mutate()` or `useUpdateBlogPost().mutate()`.\n    *   Error handling: Display form errors and API errors.\n\n### Zod Schema for Create/Update:\n```\n\ntypescript\nimport { z } from 'zod';\n\nexport const blogPostSchema = z.object({\n  title: z.string().min(1, 'Title is required'),\n  content: z.string().min(1, 'Content is required'),\n  author: z.string().min(1, 'Author is required'),\n  publicationDate: z.string().min(1, 'Publication date is required'), // Expects ISO string\n  imageUrl: z.string().url('Must be a valid URL').min(1, 'Image URL is required'),\n});\n\nexport type BlogPostFormValues = z.infer<typeof blogPostSchema>;\n\n\n```\n\n### Inter-file Wiring:\n- `BlogPage.tsx` and `BlogPostPage.tsx` import and use `useBlog.ts` hooks.\n- `AdminBlogPage.tsx` imports and uses `useBlog.ts` hooks.\n- `useBlog.ts` imports and calls functions from `blogService.ts`.\n- `blogService.ts` imports `BlogPostDto` and `CreateUpdateBlogPostDto` from `blog.ts` and uses the `axios` instance from `frontend/src/api/client.ts`.\n- `BlogPage.tsx` and `BlogPostPage.tsx` are wrapped by `<Layout>` from `core-ui`.\n- `AdminBlogPage.tsx` is wrapped by `<AdminLayout>` from `admin-portal`.\n",
     "change_required" : true
   }, {
     "feature_name" : "testimonial-ui",
