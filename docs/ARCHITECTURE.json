@@ -2377,8 +2377,8 @@
     "file_type" : "FRONTEND",
     "layer" : "COMPONENT",
     "created_date" : "2024-07-29",
-    "updated_date" : "2024-07-29",
-    "status" : "PLANNED",
+    "updated_date" : "2026-07-07",
+    "status" : "GENERATED",
     "description" : "Root component that sets up routing for the entire application, including public and admin routes.",
     "public_functions" : [ {
       "name" : "App",
