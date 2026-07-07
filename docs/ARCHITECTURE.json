@@ -1822,13 +1822,45 @@
     "status" : "PLANNED",
     "description" : "Represents a single blog post or story.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "UUID",
+      "description" : "Unique identifier for the blog post, primary key."
+    }, {
+      "name" : "title",
+      "type" : "String",
+      "description" : "Title of the blog post, not null."
+    }, {
+      "name" : "content",
+      "type" : "String",
+      "description" : "Full content of the blog post, not null."
+    }, {
+      "name" : "author",
+      "type" : "String",
+      "description" : "Author of the blog post, not null."
+    }, {
+      "name" : "publicationDate",
+      "type" : "java.time.LocalDateTime",
+      "description" : "Date and time when the blog post was published, not null."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the main image for the blog post, nullable."
+    }, {
+      "name" : "createdAt",
+      "type" : "java.time.LocalDateTime",
+      "description" : "Timestamp when the blog post was created, automatically managed."
+    }, {
+      "name" : "updatedAt",
+      "type" : "java.time.LocalDateTime",
+      "description" : "Timestamp when the blog post was last updated, automatically managed."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "blog-backend",
-    "file_role" : null
+    "file_role" : "MODEL layer — defines the `BlogPost` entity, representing a single blog post or story in the database."
   }, {
     "file_name" : "BlogPostRepository.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/BlogPostRepository.java",
@@ -1838,14 +1870,14 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Spring Data JPA repository for BlogPost entities.",
-    "public_functions" : null,
+    "public_functions" : [ ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/BlogPost.java" ],
     "depends_on" : [ ],
     "feature_name" : "blog-backend",
-    "file_role" : null
+    "file_role" : "REPOSITORY layer — provides data access operations for `BlogPost` entities, extending Spring Data JPA's `JpaRepository`."
   }, {
     "file_name" : "BlogService.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/service/BlogService.java",
@@ -1855,14 +1887,39 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Handles business logic for managing blog posts.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllBlogPosts",
+      "parameters" : [ ],
+      "return_type" : "List<BlogPostDto>",
+      "description" : "Retrieves all blog posts."
+    }, {
+      "name" : "getBlogPostById",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "BlogPostDto",
+      "description" : "Retrieves a single blog post by its ID, throws ResourceNotFoundException if not found."
+    }, {
+      "name" : "createBlogPost",
+      "parameters" : [ "BlogPostDto blogPostDto" ],
+      "return_type" : "BlogPostDto",
+      "description" : "Creates a new blog post."
+    }, {
+      "name" : "updateBlogPost",
+      "parameters" : [ "UUID id", "BlogPostDto blogPostDto" ],
+      "return_type" : "BlogPostDto",
+      "description" : "Updates an existing blog post by ID, throws ResourceNotFoundException if not found."
+    }, {
+      "name" : "deleteBlogPost",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "void",
+      "description" : "Deletes a blog post by its ID, throws ResourceNotFoundException if not found."
+    } ],
     "public_variables" : null,
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/BlogPostRepository.java" ],
     "depends_on" : [ ],
     "feature_name" : "blog-backend",
-    "file_role" : null
+    "file_role" : "SERVICE layer — implements business logic for managing blog posts, including `getAllBlogPosts(): List<BlogPostDto>`, `getBlogPostById(UUID): BlogPostDto`, `createBlogPost(BlogPostDto): BlogPostDto`, `updateBlogPost(UUID, BlogPostDto): BlogPostDto`, and `deleteBlogPost(UUID): void`."
   }, {
     "file_name" : "BlogController.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/BlogController.java",
@@ -1872,14 +1929,36 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Public-facing REST controller for fetching blog posts.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllBlogPosts",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<BlogPostDto>>",
+      "description" : "Handles GET requests to retrieve all blog posts."
+    }, {
+      "name" : "getBlogPostById",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "ResponseEntity<BlogPostDto>",
+      "description" : "Handles GET requests to retrieve a single blog post by ID."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/blog",
+      "request_body" : null,
+      "response_body" : "List<BlogPostDto> (200 OK)",
+      "description" : "Retrieves a list of all blog posts."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/blog/{id}",
+      "request_body" : null,
+      "response_body" : "BlogPostDto (200 OK) or ErrorResponse (404 Not Found)",
+      "description" : "Retrieves a single blog post by its UUID."
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/service/BlogService.java" ],
     "depends_on" : [ ],
     "feature_name" : "blog-backend",
-    "file_role" : null
+    "file_role" : "CONTROLLER layer — provides public-facing REST endpoints for fetching blog posts: `GET /api/v1/blog` and `GET /api/v1/blog/{id}`."
   }, {
     "file_name" : "AdminBlogController.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminBlogController.java",
@@ -1889,14 +1968,69 @@
     "updated_date" : "2024-07-29",
     "status" : "PLANNED",
     "description" : "Admin-only REST controller for CRUD operations on blog posts.",
-    "public_functions" : null,
+    "public_functions" : [ {
+      "name" : "getAllBlogPosts",
+      "parameters" : [ ],
+      "return_type" : "ResponseEntity<List<BlogPostDto>>",
+      "description" : "Handles GET requests to retrieve all blog posts for admin view."
+    }, {
+      "name" : "getBlogPostById",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "ResponseEntity<BlogPostDto>",
+      "description" : "Handles GET requests to retrieve a single blog post by ID for admin view."
+    }, {
+      "name" : "createBlogPost",
+      "parameters" : [ "BlogPostDto blogPostDto" ],
+      "return_type" : "ResponseEntity<BlogPostDto>",
+      "description" : "Handles POST requests to create a new blog post."
+    }, {
+      "name" : "updateBlogPost",
+      "parameters" : [ "UUID id", "BlogPostDto blogPostDto" ],
+      "return_type" : "ResponseEntity<BlogPostDto>",
+      "description" : "Handles PUT requests to update an existing blog post by ID."
+    }, {
+      "name" : "deleteBlogPost",
+      "parameters" : [ "UUID id" ],
+      "return_type" : "ResponseEntity<Void>",
+      "description" : "Handles DELETE requests to delete a blog post by ID."
+    } ],
     "public_variables" : null,
-    "api_endpoints" : null,
+    "api_endpoints" : [ {
+      "method" : "GET",
+      "path" : "/api/v1/admin/blog",
+      "request_body" : null,
+      "response_body" : "List<BlogPostDto> (200 OK)",
+      "description" : "Retrieves a list of all blog posts for administrative purposes. Requires ADMIN role."
+    }, {
+      "method" : "GET",
+      "path" : "/api/v1/admin/blog/{id}",
+      "request_body" : null,
+      "response_body" : "BlogPostDto (200 OK) or ErrorResponse (404 Not Found)",
+      "description" : "Retrieves a single blog post by its UUID for administrative purposes. Requires ADMIN role."
+    }, {
+      "method" : "POST",
+      "path" : "/api/v1/admin/blog",
+      "request_body" : "BlogPostDto",
+      "response_body" : "BlogPostDto (201 Created) or ErrorResponse (400 Bad Request)",
+      "description" : "Creates a new blog post. Requires ADMIN role."
+    }, {
+      "method" : "PUT",
+      "path" : "/api/v1/admin/blog/{id}",
+      "request_body" : "BlogPostDto",
+      "response_body" : "BlogPostDto (200 OK) or ErrorResponse (400 Bad Request, 404 Not Found)",
+      "description" : "Updates an existing blog post by ID. Requires ADMIN role."
+    }, {
+      "method" : "DELETE",
+      "path" : "/api/v1/admin/blog/{id}",
+      "request_body" : null,
+      "response_body" : "Void (204 No Content) or ErrorResponse (404 Not Found)",
+      "description" : "Deletes a blog post by its UUID. Requires ADMIN role."
+    } ],
     "api_endpoints_consumed" : null,
     "imports_from" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/service/BlogService.java" ],
     "depends_on" : [ ],
     "feature_name" : "blog-backend",
-    "file_role" : null
+    "file_role" : "CONTROLLER layer — provides admin-only REST endpoints for CRUD operations on blog posts: `GET /api/v1/admin/blog`, `GET /api/v1/admin/blog/{id}`, `POST /api/v1/admin/blog`, `PUT /api/v1/admin/blog/{id}`, and `DELETE /api/v1/admin/blog/{id}`."
   }, {
     "file_name" : "BlogPostDto.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/BlogPostDto.java",
@@ -1907,13 +2041,37 @@
     "status" : "PLANNED",
     "description" : "Data Transfer Object for blog posts.",
     "public_functions" : null,
-    "public_variables" : null,
+    "public_variables" : [ {
+      "name" : "id",
+      "type" : "UUID",
+      "description" : "Unique identifier for the blog post."
+    }, {
+      "name" : "title",
+      "type" : "String",
+      "description" : "Title of the blog post, not blank."
+    }, {
+      "name" : "content",
+      "type" : "String",
+      "description" : "Full content of the blog post, not blank."
+    }, {
+      "name" : "author",
+      "type" : "String",
+      "description" : "Author of the blog post, not blank."
+    }, {
+      "name" : "publicationDate",
+      "type" : "java.time.LocalDateTime",
+      "description" : "Date and time when the blog post was published, not null."
+    }, {
+      "name" : "imageUrl",
+      "type" : "String",
+      "description" : "URL of the main image for the blog post, nullable."
+    } ],
     "api_endpoints" : null,
     "api_endpoints_consumed" : null,
     "imports_from" : [ ],
     "depends_on" : [ ],
     "feature_name" : "blog-backend",
-    "file_role" : null
+    "file_role" : "DTO layer — defines the structure for blog post data transfer, used for both request and response bodies in the API."
   }, {
     "file_name" : "Testimonial.java",
     "file_path" : "backend/src/main/java/com/yetithehimalayankitchenbaner/model/Testimonial.java",
@@ -2870,7 +3028,7 @@
     "feature_display_name" : "Blog Management (Backend)",
     "feature_type" : "BACKEND",
     "file_paths" : [ "backend/src/main/java/com/yetithehimalayankitchenbaner/model/BlogPost.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/repository/BlogPostRepository.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/service/BlogService.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/BlogController.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/controller/AdminBlogController.java", "backend/src/main/java/com/yetithehimalayankitchenbaner/dto/BlogPostDto.java" ],
-    "feature_instruction" : null,
+    "feature_instruction" : "The Blog Management (Backend) feature provides a complete set of functionalities for managing blog posts, including public access for viewing and admin-only access for full CRUD operations. It consists of a `BlogPost` entity for persistence, a `BlogPostRepository` for data access, a `BlogService` for business logic, and two controllers: `BlogController` for public read-only access and `AdminBlogController` for authenticated administrative operations.\n\n**1. Data Model (`BlogPost.java`):**\n   - Represents a blog post with fields: `id` (UUID, primary key), `title` (String, not null), `content` (String, not null), `author` (String, not null), `publicationDate` (LocalDateTime, not null), `imageUrl` (String, nullable), `createdAt` (LocalDateTime), and `updatedAt` (LocalDateTime).\n   - `createdAt` and `updatedAt` should be automatically managed (e.g., using `@CreatedDate` and `@LastModifiedDate` with `@EntityListeners(AuditingEntityListener.class)`).\n\n**2. Data Transfer Object (`BlogPostDto.java`):**\n   - Used for transferring blog post data between the service layer and controllers.\n   - Contains fields: `id` (UUID), `title` (String), `content` (String), `author` (String), `publicationDate` (LocalDateTime), and `imageUrl` (String).\n   - Should include validation annotations like `@NotBlank` for `title`, `content`, and `author`.\n\n**3. Repository Layer (`BlogPostRepository.java`):**\n   - Extends `JpaRepository<BlogPost, UUID>` to provide standard CRUD operations for `BlogPost` entities.\n   - No custom query methods are required for the current scope.\n\n**4. Service Layer (`BlogService.java`):**\n   - Injects `BlogPostRepository`.\n   - Implements the following public methods:\n     - `public List<BlogPostDto> getAllBlogPosts()`:\n       1. Fetches all `BlogPost` entities from `BlogPostRepository`.\n       2. Converts them to `BlogPostDto` objects.\n       3. Returns the list of `BlogPostDto`.\n     - `public BlogPostDto getBlogPostById(UUID id)`:\n       1. Attempts to find a `BlogPost` by `id` using `BlogPostRepository.findById()`.\n       2. If not found, throws `ResourceNotFoundException` (from `shared-backend-core`) with a message like \"Blog post not found with ID: \" + id.\n       3. If found, converts the `BlogPost` entity to `BlogPostDto`.\n       4. Returns the `BlogPostDto`.\n     - `public BlogPostDto createBlogPost(BlogPostDto blogPostDto)`:\n       1. Converts the incoming `blogPostDto` to a `BlogPost` entity.\n       2. Sets `createdAt` and `updatedAt` (if not handled by auditing).\n       3. Saves the `BlogPost` entity using `BlogPostRepository.save()`.\n       4. Converts the saved `BlogPost` back to `BlogPostDto`.\n       5. Returns the created `BlogPostDto`.\n     - `public BlogPostDto updateBlogPost(UUID id, BlogPostDto blogPostDto)`:\n       1. Calls `getBlogPostById(id)` to ensure the blog post exists. This will throw `ResourceNotFoundException` if not found.\n       2. Updates the fields (`title`, `content`, `author`, `publicationDate`, `imageUrl`) of the existing `BlogPost` entity with values from `blogPostDto`.\n       3. Sets `updatedAt` (if not handled by auditing).\n       4. Saves the updated `BlogPost` entity using `BlogPostRepository.save()`.\n       5. Converts the saved `BlogPost` back to `BlogPostDto`.\n       6. Returns the updated `BlogPostDto`.\n     - `public void deleteBlogPost(UUID id)`:\n       1. Calls `getBlogPostById(id)` to ensure the blog post exists. This will throw `ResourceNotFoundException` if not found.\n       2. Deletes the `BlogPost` entity by `id` using `BlogPostRepository.deleteById()`.\n\n**5. Public Controller (`BlogController.java`):**\n   - Annotated with `@RestController` and `@RequestMapping(\"/api/v1/blog\")`.\n   - Injects `BlogService`.\n   - Exposes public read-only endpoints:\n     - `GET /api/v1/blog`: `public ResponseEntity<List<BlogPostDto>> getAllBlogPosts()`\n       - Calls `blogService.getAllBlogPosts()`.\n       - Returns `ResponseEntity.ok()` with the list of `BlogPostDto`.\n     - `GET /api/v1/blog/{id}`: `public ResponseEntity<BlogPostDto> getBlogPostById(@PathVariable UUID id)`\n       - Calls `blogService.getBlogPostById(id)`.\n       - Returns `ResponseEntity.ok()` with the `BlogPostDto`.\n       - Handles `ResourceNotFoundException` by returning `ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)` (or an `ErrorResponse` if using `GlobalExceptionHandler`).\n\n**6. Admin Controller (`AdminBlogController.java`):**\n   - Annotated with `@RestController` and `@RequestMapping(\"/api/v1/admin/blog\")`.\n   - All methods must be secured with `@PreAuthorize(\"hasRole('ADMIN')\")`.\n   - Injects `BlogService`.\n   - Exposes admin CRUD endpoints:\n     - `GET /api/v1/admin/blog`: `public ResponseEntity<List<BlogPostDto>> getAllBlogPosts()`\n       - Calls `blogService.getAllBlogPosts()`.\n       - Returns `ResponseEntity.ok()` with the list of `BlogPostDto`.\n     - `GET /api/v1/admin/blog/{id}`: `public ResponseEntity<BlogPostDto> getBlogPostById(@PathVariable UUID id)`\n       - Calls `blogService.getBlogPostById(id)`.\n       - Returns `ResponseEntity.ok()` with the `BlogPostDto`.\n       - Handles `ResourceNotFoundException` by returning `ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)`.\n     - `POST /api/v1/admin/blog`: `public ResponseEntity<BlogPostDto> createBlogPost(@Valid @RequestBody BlogPostDto blogPostDto)`\n       - Calls `blogService.createBlogPost(blogPostDto)`.\n       - Returns `ResponseEntity.status(HttpStatus.CREATED).body()` with the created `BlogPostDto`.\n       - Handles validation errors (e.g., `@Valid` will trigger `MethodArgumentNotValidException` caught by `GlobalExceptionHandler`).\n     - `PUT /api/v1/admin/blog/{id}`: `public ResponseEntity<BlogPostDto> updateBlogPost(@PathVariable UUID id, @Valid @RequestBody BlogPostDto blogPostDto)`\n       - Calls `blogService.updateBlogPost(id, blogPostDto)`.\n       - Returns `ResponseEntity.ok()` with the updated `BlogPostDto`.\n       - Handles `ResourceNotFoundException` and validation errors.\n     - `DELETE /api/v1/admin/blog/{id}`: `public ResponseEntity<Void> deleteBlogPost(@PathVariable UUID id)`\n       - Calls `blogService.deleteBlogPost(id)`.\n       - Returns `ResponseEntity.noContent().build()`.\n       - Handles `ResourceNotFoundException`.\n\n**Error Handling:**\n- `ResourceNotFoundException` (from `shared-backend-core`) should be used when an entity is not found. The `GlobalExceptionHandler` (from `shared-backend-core`) will convert this to a `404 Not Found` HTTP response.\n- Other exceptions like `IllegalArgumentException` should also be handled by `GlobalExceptionHandler` to return `400 Bad Request`.\n\n**Security Configuration:**\n- The `SecurityConfig` (from `shared-backend-auth`) must be updated to permit all requests to `/api/v1/blog/**` and require `ADMIN` role for `/api/v1/admin/blog/**`.\n  - `.requestMatchers(\"/api/v1/blog/**\").permitAll()`\n  - `.requestMatchers(\"/api/v1/admin/blog/**\").hasRole(\"ADMIN\")`",
     "change_required" : true
   }, {
     "feature_name" : "testimonial-backend",
