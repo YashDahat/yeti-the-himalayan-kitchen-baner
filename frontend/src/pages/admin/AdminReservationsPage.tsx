@@ -140,24 +140,24 @@ const AdminReservationsPage: React.FC = () => {
                   <TableBody>
                     {reservations.map((reservation) => (
                       <TableRow key={reservation.id} className="bg-white hover:bg-gray-50 transition-all duration-200">
-                        <TableCell className="py-3 px-4">{reservation.id.substring(0, 8)}...</TableCell>
+                        <TableCell className="py-3 px-4">{reservation.id?.substring(0, 8)}...</TableCell>
                         <TableCell className="py-3 px-4">{reservation.customerName}</TableCell>
                         <TableCell className="py-3 px-4">{reservation.customerEmail}</TableCell>
                         <TableCell className="py-3 px-4">{reservation.customerPhone}</TableCell>
                         <TableCell className="py-3 px-4">
-                          {format(new Date(reservation.reservationDate), 'yyyy-MM-dd')}
+                          {reservation.reservationDate ? format(new Date(reservation.reservationDate), 'yyyy-MM-dd') : ''}
                         </TableCell>
                         <TableCell className="py-3 px-4">
                           {/* Assuming reservationTime is a string like "HH:mm" */}
-                          {format(new Date(`2000-01-01T${reservation.reservationTime}`), 'HH:mm')}
+                          {reservation.reservationTime ? format(new Date(`2000-01-01T${reservation.reservationTime}`), 'HH:mm') : ''}
                         </TableCell>
                         <TableCell className="py-3 px-4">{reservation.numberOfGuests}</TableCell>
                         <TableCell className="py-3 px-4">{reservation.specialRequests || 'N/A'}</TableCell>
                         <TableCell className="py-3 px-4">
                           <Select
-                            value={reservation.status}
+                            value={reservation.status ?? undefined}
                             onValueChange={(newStatus: ReservationStatus) =>
-                              handleStatusChange(reservation.id, newStatus)
+                              handleStatusChange(reservation.id ?? '', newStatus)
                             }
                           >
                             <SelectTrigger className="w-[180px] h-9 border border-gray-300 rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#D2691E] focus:border-transparent">
@@ -209,7 +209,7 @@ const AdminReservationsPage: React.FC = () => {
                                   Cancel
                                 </AlertDialogCancel>
                                 <AlertDialogAction
-                                  onClick={() => handleDelete(reservation.id)}
+                                  onClick={() => handleDelete(reservation.id ?? '')}
                                   className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition-all duration-200"
                                 >
                                   Delete

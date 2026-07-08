@@ -1,27 +1,13 @@
+import { AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { DialogHeader, DialogFooter } from '@/components/ui/dialog';
 import React, { useState, useEffect } from 'react';
-import { AdminLayout } from '@/components/AdminLayout';
+import AdminLayout from '@/components/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from '@radix-ui/react-dialog';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@radix-ui/react-alert-dialog';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '@radix-ui/react-dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogTitle } from '@radix-ui/react-alert-dialog';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -41,7 +27,7 @@ import clsx from 'clsx';
 const createTestimonialSchema = z.object({
   authorName: z.string().min(1, 'Author name is required'),
   content: z.string().min(1, 'Content is required'),
-  rating: z.coerce.number().min(1, 'Rating must be at least 1').max(5, 'Rating cannot exceed 5'),
+  rating: z.number().min(1, 'Rating must be at least 1').max(5, 'Rating cannot exceed 5'),
   approved: z.boolean().optional(),
 });
 
@@ -50,7 +36,7 @@ type CreateTestimonialFormValues = z.infer<typeof createTestimonialSchema>;
 const updateTestimonialSchema = z.object({
   authorName: z.string().min(1, 'Author name is required'),
   content: z.string().min(1, 'Content is required'),
-  rating: z.coerce.number().min(1, 'Rating must be at least 1').max(5, 'Rating cannot exceed 5'),
+  rating: z.number().min(1, 'Rating must be at least 1').max(5, 'Rating cannot exceed 5'),
   approved: z.boolean(),
 });
 
@@ -94,16 +80,16 @@ const AdminTestimonialsPage: React.FC = () => {
   useEffect(() => {
     if (currentTestimonial && isEditModalOpen) {
       editForm.reset({
-        authorName: currentTestimonial.authorName,
-        content: currentTestimonial.content,
-        rating: currentTestimonial.rating,
-        approved: currentTestimonial.approved,
+        authorName: currentTestimonial.authorName ?? '',
+        content: currentTestimonial.content ?? '',
+        rating: currentTestimonial.rating ?? 1,
+        approved: currentTestimonial.approved ?? false,
       });
     }
   }, [currentTestimonial, isEditModalOpen, editForm]);
 
   const handleCreateTestimonial = async (values: CreateTestimonialFormValues) => {
-    createMutation.mutate(values, {
+    createMutation.mutate({ id: null, createdAt: null, ...values, approved: values.approved ?? false }, {
       onSuccess: () => {
         setIsCreateModalOpen(false);
         createForm.reset();
@@ -114,7 +100,7 @@ const AdminTestimonialsPage: React.FC = () => {
   const handleEditTestimonial = async (values: UpdateTestimonialFormValues) => {
     if (!editingTestimonialId) return;
     updateMutation.mutate(
-      { id: editingTestimonialId, testimonial: values },
+      { id: editingTestimonialId, testimonial: { id: currentTestimonial?.id ?? null, createdAt: currentTestimonial?.createdAt ?? null, ...values } },
       {
         onSuccess: () => {
           setIsEditModalOpen(false);
@@ -129,7 +115,7 @@ const AdminTestimonialsPage: React.FC = () => {
   };
 
   const handleUnapproveTestimonial = (testimonial: TestimonialDto) => {
-    updateMutation.mutate({ id: testimonial.id, testimonial: { ...testimonial, approved: false } });
+    updateMutation.mutate({ id: testimonial.id ?? '', testimonial: { ...testimonial, approved: false } });
   };
 
   const handleDeleteTestimonial = () => {
@@ -278,11 +264,11 @@ const AdminTestimonialsPage: React.FC = () => {
                 <TableBody>
                   {testimonials.map((testimonial) => (
                     <TableRow key={testimonial.id}>
-                      <TableCell className="font-medium truncate max-w-[80px]">{testimonial.id.substring(0, 8)}...</TableCell>
+                      <TableCell className="font-medium truncate max-w-[80px]">{testimonial.id?.substring(0, 8)}...</TableCell>
                       <TableCell>{testimonial.authorName}</TableCell>
                       <TableCell className="max-w-[200px] truncate">{testimonial.content}</TableCell>
-                      <TableCell>{renderStars(testimonial.rating)}</TableCell>
-                      <TableCell>{new Date(testimonial.createdAt).toLocaleDateString()}</TableCell>
+                      <TableCell>{renderStars(testimonial.rating ?? 0)}</TableCell>
+                      <TableCell>{testimonial.createdAt ? new Date(testimonial.createdAt).toLocaleDateString() : ''}</TableCell>
                       <TableCell>
                         <Badge variant={testimonial.approved ? 'default' : 'destructive'}>
                           {testimonial.approved ? 'Approved' : 'Pending'}
@@ -290,7 +276,7 @@ const AdminTestimonialsPage: React.FC = () => {
                       </TableCell>
                       <TableCell className="text-right space-x-2">
                         <Button
-                          onClick={() => openEditModal(testimonial.id)}
+                          onClick={() => openEditModal(testimonial.id ?? '')}
                           className="bg-[#8B4513] hover:bg-[#7a3b10] text-white font-semibold rounded-full px-4 py-2 text-sm transition-all duration-200"
                         >
                           Edit
@@ -305,7 +291,7 @@ const AdminTestimonialsPage: React.FC = () => {
                           </Button>
                         ) : (
                           <Button
-                            onClick={() => handleApproveTestimonial(testimonial.id)}
+                            onClick={() => handleApproveTestimonial(testimonial.id ?? '')}
                             disabled={approveMutation.isPending}
                             className="bg-[#f4c430] hover:bg-[#e0b02a] text-white font-semibold rounded-full px-4 py-2 text-sm transition-all duration-200"
                           >
@@ -313,7 +299,7 @@ const AdminTestimonialsPage: React.FC = () => {
                           </Button>
                         )}
                         <Button
-                          onClick={() => openDeleteAlert(testimonial.id)}
+                          onClick={() => openDeleteAlert(testimonial.id ?? '')}
                           className="bg-red-600 hover:bg-red-700 text-white font-semibold rounded-full px-4 py-2 text-sm transition-all duration-200"
                         >
                           Delete

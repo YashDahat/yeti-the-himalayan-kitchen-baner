@@ -1,10 +1,12 @@
+import { AlertDialogFooter, AlertDialogHeader } from '@/components/ui/alert-dialog';
+import { DialogHeader } from '@/components/ui/dialog';
 import React, { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { toast } from 'sonner';
 
-import { AdminLayout } from '@/components/AdminLayout';
+import AdminLayout from '@/components/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -33,27 +35,8 @@ import {
 } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-}
-from '@radix-ui/react-dialog';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@radix-ui/react-alert-dialog';
-
+import { Dialog, DialogContent, DialogTitle, DialogTrigger, DialogClose } from '@radix-ui/react-dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogTitle, AlertDialogTrigger } from '@radix-ui/react-alert-dialog';
 import {
   useMenuItems,
   useCategories,
@@ -75,10 +58,10 @@ const categoryFormSchema = z.object({
 const menuItemFormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   description: z.string().min(1, 'Description is required'),
-  price: z.coerce.number().min(0.01, 'Price must be positive'),
+  price: z.number().min(0.01, 'Price must be positive'),
   categoryId: z.string().uuid('Invalid category selected'),
   imageUrl: z.string().url('Invalid URL format').optional().or(z.literal('')),
-  available: z.boolean().default(true),
+  available: z.boolean(),
 });
 
 type CategoryFormValues = z.infer<typeof categoryFormSchema>;
@@ -120,7 +103,7 @@ const AdminMenuPage: React.FC = () => {
 
   useEffect(() => {
     if (selectedCategory) {
-      categoryForm.reset({ name: selectedCategory.name });
+      categoryForm.reset({ name: selectedCategory.name ?? '' });
     } else {
       categoryForm.reset({ name: '' });
     }
@@ -129,12 +112,12 @@ const AdminMenuPage: React.FC = () => {
   useEffect(() => {
     if (selectedMenuItem) {
       menuItemForm.reset({
-        name: selectedMenuItem.name,
-        description: selectedMenuItem.description,
-        price: selectedMenuItem.price,
-        categoryId: selectedMenuItem.categoryId,
+        name: selectedMenuItem.name ?? '',
+        description: selectedMenuItem.description ?? '',
+        price: selectedMenuItem.price ?? 0,
+        categoryId: selectedMenuItem.categoryId ?? '',
         imageUrl: selectedMenuItem.imageUrl ?? '',
-        available: selectedMenuItem.available,
+        available: selectedMenuItem.available ?? true,
       });
     } else {
       menuItemForm.reset({
@@ -182,10 +165,12 @@ const AdminMenuPage: React.FC = () => {
   const handleCreateMenuItem = async (values: MenuItemFormValues) => {
     try {
       await createMenuItemMutation.mutateAsync({
+        id: null,
         name: values.name,
         description: values.description,
         price: values.price,
         categoryId: values.categoryId,
+        categoryName: null,
         imageUrl: values.imageUrl || null,
         available: values.available,
       });
@@ -200,12 +185,14 @@ const AdminMenuPage: React.FC = () => {
     if (!selectedMenuItem) return;
     try {
       await updateMenuItemMutation.mutateAsync({
-        id: selectedMenuItem.id,
+        id: selectedMenuItem.id ?? '',
         item: {
+          id: selectedMenuItem.id,
           name: values.name,
           description: values.description,
           price: values.price,
           categoryId: values.categoryId,
+          categoryName: selectedMenuItem.categoryName,
           imageUrl: values.imageUrl || null,
           available: values.available,
         },
@@ -537,10 +524,10 @@ const AdminMenuPage: React.FC = () => {
                 ) : (
                   menuItems?.map((item) => (
                     <TableRow key={item.id}>
-                      <TableCell className="font-medium">{item.id.substring(0, 8)}...</TableCell>
+                      <TableCell className="font-medium">{item.id?.substring(0, 8)}...</TableCell>
                       <TableCell>{item.name}</TableCell>
                       <TableCell>{item.categoryName}</TableCell>
-                      <TableCell>${item.price.toFixed(2)}</TableCell>
+                      <TableCell>${item.price?.toFixed(2) ?? '0.00'}</TableCell>
                       <TableCell>{item.available ? 'Yes' : 'No'}</TableCell>
                       <TableCell className="text-right space-x-2">
                         <Dialog open={isMenuItemEditDialogOpen && selectedMenuItem?.id === item.id} onOpenChange={setIsMenuItemEditDialogOpen}>
@@ -691,7 +678,7 @@ const AdminMenuPage: React.FC = () => {
                               <AlertDialogAction asChild>
                                 <Button
                                   variant="destructive"
-                                  onClick={() => handleDeleteMenuItem(item.id)}
+                                  onClick={() => handleDeleteMenuItem(item.id ?? '')}
                                   disabled={deleteMenuItemMutation.isPending}
                                 >
                                   {deleteMenuItemMutation.isPending ? 'Deleting...' : 'Delete'}

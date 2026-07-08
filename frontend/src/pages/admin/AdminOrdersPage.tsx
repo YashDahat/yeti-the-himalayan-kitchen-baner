@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import clsx from 'clsx';
 
-import { AdminLayout } from '@/components/AdminLayout';
+import AdminLayout from '@/components/AdminLayout';
 import {
   Table,
   TableBody,
@@ -108,14 +108,14 @@ const AdminOrdersPage: React.FC = () => {
                     <TableRow key={order.id}>
                       <TableCell className="font-medium">{order.id}</TableCell>
                       <TableCell>{order.userId}</TableCell>
-                      <TableCell>{format(new Date(order.orderDate), 'MMM dd, yyyy HH:mm')}</TableCell>
-                      <TableCell>₹{order.totalAmount.toFixed(2)}</TableCell>
+                      <TableCell>{order.orderDate ? format(new Date(order.orderDate), 'MMM dd, yyyy HH:mm') : ''}</TableCell>
+                      <TableCell>₹{order.totalAmount?.toFixed(2) ?? '0.00'}</TableCell>
                       <TableCell>{order.deliveryAddress}</TableCell>
                       <TableCell>{order.contactPhone}</TableCell>
                       <TableCell>
                         <Select
-                          value={order.status}
-                          onValueChange={(value) => handleStatusChange(order.id, value as OrderStatus)}
+                          value={order.status ?? undefined}
+                          onValueChange={(value) => handleStatusChange(order.id ?? '', value as OrderStatus)}
                           disabled={updateStatusMutation.isPending}
                         >
                           <SelectTrigger
@@ -142,7 +142,7 @@ const AdminOrdersPage: React.FC = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex space-x-2">
-                          <Link to={`/admin/orders/${order.id}`}>
+                          <Link to={`/admin/orders/${order.id ?? ''}`}>
                             <Button variant="outline" size="sm">
                               View Details
                             </Button>
@@ -151,7 +151,7 @@ const AdminOrdersPage: React.FC = () => {
                             <Button
                               variant="destructive"
                               size="sm"
-                              onClick={() => handleCancelOrder(order.id)}
+                              onClick={() => handleCancelOrder(order.id ?? '')}
                               disabled={cancelOrderMutation.isPending}
                             >
                               Cancel Order

@@ -82,15 +82,19 @@ const AdminBlogPage: React.FC = () => {
   }, [isModalOpen, editingPost, form]);
 
   const onSubmit = async (data: BlogPostFormValues) => {
-    const postData: CreateUpdateBlogPostDto = {
-      ...data,
+    const postData: BlogPostDto = {
+      id: editingPost?.id ?? null,
+      title: data.title,
+      content: data.content,
+      author: data.author,
       // Convert YYYY-MM-DD to ISO 8601 string
       publicationDate: new Date(data.publicationDate).toISOString(),
+      imageUrl: data.imageUrl,
     };
 
     try {
       if (editingPost) {
-        await updateMutation.mutateAsync({ id: editingPost.id, post: postData });
+        await updateMutation.mutateAsync({ id: editingPost.id ?? '', post: postData });
       } else {
         await createMutation.mutateAsync(postData);
       }
@@ -159,7 +163,7 @@ const AdminBlogPage: React.FC = () => {
                       <TableCell className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{post.title}</TableCell>
                       <TableCell className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{post.author}</TableCell>
                       <TableCell className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {format(new Date(post.publicationDate), 'PPP')}
+                        {post.publicationDate ? format(new Date(post.publicationDate), 'PPP') : ''}
                       </TableCell>
                       <TableCell className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 truncate max-w-xs">{post.imageUrl}</TableCell>
                       <TableCell className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
