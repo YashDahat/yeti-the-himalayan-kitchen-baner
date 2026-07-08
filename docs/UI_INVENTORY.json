@@ -1,4 +1,19 @@
 {
+  "shadcn_ui" : {
+    "alert-dialog" : [ "AlertDialog", "AlertDialogPortal", "AlertDialogOverlay", "AlertDialogTrigger", "AlertDialogContent", "AlertDialogHeader", "AlertDialogFooter", "AlertDialogTitle", "AlertDialogDescription", "AlertDialogAction", "AlertDialogCancel" ],
+    "badge" : [ "BadgeProps", "Badge", "badgeVariants" ],
+    "button" : [ "ButtonProps", "Button", "buttonVariants" ],
+    "card" : [ "Card", "CardHeader", "CardFooter", "CardTitle", "CardDescription", "CardContent" ],
+    "checkbox" : [ "Checkbox" ],
+    "dialog" : [ "Dialog", "DialogPortal", "DialogOverlay", "DialogClose", "DialogTrigger", "DialogContent", "DialogHeader", "DialogFooter", "DialogTitle", "DialogDescription" ],
+    "form" : [ "useFormField", "Form", "FormItem", "FormLabel", "FormControl", "FormDescription", "FormMessage", "FormField" ],
+    "input" : [ "Input" ],
+    "label" : [ "Label" ],
+    "select" : [ "Select", "SelectGroup", "SelectValue", "SelectTrigger", "SelectContent", "SelectLabel", "SelectItem", "SelectSeparator", "SelectScrollUpButton", "SelectScrollDownButton" ],
+    "sonner" : [ "Toaster" ],
+    "table" : [ "Table", "TableHeader", "TableBody", "TableFooter", "TableHead", "TableRow", "TableCell", "TableCaption" ],
+    "textarea" : [ "Textarea" ]
+  },
   "radix" : {
     "@radix-ui/react-alert-dialog" : [ "Action", "AlertDialog", "AlertDialogAction", "AlertDialogCancel", "AlertDialogContent", "AlertDialogDescription", "AlertDialogOverlay", "AlertDialogPortal", "AlertDialogTitle", "AlertDialogTrigger", "Cancel", "Content", "Description", "Overlay", "Portal", "Root", "Title", "Trigger" ],
     "@radix-ui/react-checkbox" : [ "Checkbox", "CheckboxIndicator", "Indicator", "Root", "unstable_BubbleInput", "unstable_CheckboxBubbleInput", "unstable_CheckboxTrigger", "unstable_Trigger" ],
@@ -8,16 +23,5 @@
     "@radix-ui/react-select" : [ "Arrow", "Content", "Group", "Icon", "Item", "ItemIndicator", "ItemText", "Label", "Portal", "Root", "ScrollDownButton", "ScrollUpButton", "Select", "SelectArrow", "SelectContent", "SelectGroup", "SelectIcon", "SelectItem", "SelectItemIndicator", "SelectItemText", "SelectLabel", "SelectPortal", "SelectScrollDownButton", "SelectScrollUpButton", "SelectSeparator", "SelectTrigger", "SelectValue", "SelectViewport", "Separator", "Trigger", "Value", "Viewport", "unstable_BubbleInput", "unstable_SelectBubbleInput" ],
     "@radix-ui/react-slot" : [ "Root", "Slot", "Slottable" ],
     "@radix-ui/react-toast" : [ "Action", "Close", "Description", "Root", "Title", "Toast", "ToastAction", "ToastClose", "ToastDescription", "ToastTitle", "ToastViewport", "Viewport" ]
-  },
-  "shadcn_ui" : {
-    "badge" : [ "BadgeProps", "Badge", "badgeVariants" ],
-    "button" : [ "ButtonProps", "Button", "buttonVariants" ],
-    "card" : [ "Card", "CardHeader", "CardFooter", "CardTitle", "CardDescription", "CardContent" ],
-    "form" : [ "useFormField", "Form", "FormItem", "FormLabel", "FormControl", "FormDescription", "FormMessage", "FormField" ],
-    "input" : [ "Input" ],
-    "label" : [ "Label" ],
-    "sonner" : [ "Toaster" ],
-    "table" : [ "Table", "TableHeader", "TableBody", "TableFooter", "TableHead", "TableRow", "TableCell", "TableCaption" ],
-    "textarea" : [ "Textarea" ]
   }
 }
